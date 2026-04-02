@@ -968,34 +968,6 @@ footer {
   line-height: 1.5;
 }
 
-/* Social Icons */
-.social-icons {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.social-icon {
-  width: 45px;
-  height: 45px;
-  background: rgba(139, 92, 246, 0.2);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 18px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.social-icon:hover {
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
-  border-color: transparent;
-  transform: translateY(-3px);
-}
-
 /* Contact Form */
 .contact-form {
   display: flex;
