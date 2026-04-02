@@ -12,7 +12,7 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<title>CMS Dashboard</title>
+<title> Finance Dashboard | finaDash</title>
 
 <!-- CSS CONNECT -->
 <link rel="stylesheet" href="dash.css">
@@ -26,7 +26,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- DESKTOP NAVBAR -->
 <nav class="desktop-nav">
-
+<a href="#home">Home</a>
+<a href="#finance">Finance</a>
 </nav>
 
 <!-- HAMBURGER MENU -->
@@ -40,27 +41,27 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- MOBILE MENU -->
 <nav class="menu" id="menu">
-
+<a href="#home">Home</a>
+<a href="#finance">Finance</a>
 </nav>
 
 </header>
 
 
-<section class="home">
+<section class="home" id="home">
 <div class="description">
 
 <!-- ROCKET BADGE -->
 <div class="badge">
-🚀 management Tomorrow, Today
+🚀 Finance Management Tomorrow, Today
 </div>
 
 <h1 class="title">
-<span class="gradient-text">Grow Professionally</span> with the Best
+<span class="gradient-text">Finance Dashboard</span> - Manage Your  Finances
 </h1>
 
 <p class="paragraph">
-In a world filled with opportunities, having a mentor can make all the difference.
-Explore why people turn to this invaluable resource to unlock their potential.
+Complete financial management system for educational institutions. Track income, expenses, and generate reports with ease.
 </p>
 
 <form id="form" autocomplete="off">
@@ -74,7 +75,7 @@ placeholder=""
 required />
 
 <button type="submit" class="btn" aria-label="submit">
-<span>Subscribe</span>
+<span>Get Started</span>
 <ion-icon name="arrow-forward-outline"></ion-icon>
 </button>
 
@@ -149,40 +150,132 @@ alt="" />
 </div>
 </section>
 
-
-<section class="card-container" id="card-container">
-
-<div class="slider">
-
-
-
-
-
-
-</div>
-
-
-<ul class="control" id="custom-control">
-
-<li>
-<ion-icon name="caret-back-outline"></ion-icon>
-</li>
-
-<li>
-<ion-icon name="caret-forward-outline"></ion-icon>
-</li>
-
-</ul>
-
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 CMS. All Rights Reserved</p>
-            <p class="designer">Designed by <span> Siddhartha gupta</span></p>
+<!-- Finance Dashboard Section -->
+<section class="finance-dashboard" id="finance">
+    <div class="finance-container">
+        
+        <!-- Role Switcher -->
+        <div class="role-switcher">
+            <span>Current Role: </span>
+            <div class="role-toggle">
+                <button class="role-btn active" data-role="viewer">Viewer</button>
+                <button class="role-btn" data-role="admin">Admin</button>
+            </div>
         </div>
-    </footer>
 
+        <!-- Overview Cards -->
+        <div class="overview-cards">
+            <div class="card balance-card">
+                <div class="card-icon">💰</div>
+                <div class="card-content">
+                    <h3>Total Balance</h3>
+                    <p class="amount" id="totalBalance">₹0.00</p>
+                    <span class="trend positive">+12.5%</span>
+                </div>
+            </div>
+            <div class="card income-card">
+                <div class="card-icon">📈</div>
+                <div class="card-content">
+                    <h3>Total Income</h3>
+                    <p class="amount" id="totalIncome">₹0.00</p>
+                    <span class="trend positive">+8.2%</span>
+                </div>
+            </div>
+            <div class="card expense-card">
+                <div class="card-icon">📉</div>
+                <div class="card-content">
+                    <h3>Total Expenses</h3>
+                    <p class="amount" id="totalExpenses">₹0.00</p>
+                    <span class="trend negative">-3.4%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>Monthly Trend</h3>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color income"></div>
+                        <span>Income</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color expense"></div>
+                        <span>Expense</span>
+                    </div>
+                </div>
+                <canvas id="monthlyChart" width="400" height="200"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Category Breakdown</h3>
+                <canvas id="categoryChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Transaction Management -->
+        <div class="transaction-section">
+            <div class="transaction-header">
+                <h3>Transactions</h3>
+                <div class="transaction-controls">
+                    <input type="text" id="searchTransaction" placeholder="Search transactions...">
+                    <select id="filterType">
+                        <option value="all">All</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="date">Sort by Date</option>
+                        <option value="amount">Sort by Amount</option>
+                    </select>
+                    <button class="add-transaction-btn admin-only" id="addTransactionBtn">+ Add Transaction</button>
+                    <button class="export-btn" id="exportBtn">📊 Export</button>
+                </div>
+            </div>
+
+            <!-- Add Transaction Form (Hidden by default) -->
+            <div class="add-transaction-form" id="addTransactionForm" style="display: none;">
+                <h4>Add New Transaction</h4>
+                <form id="transactionForm">
+                    <div class="form-row">
+                        <input type="number" id="amount" placeholder="Amount" required>
+                        <input type="text" id="category" placeholder="Category" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="date" id="date" required>
+                        <select id="type" required>
+                            <option value="">Select Type</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" id="description" placeholder="Description (optional)">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Add Transaction</button>
+                        <button type="button" class="btn-secondary" id="cancelTransaction">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Transactions List -->
+            <div class="transactions-list" id="transactionsList">
+                <!-- Transactions will be dynamically added here -->
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- FOOTER SECTION -->
+<footer class="main-footer">
+    <div class="footer-bottom">
+        <div class="footer-content">
+            <p>&copy; 2026 Finance Dashboard. All Rights Reserved</p>
+            <p class="designer">Designed by <span>Siddhartha Gupta</span></p>
+        </div>
+    </div>
+</footer>
 
 <!-- JS CONNECT -->
 <script src="dash.js" defer></script>
