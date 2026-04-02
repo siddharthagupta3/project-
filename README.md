@@ -1,4 +1,4 @@
-# InterProject - CMS Dashboard
+# InterProject - Finance Dashboard
 
 A modern, clean, and professional Content Management System dashboard built with pure HTML, CSS, and JavaScript. No backend dependencies, no frameworks—just fast, responsive, and production-ready code.
 
@@ -33,7 +33,7 @@ A modern, clean, and professional Content Management System dashboard built with
 ```
 interproject/
 ├── index.html              # Landing page
-├── admin.html              # CMS admin page
+├── admin.html              # Finance admin page
 ├── admin.css               # Admin styling
 ├── admin.js                # Admin functionality
 ├── signup/
@@ -44,7 +44,7 @@ interproject/
 │   ├── dash.html           # Dashboard page
 │   ├── dash.css            # Dashboard styling
 │   └── dash.js             # Dashboard functionality
-├── cmsteam/                # Team management
+├── team/                   # Team management
 ├── legal/                  # Legal pages
 ├── video/                  # Video resources
 └── README.md              # This file

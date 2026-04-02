@@ -103,12 +103,12 @@ function getReply(text) {
   
   // Greetings
   if (lowerText.match(/hello|hi|hey|greetings/)) {
-    return '👋 Hello! Welcome to CMS. How can I help you today?';
+    return '👋 Hello! Welcome to Finance. How can I help you today?';
   }
   
   // Registration & Account
   if (lowerText.match(/register|signup|create account|new account|join/)) {
-    return '📝 To create an account, click "Get Started" on the top right. You\'ll fill in your details and get instant access to our CMS platform!';
+    return '📝 To create an account, click "Get Started" on the top right. You\'ll fill in your details and get instant access to our Finance platform!';
   }
   
   // Login & Access
