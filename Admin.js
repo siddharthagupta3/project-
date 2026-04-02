@@ -199,6 +199,34 @@ function startVoice() {
   };
 }
 
+// Handle Contact Form Submission
+function handleContactForm() {
+  const name = document.getElementById('contact-name')?.value;
+  const email = document.getElementById('contact-email')?.value;
+  const subject = document.getElementById('contact-subject')?.value;
+  const message = document.getElementById('contact-message')?.value;
+  
+  if (name && email && subject && message) {
+    // Store in localStorage for demo purposes
+    const contact = {
+      name,
+      email,
+      subject,
+      message,
+      timestamp: new Date().toLocaleString()
+    };
+    
+    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contacts.push(contact);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    
+    showToast('Thank you! We received your message. We will get back to you within 24 hours.');
+    
+    // Reset form
+    document.querySelector('.contact-form').reset();
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const chatInput = document.querySelector('#chatInput');
   if (chatInput) {

@@ -277,16 +277,80 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
-        <div class="contact-wrapper">
-            <h2 class="contact-title">Get in Touch</h2>
-            <p class="contact-desc">Have questions? We'd love to hear from you. Send us a message.</p>
-            <form class="contact-form" onsubmit="event.preventDefault(); showToast('Message sent successfully!');">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h2 class="contact-title">Get in Touch</h2>
+                <p class="contact-subtitle">Have questions? Our team is here to help. Reach out to us today.</p>
+            </div>
+            
+            <div class="contact-content">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Address</h3>
+                            <p>123 Finance Building<br>New York, NY 10001</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Phone</h3>
+                            <p>+1 (555) 123-4567<br>Mon-Fri 9AM-6PM EST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h3>Email</h3>
+                            <p>support@finance.com<br>response within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <form class="contact-form" onsubmit="event.preventDefault(); handleContactForm();">
+                    <div class="form-group">
+                        <label for="contact-name">Full Name</label>
+                        <input type="text" id="contact-name" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" placeholder="your@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-subject">Subject</label>
+                        <input type="text" id="contact-subject" placeholder="What is this about?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" placeholder="Tell us more about your inquiry..." rows="6" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Message</button>
+                    <p class="form-note">We'll get back to you as soon as possible</p>
+                </form>
+            </div>
         </div>
     </section>
 
