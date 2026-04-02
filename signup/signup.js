@@ -50,8 +50,17 @@ function handleLogin(e) {
     localStorage.setItem('userEmail', email);
   }
   
-  showSuccess('✅ Login successful! Welcome back.');
+  // Set user logged in flag
+  localStorage.setItem('isLoggedIn', 'true');
+  localStorage.setItem('currentUser', email);
+  
+  showSuccess('✅ Login successful! Redirecting to dashboard...');
   document.getElementById('loginForm').reset();
+  
+  // Redirect to dashboard after 1.5 seconds
+  setTimeout(() => {
+    window.location.href = '../dashboard/dash.html';
+  }, 1500);
 }
 
 function handleRegister(e) {
@@ -71,9 +80,18 @@ function handleRegister(e) {
   if (pass !== confirm) return showError('Passwords do not match');
   if (!agree) return showError('Please agree to terms');
   
-  showSuccess('✅ Account created! Please login.');
+  // Set user logged in flag
+  localStorage.setItem('isLoggedIn', 'true');
+  localStorage.setItem('currentUser', email);
+  localStorage.setItem('userFirstName', first);
+  
+  showSuccess('✅ Account created! Redirecting to dashboard...');
   document.getElementById('registerForm').reset();
-  setTimeout(showLoginPanel, 2000);
+  
+  // Redirect to dashboard after 1.5 seconds
+  setTimeout(() => {
+    window.location.href = '../dashboard/dash.html';
+  }, 1500);
 }
 
 function handleSocialLogin(e) {
