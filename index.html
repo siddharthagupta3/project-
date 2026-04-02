@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS - Future of College Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-orb orb1"></div>
+        <div class="floating-orb orb2"></div>
+        <div class="floating-orb orb3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                CMS
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="signup/signup.html" class="nav-cta" onclick="showToast('Welcome to CMS!')">Get Started</a>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">🚀 Innovating Tomorrow, Today</span>
+                <h1>Shape the Future with <span class="gradient-text">College Management System</span></h1>
+                <p>Experience the convergence of AI, Cloud, and Quantum. Transform your management with solutions that transcend boundaries.</p>
+                <div class="hero-buttons">
+                    <a href="signup/signup.html" class="btn-primary" onclick="showToast('Starting your journey!')">
+                        Start Free Account
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#features" class="btn-secondary" onclick="showToast('Playing demo video')">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="glass-card">
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon icon-ai">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">AI</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Machine Learning</div>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon icon-cloud">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Cloud</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Scalable</div>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon icon-quantum">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Quantum</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Next Gen</div>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon icon-blockchain">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Blockchain</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Secure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Powerful Features</h2>
+                <p>Everything you need to manage your college efficiently</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Student Management</h3>
+                    <p>Complete student lifecycle management from admission to graduation with real-time tracking</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Course Management</h3>
+                    <p>Create, manage, and organize courses with detailed curriculum planning and tracking</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Attendance Tracking</h3>
+                    <p>Automated attendance system with real-time reports and analytics</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Performance Analytics</h3>
+                    <p>Advanced analytics dashboard with detailed performance insights and metrics</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Communication Hub</h3>
+                    <p>Unified communication platform for announcements, messages, and notifications</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Security & Privacy</h3>
+                    <p>Enterprise-grade security with data encryption and role-based access control</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Users Say</h2>
+                <p>Hear from institutions already transforming with our platform</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-content">
+                        "CMS has revolutionized our college management. The system is intuitive, powerful, and has saved us countless hours."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DK</div>
+                        <div class="author-info">
+                            <h4>Dr. Kumar</h4>
+                            <p>Principal, Tech College</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-content">
+                        "Outstanding support and continuous updates. Our college has seen a 40% improvement in administrative efficiency."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-info">
+                            <h4>Prof. Singh</h4>
+                            <p>Registrar, Excellence Institute</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-content">
+                        "Best investment we made. Students love the portal, faculty finds it easy to use, and admins have full control."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PJ</div>
+                        <div class="author-info">
+                            <h4>Priya Joshi</h4>
+                            <p>Dean, Modern University</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Transform Your College?</h2>
+            <p>Join thousands of institutions already using CMS to manage their operations efficiently</p>
+            <div class="hero-buttons" style="justify-content: center; margin-top: 2rem;">
+                <a href="signup/signup.html" class="btn-primary">Start Free Trial</a>
+                <a href="#contact" class="btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-wrapper">
+            <h2 class="about-title">About CMS</h2>
+            <p class="about-desc">College Management System is a comprehensive solution designed to streamline academic and administrative operations in educational institutions.</p>
+            <div class="about-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Web Based</h3>
+                    <p>Access from anywhere, anytime with any device</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Fully responsive design for mobile devices</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>Easy Setup</h3>
+                    <p>Quick installation and configuration process</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="contact-wrapper">
+            <h2 class="contact-title">Get in Touch</h2>
+            <p class="contact-desc">Have questions? We'd love to hear from you. Send us a message.</p>
+            <form class="contact-form" onsubmit="event.preventDefault(); showToast('Message sent successfully!');">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#security">Security</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#status">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span class="current-year">2024</span> CMS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-toggle" onclick="toggleChat()" title="Chat with us">
+        💬
+    </div>
+
+    <div class="chat-box" id="chatBox" style="display: none;">
+        <div class="chat-header">
+            <span>CMS Chat Bot</span>
+            <button onclick="toggleChat()" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">✕</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="msg bot">
+                <p>Hello! 👋 Welcome to CMS. How can I help you today?</p>
+                <div class="time">Just now</div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button onclick="startVoice()" title="Voice Input">🎤</button>
+            <button onclick="sendMessage()" title="Send">Send</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
