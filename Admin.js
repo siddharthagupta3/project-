@@ -133,7 +133,7 @@ function getReply(text) {
   
   // Contact & Support
   if (lowerText.match(/contact|email|phone|support|help|reach out|question/)) {
-    return '📞 You can reach our support team via the Contact form below, or email us at support@finance.com. We're here 24/7!';
+    return "📞 You can reach our support team via the Contact form below, or email us at support@finance.com. We're here 24/7!";
   }
   
   // Chat capabilities
@@ -163,7 +163,7 @@ function getReply(text) {
   
   // How are you
   if (lowerText.match(/how are you|how's it going|how do you feel/)) {
-    return '😄 I'm doing great, thanks for asking! Ready to help you succeed with our Finance platform!';
+    return "😄 I'm doing great, thanks for asking! Ready to help you succeed with our Finance platform!";
   }
   
   // Tech questions
