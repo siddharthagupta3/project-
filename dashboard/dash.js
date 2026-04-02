@@ -25,9 +25,9 @@ const app = {
     
     addSample() {
         this.transactions = [
-            { id: 1, amount: 50000, category: 'Tuition Fees', date: '2024-01-15', type: 'income', description: 'Student tuition payment' },
+            { id: 1, amount: 50000, category: 'Customer Deposits', date: '2024-01-15', type: 'income', description: 'Customer deposit transaction' },
             { id: 2, amount: 15000, category: 'Salaries', date: '2024-01-10', type: 'expense', description: 'Staff salaries' },
-            { id: 3, amount: 25000, category: 'Library Fees', date: '2024-01-20', type: 'income', description: 'Library membership fees' }
+            { id: 3, amount: 25000, category: 'Account Fees', date: '2024-01-20', type: 'income', description: 'Account service charges' }
         ];
         this.saveStorage();
     },

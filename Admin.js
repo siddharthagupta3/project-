@@ -143,12 +143,12 @@ function getReply(text) {
   
   // Testimonials
   if (lowerText.match(/review|testimonial|feedback|rating|opinion/)) {
-    return '⭐ Check our Testimonials section! See what students, teachers, and administrators say about their CMS experience.';
+    return '⭐ Check our Testimonials section! See what bank managers, staff, and customers say about their Finance platform experience.';
   }
   
   // Pricing
   if (lowerText.match(/price|cost|plan|payment|subscription|free/)) {
-    return '💵 Visit our Pricing section for detailed plans. We offer flexible options suitable for institutions of all sizes!';
+    return '💵 Visit our Pricing section for detailed plans. We offer flexible options suitable for banks of all sizes!';
   }
   
   // Thanks & Politeness
