@@ -1,6 +1,6 @@
 # InterProject - Finance Dashboard
 
-A modern, clean, and professional Content Management System dashboard built with pure HTML, CSS, and JavaScript. No backend dependencies, no frameworks—just fast, responsive, and production-ready code.
+A modern, clean, and professional Finance Management System dashboard built with pure HTML, CSS, and JavaScript. No backend dependencies, no frameworks—just fast, responsive, and production-ready code.
 
 ## 🎯 Features
 
@@ -8,10 +8,9 @@ A modern, clean, and professional Content Management System dashboard built with
 - 🚀 Modern hero section with gradient text
 - 📧 Email subscription form with real-time validation
 - ✨ Smooth scroll animations (ScrollReveal)
-- 🎨 3D card tilt effects (VanillaTilt)
 - 📱 Fully responsive design
 - 🎤 Web Speech API voice input support
-- 💬 AI chatbot with 13+ response categories
+- 💬 Interactive chatbot with 13+ response categories (pure JavaScript)
 
 ### Authentication (signup.html)
 - 🔐 Dual-panel login/register interface
@@ -76,7 +75,6 @@ interproject/
   - Font Awesome 6.5.0 - Icons
   - Ionicons 7.1.0 - Icon library
   - ScrollReveal.js - Scroll animations
-  - VanillaTilt.js - 3D tilt effects
 
 ## 🎨 Key Features by File
 
@@ -85,7 +83,6 @@ interproject/
 - Form validation with email regex
 - Typing animation for placeholders
 - Scroll reveal effects
-- VanillaTilt 3D effects
 - Notification system
 - Mobile menu toggle
 
@@ -118,7 +115,7 @@ interproject/
 ✅ **Fully Responsive** - Mobile, tablet, desktop
 ✅ **Interview Ready** - Well-structured and documented
 ✅ **No Frameworks** - Vanilla JavaScript only
-✅ **Smooth Animations** - ScrollReveal & VanillaTilt
+✅ **Smooth Animations** - ScrollReveal scroll effects
 ✅ **Form Validation** - Email regex, phone, passwords
 ✅ **localStorage** - Client-side data persistence
 ✅ **Web Speech API** - Voice input support

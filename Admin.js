@@ -118,7 +118,7 @@ function getReply(text) {
   
   // Features & Capabilities
   if (lowerText.match(/features|what can i do|capabilities|services|tools/)) {
-    return '⚡ CMS offers: College Management, Finance Dashboard, Transaction Tracking, Real-time Analytics, User Authentication, and AI-chat support. Explore our Features section above!';
+    return '⚡ Finance offers: Transaction Tracking, Financial Analytics, Account Management, User Authentication, and chat support. Explore our Features section above!';
   }
   
   // Finance Dashboard
@@ -127,8 +127,8 @@ function getReply(text) {
   }
   
   // About Us
-  if (lowerText.match(/about|who are you|cms|company|what is this/)) {
-    return '🎓 CMS is a comprehensive College Management System designed to streamline college operations, manage finances, and enhance administrative efficiency.';
+  if (lowerText.match(/about|who are you|finance|company|what is this/)) {
+    return '🎓 Finance is a comprehensive Finance Management System designed to streamline financial operations, manage transactions, and enhance administrative efficiency.';
   }
   
   // Contact & Support
