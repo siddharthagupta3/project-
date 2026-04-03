@@ -468,7 +468,10 @@ function drawCategoryChart() {
 // Navigation
 function toggleMenu() {
     const menu = document.getElementById('menu');
+    const hamburger = document.querySelector('.hamburger');
+    
     if (menu) menu.classList.toggle('active');
+    if (hamburger) hamburger.classList.toggle('active');
 }
 
 function setupNavigation() {
@@ -597,12 +600,50 @@ function initDashboard() {
     updateDashboard();
     renderTransactions();
     initCharts();
-    
+
     // Restore UI state
     document.querySelectorAll('.role-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.role === app.user);
     });
     document.body.classList.toggle('admin-mode', app.user === 'admin');
+
+    // Start grid animation
+    startGridAnimation();
+}
+
+// Grid Animation Sequence
+function startGridAnimation() {
+    // Define the exact sequence as per requirements
+    const sequence = [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7];
+    const delay = 250; // 0.25s delay between items
+    const totalCycleTime = sequence.length * delay + 800; // Add animation duration
+    const repeatDelay = 1500; // 1.5 seconds delay before repeat
+    
+    function runAnimationCycle() {
+        // Get all items
+        const items = document.querySelectorAll('.item');
+        
+        // Reset all items first
+        items.forEach(item => {
+            item.classList.remove('animate');
+        });
+        
+        // Animate items in sequence
+        sequence.forEach((itemNumber, index) => {
+            setTimeout(() => {
+                const item = document.querySelector(`.item:nth-child(${itemNumber})`);
+                if (item) {
+                    item.classList.add('animate');
+                }
+            }, index * delay);
+        });
+        
+        // Schedule next cycle
+        setTimeout(runAnimationCycle, totalCycleTime + repeatDelay);
+    }
+    
+    // Start the first cycle
+    runAnimationCycle();
 }
 
 // Start App

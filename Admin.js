@@ -1,237 +1,318 @@
-﻿// Landing Page
+// ================= LOADER ================= 
 window.addEventListener('load', () => {
-  setTimeout(() => document.querySelector('.loader')?.classList.add('hidden'), 1000);
-});
-
-window.addEventListener('scroll', () => {
-  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  document.querySelector('.scroll-progress').style.width = (window.scrollY / height * 100) + '%';
-  document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 50);
-  
-  const hero = document.querySelector('.hero-content');
-  if (hero) {
-    hero.style.transform = `translateY(${window.scrollY * 0.5}px)`;
-    hero.style.opacity = Math.max(1 - window.scrollY / 1000, 0.2);
+  const loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.display = 'none';
   }
 });
 
-// Smooth scroll navigation
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelector(link.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-  });
+// ================= SCROLL PROGRESS BAR =================
+window.addEventListener('scroll', () => {
+  const scrollProgress = document.getElementById('scrollProgress');
+  const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  scrollProgress.style.width = scrollPercent + '%';
 });
 
-// Counter animation
-function animateCounter(el, target, duration = 2000) {
-  let current = 0;
-  const step = target / (duration / 16);
-  const timer = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.textContent = Math.floor(current);
-    if (current >= target) clearInterval(timer);
-  }, 16);
-}
+// ================= NAVBAR SCROLL EFFECT =================
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
 
-// Scroll reveal observer
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      if (entry.target.classList.contains('stat-number')) {
-        animateCounter(entry.target, parseInt(entry.target.textContent));
-      }
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
+// ================= SMOOTH SCROLLING FOR NAVIGATION LINKS =================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'auto'
+      });
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
-
-document.querySelectorAll('.stat-number, .feature-card').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'all 0.6s ease';
-  observer.observe(el);
 });
 
-// Card hover effects
-document.querySelectorAll('.feature-card, .testimonial-card').forEach(card => {
-  card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-8px) scale(1.02)');
-  card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0) scale(1)');
+// ================= ANIMATED COUNTER FOR STATS =================
+// Animation disabled - display values directly
+const animateCounter = (element) => {
+  const target = parseFloat(element.getAttribute('data-target'));
+  element.textContent = target + (element.textContent.includes('%') ? '%' : '+');
+};
+
+// ================= INTERSECTION OBSERVER FOR STATS ANIMATION =================
+// Animation disabled - show stats immediately
+const statsSection = document.querySelector('.stats');
+if (statsSection) {
+  const counters = statsSection.querySelectorAll('[data-target]');
+  counters.forEach(counter => animateCounter(counter));
+}
+
+// ================= TOAST NOTIFICATION =================
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+  toastMessage.textContent = message;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// ================= MOBILE MENU TOGGLE =================
+function toggleMobileMenu() {
+  const navLinks = document.querySelector('.nav-links');
+  navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+  navLinks.style.position = 'absolute';
+  navLinks.style.top = '100%';
+  navLinks.style.left = '0';
+  navLinks.style.right = '0';
+  navLinks.style.flexDirection = 'column';
+  navLinks.style.background = 'rgba(10, 10, 15, 0.95)';
+  navLinks.style.padding = '1rem';
+  navLinks.style.borderTop = '1px solid var(--glass-border)';
+}
+
+// ================= PARALLAX EFFECT FOR HERO SECTION =================
+// Animation disabled
+// window.addEventListener('scroll', () => {
+//   const scrolled = window.pageYOffset;
+//   const heroContent = document.querySelector('.hero-content');
+//   if (heroContent) {
+//     heroContent.style.transform = 'translateY(' + scrolled * 0.5 + 'px)';
+//   }
+// });
+
+// ================= ADD HOVER EFFECT TO CARDS =================
+// Animation disabled
+// document.querySelectorAll('.feature-card, .testimonial-card').forEach(card => {
+//   card.addEventListener('mouseenter', function() {
+//     this.style.transform = 'translateY(-5px) scale(1.02)';
+//   });
+//   
+//   card.addEventListener('mouseleave', function() {
+//     this.style.transform = 'translateY(0) scale(1)';
+//   });
+// });
+
+// ================= DYNAMIC YEAR IN FOOTER =================
+document.addEventListener('DOMContentLoaded', () => {
+  const year = new Date().getFullYear();
+  const footerYear = document.querySelector('.footer-bottom p');
+  if (footerYear) {
+    footerYear.textContent = '© ' + year + ' Finance. All rights reserved.';
+  }
 });
 
-// Mobile menu toggle
-document.querySelector('.mobile-menu-toggle')?.addEventListener('click', () => {
-  const nav = document.querySelector('.nav-links');
-  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-});
+// ================= FINANCE AI CHATBOT ================= 
 
-// Update footer year
-document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
-
-// Chat toggle
-document.querySelector('.chat-toggle')?.addEventListener('click', () => {
-  const box = document.querySelector('.chat-box');
-  if (box) box.style.display = box.style.display === 'none' ? 'flex' : 'none';
-});
-
-// Add message
-function addMessage(text, isUser) {
-  const msg = document.createElement('div');
-  msg.className = isUser ? 'msg user' : 'msg bot';
-  msg.innerHTML = `<p>${text}</p><div class="time">Just now</div>`;
-  const body = document.querySelector('.chat-body');
-  if (body) {
-    body.appendChild(msg);
-    body.scrollTop = body.scrollHeight;
+// ================= TOGGLE ================= 
+function toggleChat() {
+  const box = document.getElementById("chatBox");
+  box.style.display = box.style.display === "flex" ? "none" : "flex";
+  if (box.style.display === "flex" && !localStorage.getItem("greeted")) {
+    addBotMessage("Hello 👋 Welcome to Finance AI Assistant!");
+    localStorage.setItem("greeted", "yes");
   }
 }
 
-// Send message
-function sendMessage() {
-  const input = document.querySelector('#chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  
-  addMessage(text, true);
-  input.value = '';
-  setTimeout(() => addMessage(getReply(text), false), 500);
+// ================= THEME ================= 
+let darkMode = true;
+function toggleTheme() {
+  const box = document.getElementById("chatBox");
+  darkMode = !darkMode;
+  if (darkMode) {
+    box.style.background = "rgba(15,15,30,0.98)";
+  } else {
+    box.style.background = "#ffffff";
+  }
 }
+
+// ================= CLEAR ================= 
+function clearChat() {
+  document.getElementById("chatBody").innerHTML = "";
+}
+
+// ================= TIME ================= 
+function getTime() {
+  const d = new Date();
+  return d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0');
+}
+
+// ================= 40+ REPLIES - FINANCE SYSTEM ================= 
+const replies = {
+  "hello": "Hello 👋 Finance Management System mein aapka welcome hai!",
+  "hi": "Hi 🚀 How can I help with your finances?",
+  "portfolio": "Portfolio management dashboard se manage karein.",
+  "investment": "Investment tracking tools available hain.",
+  "returns": "Returns analytics real-time dikhega.",
+  "risk": "Risk analysis aapke liye calculate karega.",
+  "finance": "Ye Finance Management System hai.",
+  "account": "Account details dashboard mein visible hain.",
+  "balance": "Balance check account section se karein.",
+  "transaction": "Transaction history available hai.",
+  "transfer": "Transfer option banking section mein hai.",
+  "payment": "Payment options available hain.",
+  "loan": "Loan details finance section mein milenge.",
+  "credit": "Credit score profile mein dikhega.",
+  "debit": "Debit details transaction history mein hai.",
+  "savings": "Savings goals set karein dashboard se.",
+  "investment plan": "Investment planning tools available hain.",
+  "analytics": "Analytics reports real-time generate hote hain.",
+  "report": "Reports download ke liye ready hain.",
+  "budget": "Budget planning feature available hai.",
+  "expense": "Expense tracking automated hai.",
+  "income": "Income management easy hai.",
+  "tax": "Tax calculation automatic hota hai.",
+  "support": "Support team 24/7 available hai.",
+  "help": "Help section mein guidance milegi.",
+  "contact": "Contact us page se reach out karein.",
+  "thanks": "Welcome! 😊",
+  "bye": "Bye! 👋 Good luck with finances!",
+  "what is finance": "Finance management system for portfolio handling.",
+  "your name": "I'm Finance AI Assistant 🤖",
+  "who made you": "Developed by Siddhartha Gupta 👨‍💻",
+  "how to start": "Dashboard se start karein.",
+  "features": "Analytics, Reports, Tracking - sab available hai.",
+  "security": "256-bit encryption secure hai.",
+  "privacy": "Privacy policy available hai.",
+  "terms": "Terms & conditions accept karein.",
+  "cost": "Pricing page check karein details ke liye.",
+  "free trial": "Free trial 30 days available hai.",
+  "subscription": "Subscription plans ke liye pricing dekhen.",
+  "mobile app": "Mobile app soon launch hoga.",
+  "api": "API documentation available hai.",
+  "integration": "Third-party integration support hai.",
+  "export": "Export reports in PDF/Excel format.",
+  "dashboard": "Dashboard ke through sab kuch manage karein.",
+  "widget": "Widgets customize karke use karein.",
+  "notification": "Notifications real-time milenge.",
+  "alert": "Alerts important updates ke liye hain.",
+  "default": [
+    "Aap mujhse finance related kuch bhi puch sakte hain 😊",
+    "Portfolio, investment ya transaction ke baare mein poochiye.",
+    "Finance management ke features puchiye.",
+    "Main aapki financial planning mein madad kar sakta hoon.",
+    "Dashboard explore karke dekhiye features.",
+    "Kya aapko analytics report chahiye?",
+    "Investment tracking mein help chahiye?",
+    "Budget planning start karna chahte hain?",
+    "Main humesha aapki madad ke liye ready hoon 🚀"
+  ]
+};
+
+let lastTopic = null;
 
 function getReply(text) {
-  const lowerText = text.toLowerCase();
+  text = text.toLowerCase();
   
-  // Greetings
-  if (lowerText.match(/hello|hi|hey|greetings/)) {
-    return '👋 Hello! Welcome to Finance. How can I help you today?';
+  for (let key in replies) {
+    if (key !== "default" && text.includes(key)) {
+      lastTopic = key;
+      return replies[key];
+    }
   }
-  
-  // Registration & Account
-  if (lowerText.match(/register|signup|create account|new account|join/)) {
-    return '📝 To create an account, click "Get Started" on the top right. You\'ll fill in your details and get instant access to our Finance platform!';
-  }
-  
-  // Login & Access
-  if (lowerText.match(/login|sign in|password|forgot password/)) {
-    return '🔐 Click "Get Started" and switch to the login panel. If you forgot your password, use the "Forgot Password" link on the login form.';
-  }
-  
-  // Features & Capabilities
-  if (lowerText.match(/features|what can i do|capabilities|services|tools/)) {
-    return '⚡ Finance offers: Transaction Tracking, Financial Analytics, Account Management, User Authentication, and chat support. Explore our Features section above!';
-  }
-  
-  // Finance Dashboard
-  if (lowerText.match(/finance|dashboard|transaction|payment|expense|income|budget/)) {
-    return '💰 Our Finance Dashboard tracks all transactions! You can add income/expenses, filter by type, search transactions, and view real-time balance updates.';
-  }
-  
-  // About Us
-  if (lowerText.match(/about|who are you|finance|company|what is this/)) {
-    return '🎓 Finance is a comprehensive Finance Management System designed to streamline financial operations, manage transactions, and enhance administrative efficiency.';
-  }
-  
-  // Contact & Support
-  if (lowerText.match(/contact|email|phone|support|help|reach out|question/)) {
-    return "📞 You can reach our support team via the Contact form below, or email us at support@finance.com. We're here 24/7!";
-  }
-  
-  // Chat capabilities
-  if (lowerText.match(/what can you do|chat|help me|assistance/)) {
-    return '🤖 I can help you with: Registration info, Login details, Feature explanations, Finance dashboard guidance, Contact support, and answer general questions!';
-  }
-  
-  // Testimonials
-  if (lowerText.match(/review|testimonial|feedback|rating|opinion/)) {
-    return '⭐ Check our Testimonials section! See what bank managers, staff, and customers say about their Finance platform experience.';
-  }
-  
-  // Pricing
-  if (lowerText.match(/price|cost|plan|payment|subscription|free/)) {
-    return '💵 Visit our Pricing section for detailed plans. We offer flexible options suitable for banks of all sizes!';
-  }
-  
-  // Thanks & Politeness
-  if (lowerText.match(/thanks|thank you|appreciate|🙏/)) {
-    return '😊 You\'re welcome! Happy to help. Is there anything else you\'d like to know?';
-  }
-  
-  // Goodbye
-  if (lowerText.match(/bye|goodbye|see you|farewell|exit|close/)) {
-    return '👋 Thanks for chatting with us! Feel free to reach out anytime. Have a great day!';
-  }
-  
-  // How are you
-  if (lowerText.match(/how are you|how's it going|how do you feel/)) {
-    return "😄 I'm doing great, thanks for asking! Ready to help you succeed with our Finance platform!";
-  }
-  
-  // Tech questions
-  if (lowerText.match(/voice|mic|record|audio|speak/)) {
-    return '🎤 Click the microphone button to use voice input! Speak clearly, and I\'ll convert it to text. It supports multiple languages!';
-  }
-  
-  // Default response with smart suggestions
-  const suggestions = [
-    'Try asking about "features"',
-    'Ask me about "registration"',
-    'Tell me about "finance dashboard"',
-    'Ask "how to login"',
-    'Type "contact" for support'
-  ];
-  const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-  
-  return `🤔 I didn't quite understand that. ${randomSuggestion}, or feel free to ask something else!`;
+
+  const arr = replies.default;
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// ================= MESSAGE ================= 
+function addUserMessage(text) {
+  const msg = document.createElement("div");
+  msg.className = "msg user";
+  msg.innerHTML = text +
+    "<div class='time'>" + getTime() +
+    "<span class='tick' id='tick'>✔✔</span></div>";
+  document.getElementById("chatBody").appendChild(msg);
+  scrollBottom();
+
+  setTimeout(() => {
+    document.getElementById("tick").style.color = "skyblue";
+  }, 1000);
+}
+
+function addBotMessage(text) {
+  const msg = document.createElement("div");
+  msg.className = "msg bot";
+  msg.innerHTML = text + "<div class='time'>" + getTime() + "</div>";
+  document.getElementById("chatBody").appendChild(msg);
+  scrollBottom();
+}
+
+// ================= SCROLL ================= 
+function scrollBottom() {
+  const body = document.getElementById("chatBody");
+  body.scrollTop = body.scrollHeight;
+}
+
+// ================= SEND ================= 
+function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+  if (!text) return;
+  addUserMessage(text);
+  input.value = "";
+  setTimeout(() => {
+    addBotMessage(getReply(text));
+  }, 800);
+}
+
+// ================= ENTER KEY ================= 
+document.getElementById("chatInput")
+  .addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+  });
+
+// ================= VOICE ================= 
 function startVoice() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    alert('Voice recognition not supported in your browser');
+  if (!('webkitSpeechRecognition' in window)) {
+    alert("Voice not supported in this browser");
     return;
   }
-  
-  const recognition = new SpeechRecognition();
-  recognition.lang = 'en-IN';
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = "en-IN";
   recognition.start();
-  recognition.onresult = (e) => {
-    document.querySelector('.chat-input').value = e.results[0][0].transcript;
+  recognition.onresult = function(event) {
+    document.getElementById("chatInput").value =
+      event.results[0][0].transcript;
+    sendMessage();
   };
 }
 
-// Handle Contact Form Submission
-function handleContactForm() {
-  const name = document.getElementById('contact-name')?.value;
-  const email = document.getElementById('contact-email')?.value;
-  const subject = document.getElementById('contact-subject')?.value;
-  const message = document.getElementById('contact-message')?.value;
-  
-  if (name && email && subject && message) {
-    // Store in localStorage for demo purposes
-    const contact = {
-      name,
-      email,
-      subject,
-      message,
-      timestamp: new Date().toLocaleString()
-    };
-    
-    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-    contacts.push(contact);
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-    
-    showToast('Thank you! We received your message. We will get back to you within 24 hours.');
-    
-    // Reset form
-    document.querySelector('.contact-form').reset();
+// ================= TYPING EFFECT ================= 
+const text = "Finance Management System";
+let i = 0;
+let deleting = false;
+
+function type() {
+  let el = document.getElementById("typing-text");
+
+  if (!el) return;
+
+  if (!deleting) {
+    el.innerHTML = text.substring(0, i);
+    i++;
+
+    if (i > text.length) {
+      deleting = true;
+      setTimeout(type, 1200);
+      return;
+    }
+  } else {
+    el.innerHTML = text.substring(0, i);
+    i--;
+
+    if (i < 0) {
+      deleting = false;
+    }
   }
+
+  setTimeout(type, 70);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const chatInput = document.querySelector('#chatInput');
-  if (chatInput) {
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
-  }
-});
+type();

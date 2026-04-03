@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance - Future of Financial Management</title>
+    <title> Finance - Future of Financial Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="admin.css">
+
 </head>
 <body>
     <!-- Loading Screen -->
@@ -27,7 +28,7 @@
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">
-                <i class="fas fa-wallet"></i>
+                <i class="fas fa-building"></i>
                 Finance
             </div>
             <ul class="nav-links">
@@ -36,7 +37,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="signup/signup.html" class="nav-cta" onclick="showToast('Welcome to Finance!')">Get Started</a>
+            <a href="signup/signup.html" class="nav-cta">Get Started</a>
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <span></span>
                 <span></span>
@@ -49,15 +50,15 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text">
-                <span class="hero-badge">🚀 Innovating Tomorrow, Today</span>
-                <h1>Shape the Future with <span class="gradient-text">Finance Management System</span></h1>
-                <p>Experience the convergence of modern finance, cloud technology, and analytics. Transform your financial management with solutions that transcend boundaries.</p></p>
+                <span class="hero-badge">🚀 Finance Tomorrow, Today</span>
+                <h1 class="hero-title">Shape the Future with <br><span class="typing-wrapper"><span id="typing-text"></span></span></h1>
+                <p>Experience the convergence of AI,  Transform your management with solutions that transcend boundaries.</p>
                 <div class="hero-buttons">
-                    <a href="signup/signup.html" class="btn-primary" onclick="showToast('Starting your journey!')">
-                        Start Free Account
+                    <a href="signup/signup.html" class="btn-primary">
+                        Start Free account
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="#features" class="btn-secondary" onclick="showToast('Playing demo video')">
+                    <a href="video/demo.mp4" class="btn-secondary" onclick="showToast('Playing demo video')">
                         <i class="fas fa-play"></i>
                         Watch Demo
                     </a>
@@ -65,14 +66,15 @@
             </div>
             <div class="hero-visual">
                 <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem;">Core Technologies</h3>
                     <div class="tech-grid">
                         <div class="tech-item">
                             <div class="tech-icon icon-ai">
                                 <i class="fas fa-brain"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 600;">AI</div>
-                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Machine Learning</div>
+                                <div style="font-weight: 600;">AI ChatBoat</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> AI messaging platform</div>
                             </div>
                         </div>
                         <div class="tech-item">
@@ -80,8 +82,8 @@
                                 <i class="fas fa-cloud"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 600;">Cloud</div>
-                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Scalable</div>
+                                <div style="font-weight: 600;">Mind Game</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> Play interactive games</div>
                             </div>
                         </div>
                         <div class="tech-item">
@@ -89,8 +91,8 @@
                                 <i class="fas fa-atom"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 600;">Quantum</div>
-                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Next Gen</div>
+                                <div style="font-weight: 600;">News</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Upteds with latest news</div>
                             </div>
                         </div>
                         <div class="tech-item">
@@ -98,8 +100,8 @@
                                 <i class="fas fa-link"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 600;">Blockchain</div>
-                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Secure</div>
+                                <div style="font-weight: 600;">Smart Contracts</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Automated contract execution</div>
                             </div>
                         </div>
                     </div>
@@ -112,78 +114,64 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <h2>Powerful Features</h2>
-                <p>Everything you need to manage your bank efficiently</p>
+                <h2>Revolutionary Features</h2>
+                <p>Discover the cutting-edge capabilities that set us apart</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-exchange-alt"></i>
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <h3>Transaction Management</h3>
-                    <p>Add, track, and manage all transactions seamlessly. Real-time balance updates with detailed transaction history and descriptions.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <h3>Financial Dashboard</h3>
-                    <p>Interactive dashboard showing total income, expenses, and balance. Visual overview of your financial data at a glance.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-filter"></i>
-                    </div>
-                    <h3>Search & Filter</h3>
-                    <p>Powerful search functionality to find transactions by category or description. Filter by transaction type (income/expense).</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h3>Role-Based Access</h3>
-                    <p>Switch between Admin and Viewer roles. Admin can manage and delete transactions. Viewer has read-only access to data.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                    <h3>Real-Time Sync</h3>
-                    <p>Data automatically syncs to browser storage. Access your financial information anytime, anywhere without internet dependency.</p>
+                    <h3>Autonomous AI</h3>
+                    <p>Self-learning algorithms that adapt and evolve with your data, providing insights that grow smarter over time.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Secure & Fast</h3>
-                    <p>Zero backend required - all data stays on your device. Instant load times and maximum privacy with frontend-only processing.</p>
+                    <h3>Mind Game</h3>
+                    <p>Interactive games designed to enhance cognitive skills and mental agility.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Smart Notifications</h3>
-                    <p>Get instant feedback on every action. Success messages for transaction updates and helpful error alerts for guidance.</p>
+                    <h3>News</h3>
+                    <p>Stay updated with the latest news and trends in technology and innovation.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                        <i class="fas fa-globe"></i>
                     </div>
-                    <h3>Fully Responsive</h3>
-                    <p>Perfect experience on mobile, tablet, and desktop. Optimized interface for all screen sizes with smooth animations.</p>
+                    <h3>india reach</h3>
+                    <p>Our platform is accessible across India with localized content and support.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Visualize complex data streams with interactive dashboards and predictive modeling.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer First</h3>
+                    <p>Comprehensive APIs, SDKs, and documentation to accelerate your development workflow.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    
+
 
     <!-- Testimonials Section -->
     <section class="testimonials">
         <div class="container">
             <div class="section-header">
-                <h2>What Users Say</h2>
-                <p>Hear from banks already transforming with our platform</p>
+                <h2>Trusted by Finance Professionals in India</h2>
+                <p>See what our clients have to say about their financial success</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
@@ -194,14 +182,12 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <div class="testimonial-content">
-                        "Finance platform has revolutionized our financial management. The system is intuitive, powerful, and has saved us countless hours."
-                    </div>
+                    <p class="testimonial-content">"Finance has transformed our entire portfolio. The AI capabilities alone have increased our returns by 300%."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">DK</div>
+                        <div class="author-avatar">JD</div>
                         <div class="author-info">
-                            <h4>Dr. Kumar</h4>
-                            <p>Bank Manager, National Bank</p>
+                            <h4>Ritika</h4>
+                            <p>Finance Manager, Goldman Saché India</p>
                         </div>
                     </div>
                 </div>
@@ -213,14 +199,12 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <div class="testimonial-content">
-                        "The transaction management system is fantastic. Real-time balance updates and search functionality make our job much easier."
-                    </div>
+                    <p class="testimonial-content">"The platform has significantly improved our portfolio management and investment returns."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">SP</div>
+                        <div class="author-avatar">MS</div>
                         <div class="author-info">
-                            <h4>Sandeep Patel</h4>
-                            <p>Finance Officer, Metro Bank</p>
+                            <h4>Muskan Singh</h4>
+                            <p>Investment Analyst, ICICI Securities</p>
                         </div>
                     </div>
                 </div>
@@ -232,14 +216,12 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <div class="testimonial-content">
-                        "Best investment we made. The finance dashboard is incredibly user-friendly, and admins have complete control over transaction management."
-                    </div>
+                    <p class="testimonial-content">"The platform has made financial planning more interactive and engaging for wealth management."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">PJ</div>
+                        <div class="author-avatar">AK</div>
                         <div class="author-info">
-                            <h4>Priya Joshi</h4>
-                            <p>Finance Director, Digital Bank</p>
+                            <h4>Akshay Kumar</h4>
+                            <p>Wealth Manager, SBI Mutual Fund</p>
                         </div>
                     </div>
                 </div>
@@ -250,236 +232,230 @@
     <!-- CTA Section -->
     <section class="cta">
         <div class="cta-content">
-            <h2>Ready to Transform Your Bank?</h2>
-            <p>Join thousands of organizations already using Finance to manage their operations efficiently</p>
-            <div class="hero-buttons" style="justify-content: center; margin-top: 2rem;">
-                <a href="signup/signup.html" class="btn-primary">Start Free Trial</a>
-                <a href="#contact" class="btn-secondary">Contact Sales</a>
+            <h2>Ready to Transform Your Future?</h2>
+            <p>Join thousands of finance experts already using Finance to manage their portfolios and investments.</p>
+            <div class="hero-buttons" style="justify-content: center;">
+                <a href="signup/signup.html" class="btn-primary">
+                    Start Free Trial
+                    <i class="fas fa-rocket"></i>
+                </a>
+                <a href="signup/signup.html" class="btn-secondary">
+                    talk to connect
+                    <i class="fas fa-phone"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Dashboard Features Section -->
-    <section class="dashboard-features" id="dashboard">
-        <div class="container">
-            <div class="section-header">
-                <h2>Explore Our Finance Dashboard</h2>
-                <p>Powerful tools to manage your financial operations seamlessly</p>
-            </div>
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="dashboard-number">01</div>
-                    <i class="fas fa-plus-circle"></i>
-                    <h3>Add Transactions</h3>
-                    <p>Quickly add income and expense transactions with category, date, and description. Track every financial movement in real-time.</p>
-                </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-number">02</div>
-                    <i class="fas fa-search"></i>
-                    <h3>Search & Filter</h3>
-                    <p>Find transactions instantly by category or description. Filter by income or expense to analyze specific transaction types.</p>
-                </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-number">03</div>
-                    <i class="fas fa-chart-bar"></i>
-                    <h3>View Analytics</h3>
-                    <p>See your total income, expenses, and balance updated in real-time. Visual dashboard showing your financial overview at a glance.</p>
-                </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-number">04</div>
-                    <i class="fas fa-pencil-alt"></i>
-                    <h3>Manage Records</h3>
-                    <p>Edit or delete transactions with ease (Admin only). Complete control over your transaction database with detailed history tracking.</p>
-                </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-number">05</div>
-                    <i class="fas fa-lock"></i>
-                    <h3>Role-Based Control</h3>
-                    <p>Switch between Admin (full control) and Viewer (read-only) roles. Perfect for team collaboration with different access levels.</p>
-                </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-number">06</div>
-                    <i class="fas fa-cloud"></i>
-                    <h3>Cloud-Free Storage</h3>
-                    <p>All data saved locally in your browser. No servers, no cloud, complete privacy. Your financial data stays with you, always.</p>
-                </div>
-            </div>
-            <div class="dashboard-cta">
-                <a href="dashboard/dash.html" class="btn-primary">Open Dashboard<i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
-            </div>
-        </div>
-    </section>
+ <!-- About Section -->
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="about-wrapper">
-            <h2>About Finance</h2>
-            <p class="about-desc">Finance Platform is a modern, pure frontend finance management solution designed to help banks and financial institutions streamline transaction management, provide real-time analytics, and maintain secure role-based access control.</p>
-            <div class="about-features">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Smart Data Management</h3>
-                    <p>Efficient transaction storage and retrieval with instant search capabilities across all records</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Real-Time Analytics</h3>
-                    <p>Live dashboard showing income, expenses, and balance with instant calculations</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3>Role-Based Access</h3>
-                    <p>Admin and Viewer roles with different permission levels for security and control</p>
-                </div>
-            </div>
-        </div>
-    </section>
+   <section id="about">
+  <div class="about-wrapper">
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="contact-container">
-            <div class="contact-header">
-                <h2 class="contact-title">Get in Touch</h2>
-                <p class="contact-subtitle">Have questions? Our team is here to help. Reach out to us today.</p>
+    <h2 class="about-title">About Finance</h2>
+
+    <p class="about-desc">
+      Finance Management System helps manage portfolios, investments,
+      transactions, analytics and reporting efficiently in one platform.
+    </p>
+
+    <div class="about-features">
+
+      <div class="feature-card">
+        <h3>Portfolio Management</h3>
+        <p>Manage investment portfolios, assets and allocation easily.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Risk Analytics</h3>
+        <p>Analyze risk factors, generate reports and manage compliance.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Investment Tracking</h3>
+        <p>Track investments, monitor performance and optimize returns.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact Section -->
+
+<section id="contact" style="padding: 5rem 2rem; background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));">
+  <div class="container">
+    <div class="section-header" style="margin-bottom: 4rem;">
+      <h2>Get in Touch With Our Finance Team</h2>
+      <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Have questions about our Finance Management System? Our team is here to help you optimize your financial operations.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; align-items: start;">
+      <!-- Contact Info Cards -->
+      <div>
+        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+          <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📧</div>
+            <div>
+              <h3 style="margin: 0 0 0.5rem 0;">Email Support</h3>
+              <p style="margin: 0; color: var(--text-secondary);">support@finance.com</p>
+              <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Response within 24 hours</p>
             </div>
-            
-            <div class="contact-content">
-                <!-- Contact Info -->
-                <div class="contact-info">
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>Address</h3>
-                            <p>123 Finance Building<br>New York, NY 10001</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>Phone</h3>
-                            <p>+1 (555) 123-4567<br>Mon-Fri 9AM-6PM EST</p>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>Email</h3>
-                            <p>support@finance.com<br>response within 24 hours</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Contact Form -->
-                <form class="contact-form" onsubmit="event.preventDefault(); handleContactForm();">
-                    <div class="form-group">
-                        <label for="contact-name">Full Name</label>
-                        <input type="text" id="contact-name" placeholder="Enter your full name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contact-email">Email Address</label>
-                        <input type="email" id="contact-email" placeholder="your@email.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contact-subject">Subject</label>
-                        <input type="text" id="contact-subject" placeholder="What is this about?" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contact-message">Message</label>
-                        <textarea id="contact-message" placeholder="Tell us more about your inquiry..." rows="6" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Send Message</button>
-                    <p class="form-note">We'll get back to you as soon as possible</p>
-                </form>
-            </div>
+          </div>
         </div>
-    </section>
+
+        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+          <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📞</div>
+            <div>
+              <h3 style="margin: 0 0 0.5rem 0;">Phone Support</h3>
+              <p style="margin: 0; color: var(--text-secondary);">+91 (987) 654-3210</p>
+              <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Monday - Friday, 9AM - 6PM IST</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;">
+          <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📍</div>
+            <div>
+              <h3 style="margin: 0 0 0.5rem 0;">Office Location</h3>
+              <p style="margin: 0; color: var(--text-secondary);">Bangalore, India</p>
+              <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">BizHub Tower, Electronic City</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;">
+        <h3 style="margin-top: 0;">Send us a Message</h3>
+        <form class="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Full Name</label>
+            <input type="text" placeholder="Your Full Name" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
+          </div>
+
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Email Address</label>
+            <input type="email" placeholder="your@email.com" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
+          </div>
+
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Company</label>
+            <input type="text" placeholder="Your Company Name" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
+          </div>
+
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Subject</label>
+            <select style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
+              <option style="background: var(--dark-bg); color: white;">Select a subject</option>
+              <option style="background: var(--dark-bg); color: white;">Product Demo</option>
+              <option style="background: var(--dark-bg); color: white;">Pricing Inquiry</option>
+              <option style="background: var(--dark-bg); color: white;">Technical Support</option>
+              <option style="background: var(--dark-bg); color: white;">Partnership</option>
+              <option style="background: var(--dark-bg); color: white;">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Message</label>
+            <textarea placeholder="Tell us about your inquiry..." rows="5" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; font-family: inherit;"></textarea>
+          </div>
+
+          <button type="submit" style="background: var(--primary-gradient); padding: 12px 2rem; border-radius: 50px; border: none; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; width: 100%;">
+            Send Message
+          </button>
+
+          <p style="text-align: center; font-size: 0.875rem; color: var(--text-secondary); margin: 0;">Our team will respond within 24 business hours</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Product</h3>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#security">Security</a></li>
-                </ul>
+                <h3>Finance</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Finance Management System</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
             </div>
             <div class="footer-section">
-                <h3>Company</h3>
+                <h3>Legal</h3>
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="legal/privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal/terms.html">Terms of Service</a></li>
+                    <li><a href="legal/cookies.html">Cookie Policy</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Support</h3>
                 <ul>
-                    <li><a href="#help">Help Center</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                    <li><a href="#status">Status</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Status Page</a></li>
+                    <li><a href="#">Community</a></li>
                 </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <div class="social-links">
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <span class="current-year">2024</span> Finance. All rights reserved.</p>
+            <p>&copy; 2026 Finance. All rights reserved.</p>
+            <p class="designer">Designed by <span> Siddhartha gupta</span></p>
         </div>
     </footer>
 
-    <!-- Chat Widget -->
-    <div class="chat-toggle" onclick="toggleChat()" title="Chat with us">
-        💬
-    </div>
-
-    <div class="chat-box" id="chatBox" style="display: none;">
-        <div class="chat-header">
-            <span>Finance Chat Bot</span>
-            <button onclick="toggleChat()" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;">✕</button>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="msg bot">
-                <p>Hello! 👋 Welcome to Finance. How can I help you today?</p>
-                <div class="time">Just now</div>
-            </div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Type your message...">
-            <button onclick="startVoice()" title="Voice Input">🎤</button>
-            <button onclick="sendMessage()" title="Send">Send</button>
-        </div>
-    </div>
-
     <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-message" id="toastMessage">Action completed!</div>
+    </div>
+
+    
+
+<!-- ================= CMS PRO MAX AI ================= -->
+
+
+
+<div class="chat-toggle" onclick="toggleChat()">
+   <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Assistant">
+</div>
+
+<div class="chat-box" id="chatBox">
+  <div class="chat-header">
+    CMS AI 🤖
+    <div>
+      <span onclick="toggleTheme()" style="cursor:pointer">🌗</span>
+      <span onclick="clearChat()" style="cursor:pointer">🗑</span>
+      <span onclick="toggleChat()" style="cursor:pointer">✖</span>
+    </div>
+  </div>
+
+  <div class="chat-body" id="chatBody"></div>
+
+  <div class="chat-footer">
+    <input type="text" id="chatInput" placeholder="Type message...">
+    <button onclick="startVoice()">🎤</button>
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+
+
+
+<!-- ================= END ================= -->
 
     <script src="admin.js"></script>
 </body>
 </html>
+
+
