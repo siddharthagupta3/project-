@@ -1046,6 +1046,7 @@ input[type="email"]:focus {
   color: white;
   border-radius: 10px;
   outline: none;
+  color-scheme: dark;
   transition: all 0.3s ease;
 }
 
@@ -1116,7 +1117,16 @@ input[type="email"]:focus {
   color: white;
   border-radius: 10px;
   outline: none;
+  color-scheme: dark;
   transition: all 0.3s ease;
+}
+
+.transaction-controls select option,
+.form-row select option,
+.transaction-controls select optgroup,
+.form-row select optgroup {
+  background-color: rgb(35, 36, 57);
+  color: #fff;
 }
 
 .form-row input::placeholder {

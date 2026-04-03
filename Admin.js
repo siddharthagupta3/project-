@@ -1,22 +1,23 @@
 const qs = (selector, root = document) => root.querySelector(selector);
 const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+const byId = (id) => document.getElementById(id);
 
 // ================= LOADER =================
 window.addEventListener('load', () => {
-  const loader = document.getElementById('loader');
+  const loader = byId('loader');
   if (loader) loader.style.display = 'none';
 });
 
 // ================= SCROLL HANDLERS =================
 window.addEventListener('scroll', () => {
-  const scrollProgress = document.getElementById('scrollProgress');
+  const scrollProgress = byId('scrollProgress');
   if (scrollProgress) {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
     scrollProgress.style.width = scrollPercent + '%';
   }
 
-  const navbar = document.getElementById('navbar');
+  const navbar = byId('navbar');
   if (navbar) {
     if (window.scrollY > 50) {
       navbar.classList.add('scrolled');
@@ -54,8 +55,8 @@ if (statsSection) {
 
 // ================= TOAST NOTIFICATION =================
 function showToast(message) {
-  const toast = document.getElementById('toast');
-  const toastMessage = document.getElementById('toastMessage');
+  const toast = byId('toast');
+  const toastMessage = byId('toastMessage');
   if (!toast || !toastMessage) return;
   toastMessage.textContent = message;
   toast.classList.add('show');
@@ -80,29 +81,7 @@ function toggleMobileMenu() {
   navLinks.style.borderTop = '1px solid var(--glass-border)';
 }
 
-// ================= PARALLAX EFFECT FOR HERO SECTION =================
-// Animation disabled
-// window.addEventListener('scroll', () => {
-//   const scrolled = window.pageYOffset;
-//   const heroContent = document.querySelector('.hero-content');
-//   if (heroContent) {
-//     heroContent.style.transform = 'translateY(' + scrolled * 0.5 + 'px)';
-//   }
-// });
-
-// ================= ADD HOVER EFFECT TO CARDS =================
-// Animation disabled
-// document.querySelectorAll('.feature-card, .testimonial-card').forEach(card => {
-//   card.addEventListener('mouseenter', function() {
-//     this.style.transform = 'translateY(-5px) scale(1.02)';
-//   });
-//   
-//   card.addEventListener('mouseleave', function() {
-//     this.style.transform = 'translateY(0) scale(1)';
-//   });
-// });
-
-// ================= DYNAMIC YEAR IN FOOTER =================
+// ================= DYNAMIC YEAR + MOBILE AUTO-SCROLL =================
 document.addEventListener('DOMContentLoaded', () => {
   const year = new Date().getFullYear();
   const footerYear = qs('.footer-bottom p');
@@ -110,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     footerYear.textContent = '© ' + year + ' Finance. All rights reserved.';
   }
 
-  // ================= ACCESS FLOW AUTO-SCROLL (MOBILE) =================
+  // Auto-scroll for access flow on mobile only
   const track = qs('.flow-track');
   if (!track) return;
 
@@ -149,9 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ================= FINANCE AI CHATBOT ================= 
 
-// ================= TOGGLE ================= 
+// ================= TOGGLE =================
 function toggleChat() {
-  const box = document.getElementById("chatBox");
+  const box = byId("chatBox");
   if (!box) return;
   box.style.display = box.style.display === "flex" ? "none" : "flex";
   if (box.style.display === "flex" && !localStorage.getItem("greeted")) {
@@ -163,7 +142,7 @@ function toggleChat() {
 // ================= THEME ================= 
 let darkMode = true;
 function toggleTheme() {
-  const box = document.getElementById("chatBox");
+  const box = byId("chatBox");
   if (!box) return;
   darkMode = !darkMode;
   if (darkMode) {
@@ -175,7 +154,7 @@ function toggleTheme() {
 
 // ================= CLEAR ================= 
 function clearChat() {
-  const body = document.getElementById("chatBody");
+  const body = byId("chatBody");
   if (body) body.innerHTML = "";
 }
 
@@ -262,7 +241,7 @@ function getReply(text) {
 
 // ================= MESSAGE ================= 
 function addUserMessage(text) {
-  const body = document.getElementById("chatBody");
+  const body = byId("chatBody");
   if (!body) return;
   const msg = document.createElement("div");
   msg.className = "msg user";
@@ -279,7 +258,7 @@ function addUserMessage(text) {
 }
 
 function addBotMessage(text) {
-  const body = document.getElementById("chatBody");
+  const body = byId("chatBody");
   if (!body) return;
   const msg = document.createElement("div");
   msg.className = "msg bot";
@@ -290,13 +269,13 @@ function addBotMessage(text) {
 
 // ================= SCROLL ================= 
 function scrollBottom() {
-  const body = document.getElementById("chatBody");
+  const body = byId("chatBody");
   if (body) body.scrollTop = body.scrollHeight;
 }
 
 // ================= SEND ================= 
 function sendMessage() {
-  const input = document.getElementById("chatInput");
+  const input = byId("chatInput");
   if (!input) return;
   const text = input.value.trim();
   if (!text) return;
@@ -308,7 +287,7 @@ function sendMessage() {
 }
 
 // ================= ENTER KEY ================= 
-const chatInput = document.getElementById("chatInput");
+const chatInput = byId("chatInput");
 if (chatInput) {
   chatInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
@@ -325,33 +304,35 @@ function startVoice() {
   recognition.lang = "en-IN";
   recognition.start();
   recognition.onresult = function(event) {
-    document.getElementById("chatInput").value =
-      event.results[0][0].transcript;
+    const input = byId("chatInput");
+    if (input) input.value = event.results[0][0].transcript;
     sendMessage();
   };
 }
 
 // ================= TYPING EFFECT ================= 
-const text = "Finance system ";
+const TYPING_TEXT = "Finance system ";
+const TYPING_SPEED = 70;
+const TYPING_PAUSE = 1200;
 let i = 0;
 let deleting = false;
 
 function type() {
-  let el = document.getElementById("typing-text");
+  const el = byId("typing-text");
 
   if (!el) return;
 
   if (!deleting) {
-    el.innerHTML = text.substring(0, i);
+    el.innerHTML = TYPING_TEXT.substring(0, i);
     i++;
 
-    if (i > text.length) {
+    if (i > TYPING_TEXT.length) {
       deleting = true;
-      setTimeout(type, 1200);
+      setTimeout(type, TYPING_PAUSE);
       return;
     }
   } else {
-    el.innerHTML = text.substring(0, i);
+    el.innerHTML = TYPING_TEXT.substring(0, i);
     i--;
 
     if (i < 0) {
@@ -359,7 +340,7 @@ function type() {
     }
   }
 
-  setTimeout(type, 70);
+  setTimeout(type, TYPING_SPEED);
 }
 
 type();

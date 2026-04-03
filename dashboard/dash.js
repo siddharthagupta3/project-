@@ -1,8 +1,13 @@
 /**
- * FINANCE DASHBOARD - CLEAN & COMPACT CODE
+ * FINANCE DASHBOARD
+ * Clean, interview-friendly structure with minimal globals.
  */
 
-// State Management
+const byId = (id) => document.getElementById(id);
+const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+const MONTH_ORDER = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// -------- State Management --------
 const app = {
     user: 'viewer',
     transactions: [],
@@ -37,7 +42,7 @@ const app = {
     }
 };
 
-// Utility Functions
+// -------- Utility Functions --------
 function showNotification(msg, type = 'info') {
     const notification = document.createElement('div');
     notification.textContent = msg;
@@ -51,7 +56,7 @@ function showNotification(msg, type = 'info') {
     setTimeout(() => notification.remove(), 4000);
 }
 
-// Role Management
+// -------- Role Management --------
 function switchRole(role) {
     app.user = role;
     document.querySelectorAll('.role-btn').forEach(btn => {
@@ -72,7 +77,7 @@ function switchRole(role) {
     }
 }
 
-// Transaction CRUD
+// -------- Transaction CRUD --------
 function createTransaction(data) {
     const transaction = { id: Date.now(), ...data, createdAt: new Date().toISOString() };
     app.transactions.unshift(transaction);
@@ -103,7 +108,7 @@ function deleteTransaction(id) {
     }
 }
 
-// Dashboard Calculations
+// -------- Dashboard Calculations --------
 function calculateTotals() {
     const totals = { income: 0, expenses: 0, balance: 0 };
     app.transactions.forEach(t => {
@@ -121,9 +126,9 @@ function formatCurrency(value) {
 
 function updateDashboard() {
     const totals = calculateTotals();
-    const balanceEl = document.getElementById('totalBalance');
-    const incomeEl = document.getElementById('totalIncome');
-    const expensesEl = document.getElementById('totalExpenses');
+    const balanceEl = byId('totalBalance');
+    const incomeEl = byId('totalIncome');
+    const expensesEl = byId('totalExpenses');
     
     if (balanceEl) balanceEl.textContent = formatCurrency(totals.balance);
     if (incomeEl) incomeEl.textContent = formatCurrency(totals.income);
@@ -139,12 +144,12 @@ function updateCharts() {
 }
 
 function updateInsights() {
-    const bestMonthEl = document.getElementById('bestMonth');
-    const bestMonthNetEl = document.getElementById('bestMonthNet');
-    const topIncomeCategoryEl = document.getElementById('topIncomeCategory');
-    const topIncomeAmountEl = document.getElementById('topIncomeAmount');
-    const topExpenseCategoryEl = document.getElementById('topExpenseCategory');
-    const topExpenseAmountEl = document.getElementById('topExpenseAmount');
+    const bestMonthEl = byId('bestMonth');
+    const bestMonthNetEl = byId('bestMonthNet');
+    const topIncomeCategoryEl = byId('topIncomeCategory');
+    const topIncomeAmountEl = byId('topIncomeAmount');
+    const topExpenseCategoryEl = byId('topExpenseCategory');
+    const topExpenseAmountEl = byId('topExpenseAmount');
 
     if (!bestMonthEl || !bestMonthNetEl || !topIncomeCategoryEl || !topIncomeAmountEl || !topExpenseCategoryEl || !topExpenseAmountEl) {
         return;
@@ -215,14 +220,14 @@ function updateInsights() {
     }
 }
 
-// UI Rendering
+// -------- UI Rendering --------
 function renderTransactions() {
-    const container = document.getElementById('transactionsList');
+    const container = byId('transactionsList');
     if (!container) return;
     
-    const search = document.getElementById('searchTransaction')?.value.toLowerCase() || '';
-    const filter = document.getElementById('filterType')?.value || 'all';
-    const sort = document.getElementById('sortBy')?.value || 'date';
+    const search = byId('searchTransaction')?.value.toLowerCase() || '';
+    const filter = byId('filterType')?.value || 'all';
+    const sort = byId('sortBy')?.value || 'date';
     
     let filtered = app.transactions.filter(t => {
         const matches = t.category.toLowerCase().includes(search) || 
@@ -262,9 +267,9 @@ function createTransactionHTML(t) {
     `;
 }
 
-// Form Handling
+// -------- Form Handling --------
 function setTransactionFormMode(mode) {
-    const titleEl = document.getElementById('transactionFormTitle');
+    const titleEl = byId('transactionFormTitle');
     const submitBtn = document.querySelector('#transactionForm button[type="submit"]');
     const isEdit = mode === 'edit';
 
@@ -285,8 +290,8 @@ function showAddTransactionForm(options = {}) {
     }
 
     const { reset = true } = options;
-    const formWrapper = document.getElementById('addTransactionForm');
-    const form = document.getElementById('transactionForm');
+    const formWrapper = byId('addTransactionForm');
+    const form = byId('transactionForm');
 
     if (formWrapper) {
         formWrapper.style.display = 'block';
@@ -299,7 +304,7 @@ function showAddTransactionForm(options = {}) {
 }
 
 function hideAddTransactionForm() {
-    const formWrapper = document.getElementById('addTransactionForm');
+    const formWrapper = byId('addTransactionForm');
     if (formWrapper) formWrapper.style.display = 'none';
     resetTransactionFormState();
 }
@@ -338,11 +343,11 @@ function editTransaction(id) {
     app.editingId = id;
     showAddTransactionForm({ reset: false });
 
-    const amountEl = document.getElementById('amount');
-    const categoryEl = document.getElementById('category');
-    const dateEl = document.getElementById('date');
-    const typeEl = document.getElementById('type');
-    const descriptionEl = document.getElementById('description');
+    const amountEl = byId('amount');
+    const categoryEl = byId('category');
+    const dateEl = byId('date');
+    const typeEl = byId('type');
+    const descriptionEl = byId('description');
 
     if (amountEl) amountEl.value = t.amount;
     if (categoryEl) categoryEl.value = t.category;
@@ -358,13 +363,13 @@ function saveDashboard() {
     showNotification('Changes saved', 'success');
 }
 
-// Charts
+// -------- Charts --------
 function initCharts() {
     updateCharts();
 }
 
 function drawMonthlyChart() {
-    const canvas = document.getElementById('monthlyChart');
+    const canvas = byId('monthlyChart');
     if (!canvas) return;
     
     // Set proper resolution for crisp display
@@ -387,10 +392,7 @@ function drawMonthlyChart() {
     });
     
     // Sort months chronologically
-    const months = Object.keys(monthlyData).sort((a, b) => {
-        const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return monthOrder.indexOf(a) - monthOrder.indexOf(b);
-    });
+    const months = Object.keys(monthlyData).sort((a, b) => MONTH_ORDER.indexOf(a) - MONTH_ORDER.indexOf(b));
     
     const data = months.map(month => ({
         month,
@@ -507,7 +509,7 @@ function drawMonthlyChart() {
 }
 
 function drawCategoryChart() {
-    const canvas = document.getElementById('categoryChart');
+    const canvas = byId('categoryChart');
     if (!canvas) return;
     
     // Set proper resolution for crisp display
@@ -590,9 +592,9 @@ function drawCategoryChart() {
     });
 }
 
-// Navigation
+// -------- Navigation --------
 function toggleMenu() {
-    const menu = document.getElementById('menu');
+    const menu = byId('menu');
     const hamburger = document.querySelector('.hamburger');
     
     if (menu) menu.classList.toggle('active');
@@ -600,22 +602,22 @@ function toggleMenu() {
 }
 
 function setupNavigation() {
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+    qsa('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                document.getElementById('menu')?.classList.remove('active');
+                byId('menu')?.classList.remove('active');
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
 }
 
-// Email Form
+// -------- Email Form --------
 function setupEmailForm() {
-    const form = document.getElementById('form');
-    const emailInput = document.getElementById('email-id');
+    const form = byId('form');
+    const emailInput = byId('email-id');
     
     if (!form || !emailInput) return;
     
@@ -629,7 +631,7 @@ function setupEmailForm() {
         e.preventDefault();
         if (emailRegex.test(emailInput.value)) {
             form.innerHTML = '<p style="font-size: 2rem; font-weight: 500; color: #76a73f;">Subscribed! 🎉</p>';
-            setTimeout(() => document.getElementById('finance')?.scrollIntoView({ behavior: 'smooth' }), 1700);
+            setTimeout(() => byId('finance')?.scrollIntoView({ behavior: 'smooth' }), 1700);
         } else {
             showNotification('Enter valid email', 'error');
         }
@@ -648,54 +650,54 @@ function setupEmailForm() {
     setTimeout(typeEmail, 1600);
 }
 
-// Event Listeners
+// -------- Event Listeners --------
 function setupEventListeners() {
     // Role switching
-    document.querySelectorAll('.role-btn').forEach(btn => {
+    qsa('.role-btn').forEach(btn => {
         btn.addEventListener('click', () => switchRole(btn.dataset.role));
     });
     
     // Transaction form
-    const transactionForm = document.getElementById('transactionForm');
+    const transactionForm = byId('transactionForm');
     if (transactionForm) {
         transactionForm.addEventListener('submit', handleTransactionSubmit);
     }
     
     // Add transaction button
-    const addBtn = document.getElementById('addTransactionBtn');
+    const addBtn = byId('addTransactionBtn');
     if (addBtn) {
         addBtn.addEventListener('click', showAddTransactionForm);
     }
     
     // Cancel transaction button
-    const cancelBtn = document.getElementById('cancelTransaction');
+    const cancelBtn = byId('cancelTransaction');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', hideAddTransactionForm);
     }
     
     // Search and filters
-    const searchInput = document.getElementById('searchTransaction');
-    const filterSelect = document.getElementById('filterType');
-    const sortSelect = document.getElementById('sortBy');
+    const searchInput = byId('searchTransaction');
+    const filterSelect = byId('filterType');
+    const sortSelect = byId('sortBy');
     
     if (searchInput) searchInput.addEventListener('input', renderTransactions);
     if (filterSelect) filterSelect.addEventListener('change', renderTransactions);
     if (sortSelect) sortSelect.addEventListener('change', renderTransactions);
     
     // Export button
-    const exportBtn = document.getElementById('exportBtn');
+    const exportBtn = byId('exportBtn');
     if (exportBtn) {
         exportBtn.addEventListener('click', exportToCSV);
     }
 
     // Save button
-    const saveBtn = document.getElementById('saveBtn');
+    const saveBtn = byId('saveBtn');
     if (saveBtn) {
         saveBtn.addEventListener('click', saveDashboard);
     }
 }
 
-// Export Functions
+// -------- Export Functions --------
 function exportToCSV() {
     if (app.transactions.length === 0) {
         showNotification('No data to export', 'error');
@@ -722,7 +724,7 @@ function downloadFile(content, filename, mimeType) {
     window.URL.revokeObjectURL(url);
 }
 
-// Initialize App
+// -------- Initialize App --------
 function initDashboard() {
     app.init();
     setupEventListeners();
@@ -733,7 +735,7 @@ function initDashboard() {
     initCharts();
 
     // Restore UI state
-    document.querySelectorAll('.role-btn').forEach(btn => {
+    qsa('.role-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.role === app.user);
     });
     document.body.classList.toggle('admin-mode', app.user === 'admin');
@@ -742,7 +744,7 @@ function initDashboard() {
     startGridAnimation();
 }
 
-// Grid Animation Sequence
+// -------- Grid Animation Sequence --------
 function startGridAnimation() {
     // Define the exact sequence as per requirements
     const sequence = [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7];
@@ -752,7 +754,7 @@ function startGridAnimation() {
     
     function runAnimationCycle() {
         // Get all items
-        const items = document.querySelectorAll('.item');
+        const items = qsa('.item');
         
         // Reset all items first
         items.forEach(item => {

@@ -1,51 +1,66 @@
+const byId = (id) => document.getElementById(id);
+
 document.addEventListener('DOMContentLoaded', initAuth);
 
 function initAuth() {
   showLoginPanel();
-  
-  document.getElementById('showRegister')?.addEventListener('click', (e) => {
+
+  byId('showRegister')?.addEventListener('click', (e) => {
     e.preventDefault();
     showRegisterPanel();
   });
-  
-  document.getElementById('showLogin')?.addEventListener('click', (e) => {
+
+  byId('showLogin')?.addEventListener('click', (e) => {
     e.preventDefault();
     showLoginPanel();
   });
-  
-  document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
-  document.getElementById('registerForm')?.addEventListener('submit', handleRegister);
-  document.getElementById('registerPassword')?.addEventListener('input', checkPasswordStrength);
-  document.getElementById('confirmPassword')?.addEventListener('input', checkPasswordMatch);
+
+  byId('loginForm')?.addEventListener('submit', handleLogin);
+  byId('registerForm')?.addEventListener('submit', handleRegister);
+  byId('registerPassword')?.addEventListener('input', checkPasswordStrength);
+  byId('confirmPassword')?.addEventListener('input', checkPasswordMatch);
   document.querySelectorAll('.social-btn').forEach(btn => btn.addEventListener('click', handleSocialLogin));
-  
-  // Load saved email
+
+  // Restore saved login email if available
   const saved = localStorage.getItem('userEmail');
   if (saved) {
-    document.getElementById('loginEmail').value = saved;
-    document.getElementById('rememberMe').checked = true;
+    const emailInput = byId('loginEmail');
+    const remember = byId('rememberMe');
+    if (emailInput) emailInput.value = saved;
+    if (remember) remember.checked = true;
+  }
+
+  // Format phone input as XXX-XXX-XXXX
+  const phoneInput = byId('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 6) value = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6, 10);
+      else if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
+      e.target.value = value;
+    });
   }
 }
 
 function showLoginPanel() {
-  document.getElementById('loginPanel').style.display = 'flex';
-  document.getElementById('registerPanel').style.display = 'none';
+  byId('loginPanel').style.display = 'flex';
+  byId('registerPanel').style.display = 'none';
 }
 
 function showRegisterPanel() {
-  document.getElementById('loginPanel').style.display = 'none';
-  document.getElementById('registerPanel').style.display = 'flex';
+  byId('loginPanel').style.display = 'none';
+  byId('registerPanel').style.display = 'flex';
 }
 
 function handleLogin(e) {
   e.preventDefault();
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value.trim();
+  const email = byId('loginEmail').value.trim();
+  const password = byId('loginPassword').value.trim();
   
   if (!validateEmail(email)) return showError('Please enter a valid email');
   if (password.length < 6) return showError('Password must be at least 6 characters');
   
-  if (document.getElementById('rememberMe').checked) {
+  if (byId('rememberMe').checked) {
     localStorage.setItem('rememberMe', 'true');
     localStorage.setItem('userEmail', email);
   }
@@ -55,7 +70,7 @@ function handleLogin(e) {
   localStorage.setItem('currentUser', email);
   
   showSuccess('✅ Login successful! Redirecting to dashboard...');
-  document.getElementById('loginForm').reset();
+  byId('loginForm').reset();
   
   // Redirect to dashboard after 1.5 seconds
   setTimeout(() => {
@@ -65,13 +80,13 @@ function handleLogin(e) {
 
 function handleRegister(e) {
   e.preventDefault();
-  const first = document.getElementById('firstName').value.trim();
-  const last = document.getElementById('lastName').value.trim();
-  const email = document.getElementById('registerEmail').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const pass = document.getElementById('registerPassword').value;
-  const confirm = document.getElementById('confirmPassword').value;
-  const agree = document.getElementById('agreeTerms').checked;
+  const first = byId('firstName').value.trim();
+  const last = byId('lastName').value.trim();
+  const email = byId('registerEmail').value.trim();
+  const phone = byId('phone').value.trim();
+  const pass = byId('registerPassword').value;
+  const confirm = byId('confirmPassword').value;
+  const agree = byId('agreeTerms').checked;
   
   if (!first || !last) return showError('Please enter your full name');
   if (!validateEmail(email)) return showError('Please enter a valid email');
@@ -86,7 +101,7 @@ function handleRegister(e) {
   localStorage.setItem('userFirstName', first);
   
   showSuccess('✅ Account created! Redirecting to dashboard...');
-  document.getElementById('registerForm').reset();
+  byId('registerForm').reset();
   
   // Redirect to dashboard after 1.5 seconds
   setTimeout(() => {
@@ -109,7 +124,7 @@ function validatePhone(phone) {
 }
 
 function checkPasswordStrength() {
-  const pass = document.getElementById('registerPassword').value;
+  const pass = byId('registerPassword').value;
   const strength = {
     weak: { text: 'Weak', color: '#ef4444', width: '33%' },
     medium: { text: 'Medium', color: '#f59e0b', width: '66%' },
@@ -137,8 +152,8 @@ function checkPasswordStrength() {
 }
 
 function checkPasswordMatch() {
-  const pass = document.getElementById('registerPassword').value;
-  const confirm = document.getElementById('confirmPassword');
+  const pass = byId('registerPassword').value;
+  const confirm = byId('confirmPassword');
   
   if (confirm.value.length > 0) {
     confirm.style.borderColor = pass === confirm.value ? '#10b981' : '#ef4444';
@@ -146,7 +161,7 @@ function checkPasswordMatch() {
 }
 
 function togglePassword(fieldId) {
-  const field = document.getElementById(fieldId);
+  const field = byId(fieldId);
   const icon = field?.nextElementSibling?.querySelector('i');
   if (field && icon) {
     field.type = field.type === 'password' ? 'text' : 'password';
@@ -156,9 +171,9 @@ function togglePassword(fieldId) {
 }
 
 function showSuccess(message) {
-  const success = document.getElementById('successMessage');
+  const success = byId('successMessage');
   if (success) {
-    document.getElementById('successText').textContent = message;
+    byId('successText').textContent = message;
     success.classList.add('show');
     setTimeout(() => success.classList.remove('show'), 3000);
   }
@@ -172,25 +187,6 @@ function showError(message) {
   error.querySelector('button').onclick = () => error.remove();
   document.body.appendChild(error);
   setTimeout(() => error.remove(), 5000);
-}
-
-window.addEventListener('load', () => {
-  const rememberMe = localStorage.getItem('rememberMe');
-  const userEmail = localStorage.getItem('userEmail');
-  if (rememberMe === 'true' && userEmail) {
-    document.getElementById('loginEmail').value = userEmail;
-    document.getElementById('rememberMe').checked = true;
-  }
-});
-
-const phoneInput = document.getElementById('phone');
-if (phoneInput) {
-  phoneInput.addEventListener('input', (e) => {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length > 6) value = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6, 10);
-    else if (value.length > 3) value = value.slice(0, 3) + '-' + value.slice(3);
-    e.target.value = value;
-  });
 }
 
 if (window.history.replaceState) window.history.replaceState(null, null, window.location.href);

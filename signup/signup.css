@@ -161,6 +161,12 @@ body {
     margin-bottom: 30px;
 }
 
+.demo-note {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin: -12px 0 24px;
+}
+
 /* Form Styles */
 .auth-form {
     text-align: left;
