@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Community | Finance Support</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--bg: #0b0f1a;
+			--glass: rgba(255, 255, 255, 0.06);
+			--glass-border: rgba(255, 255, 255, 0.12);
+			--text: #f8fbff;
+			--muted: #b8c3d6;
+			--accent: #2ad1b5;
+			--accent-2: #4ea0ff;
+			--accent-3: #f5b84b;
+			--shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+		}
+
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+
+		html {
+			background: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			scroll-behavior: smooth;
+			height: 100%;
+		}
+
+		body {
+			font-family: "Space Grotesk", sans-serif;
+			background-color: var(--bg);
+			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			background-repeat: no-repeat;
+			background-size: cover;
+			color: var(--text);
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		.back-button {
+			position: fixed;
+			top: max(18px, env(safe-area-inset-top));
+			left: max(18px, env(safe-area-inset-left));
+			z-index: 6;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 14px;
+			border-radius: 999px;
+			background: rgba(11, 15, 26, 0.7);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: var(--text);
+			text-decoration: none;
+			font-weight: 600;
+			backdrop-filter: blur(12px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+			transition: transform 0.2s ease, background 0.2s ease;
+			touch-action: manipulation;
+		}
+
+		.back-button:hover {
+			background: rgba(11, 15, 26, 0.9);
+			color: var(--text);
+		}
+
+		.back-button:active {
+			transform: translateY(1px);
+		}
+
+		.page { position: relative; min-height: 100vh; }
+
+		.pulse-lines {
+			position: absolute;
+			inset: 0;
+			background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+			background-size: 56px 56px;
+			opacity: 0.3;
+			z-index: 0;
+		}
+
+		nav {
+			position: sticky;
+			top: 0;
+			z-index: 5;
+			backdrop-filter: blur(18px);
+			background: rgba(11, 15, 26, 0.82);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		.nav-wrap {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 18px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
+		}
+
+		.logo {
+			font-family: "Syne", sans-serif;
+			font-size: 1.4rem;
+			letter-spacing: 1px;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 18px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active { color: var(--text); }
+
+		.hero {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 90px 24px 50px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 32px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-title {
+			font-family: "Syne", sans-serif;
+			font-size: clamp(2.3rem, 4vw, 3.2rem);
+			margin-bottom: 16px;
+			animation: titlePulse 4s ease-in-out infinite;
+		}
+
+		.hero p { color: var(--muted); line-height: 1.7; }
+
+		.hero-visual {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.hero-visual img {
+			width: min(360px, 90%);
+			animation: float 7s ease-in-out infinite;
+			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+		}
+
+		.section {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 24px 80px;
+			display: grid;
+			gap: 22px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.pill-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 18px;
+		}
+
+		.pill {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 18px;
+			padding: 18px;
+			box-shadow: var(--shadow);
+		}
+
+		.pill h4 { margin-bottom: 8px; }
+		.pill p { color: var(--muted); font-size: 0.95rem; }
+
+		.cta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			margin-top: 12px;
+		}
+
+		.cta button {
+			border: none;
+			padding: 10px 18px;
+			border-radius: 999px;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+			color: #0b0f1a;
+			font-weight: 700;
+			cursor: pointer;
+		}
+
+		.feed {
+			display: grid;
+			gap: 12px;
+		}
+
+		.post {
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		.post span { color: var(--accent-3); font-size: 0.85rem; }
+		.post h5 { margin: 6px 0; }
+		.post p { color: var(--muted); }
+
+		.feature-lab {
+			max-width: 1200px;
+			margin: 0 auto 80px;
+			padding: 0 24px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.feature-header {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+
+		.feature-controls {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.feature-controls input {
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			padding: 10px 12px;
+			color: var(--text);
+			min-width: 220px;
+		}
+
+		.chip {
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			background: rgba(255, 255, 255, 0.04);
+			color: var(--muted);
+			padding: 8px 14px;
+			border-radius: 999px;
+			cursor: pointer;
+			font-size: 0.9rem;
+		}
+
+		.chip.active {
+			color: #04121a;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		}
+
+		.feature-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 18px;
+		}
+
+		.feature-tile {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 16px;
+			padding: 16px;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-tile small {
+			color: var(--accent-3);
+			font-weight: 600;
+		}
+
+		.feature-tile p {
+			color: var(--muted);
+			margin: 8px 0 12px;
+			line-height: 1.5;
+		}
+
+		.feature-expand {
+			border: none;
+			padding: 8px 12px;
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.08);
+			color: var(--text);
+			cursor: pointer;
+			font-weight: 600;
+		}
+
+		.feature-details {
+			margin-top: 12px;
+			display: none;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.feature-tile.active .feature-details {
+			display: block;
+		}
+
+		.stat-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 18px;
+			margin: 26px 0;
+		}
+
+		.stat {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		.stat h4 {
+			font-size: 1.4rem;
+		}
+
+		.mini-chart {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		canvas {
+			width: 100%;
+			height: 180px;
+			display: block;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-14px); }
+		}
+
+		@keyframes titlePulse {
+			0%, 100% { text-shadow: 0 0 0 rgba(78, 160, 255, 0); }
+			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
+		}
+
+		@media (max-width: 768px) {
+			.nav-links { display: none; }
+			.hero { padding-top: 60px; }
+		}
+
+		@media (max-width: 600px) {
+			.back-button {
+				top: 12px;
+				left: 12px;
+				padding: 8px 12px;
+				font-size: 0.9rem;
+				max-width: calc(100vw - 24px);
+			}
+			.page {
+				padding-top: 56px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
+	<div class="page">
+		<div class="pulse-lines"></div>
+
+		<nav>
+			<div class="nav-wrap">
+				<div class="logo">Finance Support</div>
+				<ul class="nav-links">
+					<li><a href="help-center.html">Help Center</a></li>
+					<li><a href="contact-us.html">Contact Us</a></li>
+					<li><a class="active" href="community.html">Community</a></li>
+					<li><a href="status-page.html">Status</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<section class="hero">
+			<div>
+				<div class="hero-title">Join the Finance Community</div>
+				<p>Get answers, share playbooks, and meet teams shaping the next era of finance operations.</p>
+				<div class="cta">
+					<button id="joinBtn">Join Now</button>
+					<button id="eventBtn">View Events</button>
+				</div>
+			</div>
+			<div class="hero-visual">
+				<img alt="Community illustration" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%232ad1b5'/><stop offset='100%' stop-color='%23f5b84b'/></linearGradient></defs><circle cx='210' cy='210' r='150' fill='url(%23g)'/><circle cx='150' cy='190' r='40' fill='%230b0f1a' opacity='0.35'/><circle cx='260' cy='190' r='40' fill='%230b0f1a' opacity='0.35'/><rect x='140' y='240' width='140' height='50' rx='25' fill='%230b0f1a' opacity='0.35'/></svg>" />
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="pill-grid">
+				<div class="pill">
+					<h4>Discussion Rooms</h4>
+					<p>Talk analytics, automation, and operations with peers.</p>
+				</div>
+				<div class="pill">
+					<h4>Weekly Events</h4>
+					<p>Live demos, release reviews, and Q and A with experts.</p>
+				</div>
+				<div class="pill">
+					<h4>Ambassador Program</h4>
+					<p>Lead regional meetups and gain early feature access.</p>
+				</div>
+				<div class="pill">
+					<h4>Knowledge Library</h4>
+					<p>Playbooks, templates, and pro tips from the community.</p>
+				</div>
+			</div>
+
+			<div class="feed" id="feed">
+				<div class="post">
+					<span>New Playbook</span>
+					<h5>Monthly close checklist for finance teams</h5>
+					<p>Use this workflow to close books 25 percent faster.</p>
+				</div>
+				<div class="post">
+					<span>Event</span>
+					<h5>Live walkthrough: Dashboard analytics</h5>
+					<p>Join our team to master charts, filters, and exports.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="feature-lab">
+			<div class="feature-header">
+				<div>
+					<h3 class="hero-title" style="font-size: 1.9rem;">Community Features</h3>
+					<p>Explore 10-15 engagement tools with live interactions.</p>
+				</div>
+				<div class="feature-controls">
+					<input id="featureSearch" type="text" placeholder="Search features" />
+					<button class="chip active" data-filter="all">All</button>
+					<button class="chip" data-filter="events">Events</button>
+					<button class="chip" data-filter="knowledge">Knowledge</button>
+					<button class="chip" data-filter="rewards">Rewards</button>
+				</div>
+			</div>
+
+			<div class="stat-row">
+				<div class="stat">
+					<small>Active Members</small>
+					<h4 data-count="1280">0</h4>
+					<p>Monthly active</p>
+				</div>
+				<div class="stat">
+					<small>Events This Month</small>
+					<h4 data-count="7">0</h4>
+					<p>Live sessions</p>
+				</div>
+				<div class="stat">
+					<small>Top Badge</small>
+					<h4>Builder</h4>
+					<p>Most earned</p>
+				</div>
+			</div>
+
+			<div class="feature-grid" id="featureGrid"></div>
+
+			<div class="mini-chart">
+				<h4>Weekly Engagement</h4>
+				<canvas id="communityChart" width="600" height="220"></canvas>
+			</div>
+		</section>
+	</div>
+
+	<script>
+		const joinBtn = document.getElementById('joinBtn');
+		const eventBtn = document.getElementById('eventBtn');
+		const feed = document.getElementById('feed');
+		const featureGrid = document.getElementById('featureGrid');
+		const featureSearch = document.getElementById('featureSearch');
+		const filterButtons = document.querySelectorAll('.chip');
+
+		joinBtn.addEventListener('click', () => {
+			const post = document.createElement('div');
+			post.className = 'post';
+			post.innerHTML = "<span>Welcome</span><h5>Thanks for joining the community</h5><p>Check your inbox for the starter kit.</p>";
+			feed.prepend(post);
+		});
+
+		eventBtn.addEventListener('click', () => {
+			const post = document.createElement('div');
+			post.className = 'post';
+			post.innerHTML = "<span>Event Added</span><h5>Finance Ops Roundtable</h5><p>Friday 6 PM IST, hosted by the product team.</p>";
+			feed.prepend(post);
+		});
+
+		const featureData = [
+			{ title: 'Live Events', tag: 'events', desc: 'Schedule and RSVP in one click.', details: 'Auto-syncs to your calendar.' },
+			{ title: 'Office Hours', tag: 'events', desc: 'Book a 15 minute expert session.', details: 'Slots open every Tuesday.' },
+			{ title: 'Knowledge Base', tag: 'knowledge', desc: 'Curated playbooks and templates.', details: 'Search by role or workflow.' },
+			{ title: 'Community Digest', tag: 'knowledge', desc: 'Weekly summary of top threads.', details: 'Delivered every Friday morning.' },
+			{ title: 'Peer Reviews', tag: 'rewards', desc: 'Share feedback and earn points.', details: 'Top reviewers unlock perks.' },
+			{ title: 'Badge System', tag: 'rewards', desc: 'Collect badges for contributions.', details: 'Badges display in your profile.' },
+			{ title: 'Mentor Match', tag: 'knowledge', desc: 'Pair with experienced operators.', details: 'Matches based on goals.' },
+			{ title: 'Challenge Weeks', tag: 'events', desc: 'Complete tasks with the community.', details: 'Leaderboard resets monthly.' },
+			{ title: 'Idea Board', tag: 'knowledge', desc: 'Upvote feature requests.', details: 'Top ideas reviewed quarterly.' },
+			{ title: 'Welcome Kits', tag: 'rewards', desc: 'Starter kits for new members.', details: 'Includes templates and guides.' },
+			{ title: 'Private Circles', tag: 'events', desc: 'Invite-only executive discussions.', details: 'Limited to 12 members per session.' },
+			{ title: 'Global Map', tag: 'rewards', desc: 'See where teams connect worldwide.', details: 'Pinned locations grow monthly.' }
+		];
+
+		function renderFeatures(filter = 'all', query = '') {
+			const normalized = query.toLowerCase();
+			const items = featureData.filter(item => {
+				const matchFilter = filter === 'all' || item.tag === filter;
+				const matchQuery = item.title.toLowerCase().includes(normalized) || item.desc.toLowerCase().includes(normalized);
+				return matchFilter && matchQuery;
+			});
+			featureGrid.innerHTML = items.map(item => `
+				<div class="feature-tile" data-tag="${item.tag}">
+					<small>${item.tag.toUpperCase()}</small>
+					<h4>${item.title}</h4>
+					<p>${item.desc}</p>
+					<button class="feature-expand">View details</button>
+					<div class="feature-details">${item.details}</div>
+				</div>
+			`).join('');
+
+			featureGrid.querySelectorAll('.feature-expand').forEach(btn => {
+				btn.addEventListener('click', () => {
+					btn.closest('.feature-tile').classList.toggle('active');
+				});
+			});
+		}
+
+		function animateCounters() {
+			document.querySelectorAll('[data-count]').forEach(counter => {
+				const target = Number(counter.dataset.count || 0);
+				let current = 0;
+				const step = Math.max(1, Math.ceil(target / 40));
+				const interval = setInterval(() => {
+					current += step;
+					if (current >= target) {
+						current = target;
+						clearInterval(interval);
+					}
+					counter.textContent = current;
+				}, 20);
+			});
+		}
+
+		function drawCommunityChart() {
+			const canvas = document.getElementById('communityChart');
+			if (!canvas) return;
+			const ctx = canvas.getContext('2d');
+			const values = [30, 42, 38, 50, 56, 62, 58];
+			const width = canvas.width;
+			const height = canvas.height;
+			ctx.clearRect(0, 0, width, height);
+			ctx.strokeStyle = 'rgba(245, 184, 75, 0.8)';
+			ctx.lineWidth = 3;
+			ctx.beginPath();
+			values.forEach((val, index) => {
+				const x = (width / (values.length - 1)) * index;
+				const y = height - (val / 70) * (height - 30) - 10;
+				if (index === 0) ctx.moveTo(x, y);
+				else ctx.lineTo(x, y);
+			});
+			ctx.stroke();
+		}
+
+		filterButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				filterButtons.forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+				renderFeatures(btn.dataset.filter, featureSearch.value);
+			});
+		});
+
+		featureSearch.addEventListener('input', () => {
+			const active = document.querySelector('.chip.active');
+			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
+		});
+
+		renderFeatures();
+		animateCounters();
+		drawCommunityChart();
+	</script>
+</body>
+</html>

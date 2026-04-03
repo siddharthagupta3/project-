@@ -1,37 +1,38 @@
-// ================= LOADER ================= 
+const qs = (selector, root = document) => root.querySelector(selector);
+const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+// ================= LOADER =================
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
-  if (loader) {
-    loader.style.display = 'none';
-  }
+  if (loader) loader.style.display = 'none';
 });
 
-// ================= SCROLL PROGRESS BAR =================
+// ================= SCROLL HANDLERS =================
 window.addEventListener('scroll', () => {
   const scrollProgress = document.getElementById('scrollProgress');
-  const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-  scrollProgress.style.width = scrollPercent + '%';
-});
+  if (scrollProgress) {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+    scrollProgress.style.width = scrollPercent + '%';
+  }
 
-// ================= NAVBAR SCROLL EFFECT =================
-window.addEventListener('scroll', () => {
   const navbar = document.getElementById('navbar');
-  if (window.scrollY > 50) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
+  if (navbar) {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
   }
 });
 
 // ================= SMOOTH SCROLLING FOR NAVIGATION LINKS =================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+qsa('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
+    const target = qs(this.getAttribute('href'));
     if (target) {
-      target.scrollIntoView({
-        behavior: 'auto'
-      });
+      target.scrollIntoView({ behavior: 'auto' });
     }
   });
 });
@@ -45,7 +46,7 @@ const animateCounter = (element) => {
 
 // ================= INTERSECTION OBSERVER FOR STATS ANIMATION =================
 // Animation disabled - show stats immediately
-const statsSection = document.querySelector('.stats');
+const statsSection = qs('.stats');
 if (statsSection) {
   const counters = statsSection.querySelectorAll('[data-target]');
   counters.forEach(counter => animateCounter(counter));
@@ -55,6 +56,7 @@ if (statsSection) {
 function showToast(message) {
   const toast = document.getElementById('toast');
   const toastMessage = document.getElementById('toastMessage');
+  if (!toast || !toastMessage) return;
   toastMessage.textContent = message;
   toast.classList.add('show');
   
@@ -65,7 +67,8 @@ function showToast(message) {
 
 // ================= MOBILE MENU TOGGLE =================
 function toggleMobileMenu() {
-  const navLinks = document.querySelector('.nav-links');
+  const navLinks = qs('.nav-links');
+  if (!navLinks) return;
   navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
   navLinks.style.position = 'absolute';
   navLinks.style.top = '100%';
@@ -102,10 +105,46 @@ function toggleMobileMenu() {
 // ================= DYNAMIC YEAR IN FOOTER =================
 document.addEventListener('DOMContentLoaded', () => {
   const year = new Date().getFullYear();
-  const footerYear = document.querySelector('.footer-bottom p');
+  const footerYear = qs('.footer-bottom p');
   if (footerYear) {
     footerYear.textContent = '© ' + year + ' Finance. All rights reserved.';
   }
+
+  // ================= ACCESS FLOW AUTO-SCROLL (MOBILE) =================
+  const track = qs('.flow-track');
+  if (!track) return;
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (!isMobile) return;
+
+  let autoScrollTimer = null;
+
+  const startAutoScroll = () => {
+    if (autoScrollTimer) return;
+    autoScrollTimer = setInterval(() => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const card = qs('.flow-card', track);
+      const step = card ? card.getBoundingClientRect().width + 24 : 320;
+
+      if (track.scrollLeft >= maxScroll - 5) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: step, behavior: 'smooth' });
+      }
+    }, 2400);
+  };
+
+  const stopAutoScroll = () => {
+    if (autoScrollTimer) {
+      clearInterval(autoScrollTimer);
+      autoScrollTimer = null;
+    }
+  };
+
+  track.addEventListener('touchstart', stopAutoScroll, { passive: true });
+  track.addEventListener('touchend', startAutoScroll, { passive: true });
+
+  startAutoScroll();
 });
 
 // ================= FINANCE AI CHATBOT ================= 
@@ -113,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ================= TOGGLE ================= 
 function toggleChat() {
   const box = document.getElementById("chatBox");
+  if (!box) return;
   box.style.display = box.style.display === "flex" ? "none" : "flex";
   if (box.style.display === "flex" && !localStorage.getItem("greeted")) {
     addBotMessage("Hello 👋 Welcome to Finance AI Assistant!");
@@ -124,6 +164,7 @@ function toggleChat() {
 let darkMode = true;
 function toggleTheme() {
   const box = document.getElementById("chatBox");
+  if (!box) return;
   darkMode = !darkMode;
   if (darkMode) {
     box.style.background = "rgba(15,15,30,0.98)";
@@ -134,7 +175,8 @@ function toggleTheme() {
 
 // ================= CLEAR ================= 
 function clearChat() {
-  document.getElementById("chatBody").innerHTML = "";
+  const body = document.getElementById("chatBody");
+  if (body) body.innerHTML = "";
 }
 
 // ================= TIME ================= 
@@ -205,14 +247,11 @@ const replies = {
   ]
 };
 
-let lastTopic = null;
-
 function getReply(text) {
   text = text.toLowerCase();
   
   for (let key in replies) {
     if (key !== "default" && text.includes(key)) {
-      lastTopic = key;
       return replies[key];
     }
   }
@@ -223,36 +262,42 @@ function getReply(text) {
 
 // ================= MESSAGE ================= 
 function addUserMessage(text) {
+  const body = document.getElementById("chatBody");
+  if (!body) return;
   const msg = document.createElement("div");
   msg.className = "msg user";
   msg.innerHTML = text +
     "<div class='time'>" + getTime() +
-    "<span class='tick' id='tick'>✔✔</span></div>";
-  document.getElementById("chatBody").appendChild(msg);
+    "<span class='tick'>✔✔</span></div>";
+  body.appendChild(msg);
   scrollBottom();
 
   setTimeout(() => {
-    document.getElementById("tick").style.color = "skyblue";
+    const tick = msg.querySelector('.tick');
+    if (tick) tick.style.color = "skyblue";
   }, 1000);
 }
 
 function addBotMessage(text) {
+  const body = document.getElementById("chatBody");
+  if (!body) return;
   const msg = document.createElement("div");
   msg.className = "msg bot";
   msg.innerHTML = text + "<div class='time'>" + getTime() + "</div>";
-  document.getElementById("chatBody").appendChild(msg);
+  body.appendChild(msg);
   scrollBottom();
 }
 
 // ================= SCROLL ================= 
 function scrollBottom() {
   const body = document.getElementById("chatBody");
-  body.scrollTop = body.scrollHeight;
+  if (body) body.scrollTop = body.scrollHeight;
 }
 
 // ================= SEND ================= 
 function sendMessage() {
   const input = document.getElementById("chatInput");
+  if (!input) return;
   const text = input.value.trim();
   if (!text) return;
   addUserMessage(text);
@@ -263,10 +308,12 @@ function sendMessage() {
 }
 
 // ================= ENTER KEY ================= 
-document.getElementById("chatInput")
-  .addEventListener("keypress", function(e) {
+const chatInput = document.getElementById("chatInput");
+if (chatInput) {
+  chatInput.addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
   });
+}
 
 // ================= VOICE ================= 
 function startVoice() {
@@ -285,7 +332,7 @@ function startVoice() {
 }
 
 // ================= TYPING EFFECT ================= 
-const text = "Finance Management System";
+const text = "Finance system ";
 let i = 0;
 let deleting = false;
 

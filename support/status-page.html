@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Status Page | Finance Support</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--bg: #0b0f1a;
+			--glass: rgba(255, 255, 255, 0.06);
+			--glass-border: rgba(255, 255, 255, 0.12);
+			--text: #f8fbff;
+			--muted: #b8c3d6;
+			--accent: #2ad1b5;
+			--accent-2: #4ea0ff;
+			--accent-3: #f5b84b;
+			--shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+		}
+
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+
+		html {
+			background: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			scroll-behavior: smooth;
+			height: 100%;
+		}
+
+		body {
+			font-family: "Space Grotesk", sans-serif;
+			background-color: var(--bg);
+			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			background-repeat: no-repeat;
+			background-size: cover;
+			color: var(--text);
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		.back-button {
+			position: fixed;
+			top: max(18px, env(safe-area-inset-top));
+			left: max(18px, env(safe-area-inset-left));
+			z-index: 6;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 14px;
+			border-radius: 999px;
+			background: rgba(11, 15, 26, 0.7);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: var(--text);
+			text-decoration: none;
+			font-weight: 600;
+			backdrop-filter: blur(12px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+			transition: transform 0.2s ease, background 0.2s ease;
+			touch-action: manipulation;
+		}
+
+		.back-button:hover {
+			background: rgba(11, 15, 26, 0.9);
+			color: var(--text);
+		}
+
+		.back-button:active {
+			transform: translateY(1px);
+		}
+
+		.page { position: relative; min-height: 100vh; }
+
+		.grid {
+			position: absolute;
+			inset: 0;
+			background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+			background-size: 52px 52px;
+			opacity: 0.3;
+			z-index: 0;
+		}
+
+		nav {
+			position: sticky;
+			top: 0;
+			z-index: 5;
+			backdrop-filter: blur(18px);
+			background: rgba(11, 15, 26, 0.82);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		.nav-wrap {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 18px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
+		}
+
+		.logo {
+			font-family: "Syne", sans-serif;
+			font-size: 1.4rem;
+			letter-spacing: 1px;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 18px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active { color: var(--text); }
+
+		.hero {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 90px 24px 40px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-title {
+			font-family: "Syne", sans-serif;
+			font-size: clamp(2.2rem, 4vw, 3.1rem);
+			margin-bottom: 12px;
+			animation: titlePulse 4s ease-in-out infinite;
+		}
+
+		.hero p { color: var(--muted); }
+
+		.status-pill {
+			margin-top: 18px;
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			padding: 10px 16px;
+			border-radius: 999px;
+			background: rgba(42, 209, 181, 0.15);
+			border: 1px solid rgba(42, 209, 181, 0.4);
+			color: var(--accent);
+			font-weight: 600;
+		}
+
+		.section {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 24px 80px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+			gap: 20px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.card {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 18px;
+			padding: 20px;
+			box-shadow: var(--shadow);
+		}
+
+		.card h4 { margin-bottom: 10px; }
+		.card p { color: var(--muted); line-height: 1.5; }
+
+		.service {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 12px 0;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		.service:last-child { border-bottom: none; }
+
+		.dot {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: var(--accent);
+			box-shadow: 0 0 10px rgba(42, 209, 181, 0.8);
+		}
+
+		.timeline {
+			display: grid;
+			gap: 12px;
+		}
+
+		.timeline-item {
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 14px;
+			padding: 14px 16px;
+		}
+
+		.timeline-item span { color: var(--accent-3); font-size: 0.85rem; }
+		.timeline-item p { margin-top: 6px; color: var(--muted); }
+
+		.updated {
+			margin-top: 10px;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.feature-lab {
+			max-width: 1200px;
+			margin: 0 auto 80px;
+			padding: 0 24px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.feature-header {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+
+		.feature-controls {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.feature-controls input {
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			padding: 10px 12px;
+			color: var(--text);
+			min-width: 220px;
+		}
+
+		.chip {
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			background: rgba(255, 255, 255, 0.04);
+			color: var(--muted);
+			padding: 8px 14px;
+			border-radius: 999px;
+			cursor: pointer;
+			font-size: 0.9rem;
+		}
+
+		.chip.active {
+			color: #04121a;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		}
+
+		.feature-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 18px;
+		}
+
+		.feature-tile {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 16px;
+			padding: 16px;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-tile small {
+			color: var(--accent-3);
+			font-weight: 600;
+		}
+
+		.feature-tile p {
+			color: var(--muted);
+			margin: 8px 0 12px;
+			line-height: 1.5;
+		}
+
+		.feature-expand {
+			border: none;
+			padding: 8px 12px;
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.08);
+			color: var(--text);
+			cursor: pointer;
+			font-weight: 600;
+		}
+
+		.feature-details {
+			margin-top: 12px;
+			display: none;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.feature-tile.active .feature-details {
+			display: block;
+		}
+
+		.stat-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 18px;
+			margin: 26px 0;
+		}
+
+		.stat {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		.stat h4 { font-size: 1.4rem; }
+
+		.mini-chart {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		canvas {
+			width: 100%;
+			height: 180px;
+			display: block;
+		}
+
+		@keyframes titlePulse {
+			0%, 100% { text-shadow: 0 0 0 rgba(78, 160, 255, 0); }
+			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
+		}
+
+		@media (max-width: 768px) {
+			.nav-links { display: none; }
+			.hero { padding-top: 60px; }
+		}
+
+		@media (max-width: 600px) {
+			.back-button {
+				top: 12px;
+				left: 12px;
+				padding: 8px 12px;
+				font-size: 0.9rem;
+				max-width: calc(100vw - 24px);
+			}
+			.page {
+				padding-top: 56px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
+	<div class="page">
+		<div class="grid"></div>
+
+		<nav>
+			<div class="nav-wrap">
+				<div class="logo">Finance Support</div>
+				<ul class="nav-links">
+					<li><a href="help-center.html">Help Center</a></li>
+					<li><a href="contact-us.html">Contact Us</a></li>
+					<li><a href="community.html">Community</a></li>
+					<li><a class="active" href="status-page.html">Status</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<section class="hero">
+			<div class="hero-title">Platform Status</div>
+			<p>Real-time visibility into Finance services and infrastructure health.</p>
+			<div class="status-pill">All Systems Operational</div>
+			<div class="updated" id="updatedAt">Last updated just now</div>
+		</section>
+
+		<section class="section">
+			<div class="card">
+				<h4>Core Services</h4>
+				<div class="service"><span>Dashboard</span><span class="dot"></span></div>
+				<div class="service"><span>Transactions API</span><span class="dot"></span></div>
+				<div class="service"><span>Reporting Engine</span><span class="dot"></span></div>
+				<div class="service"><span>Notifications</span><span class="dot"></span></div>
+			</div>
+			<div class="card">
+				<h4>Recent Updates</h4>
+				<div class="timeline">
+					<div class="timeline-item">
+						<span>Today, 09:30 AM</span>
+						<p>Monthly trend chart latency reduced by 35 percent.</p>
+					</div>
+					<div class="timeline-item">
+						<span>Yesterday, 06:00 PM</span>
+						<p>Export pipeline refreshed. No customer impact.</p>
+					</div>
+					<div class="timeline-item">
+						<span>Mar 31, 04:20 PM</span>
+						<p>Security patch deployed to admin access flow.</p>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<h4>Uptime Overview</h4>
+				<p>99.98% uptime over the last 90 days. Incident response within 12 minutes.</p>
+			</div>
+		</section>
+
+		<section class="feature-lab">
+			<div class="feature-header">
+				<div>
+					<h3 class="hero-title" style="font-size: 1.9rem;">Reliability Features</h3>
+					<p>Operational controls with live toggles and monitoring tools.</p>
+				</div>
+				<div class="feature-controls">
+					<input id="featureSearch" type="text" placeholder="Search features" />
+					<button class="chip active" data-filter="all">All</button>
+					<button class="chip" data-filter="monitoring">Monitoring</button>
+					<button class="chip" data-filter="alerts">Alerts</button>
+					<button class="chip" data-filter="recovery">Recovery</button>
+				</div>
+			</div>
+
+			<div class="stat-row">
+				<div class="stat">
+					<small>Incidents</small>
+					<h4 data-count="0">0</h4>
+					<p>Past 24 hours</p>
+				</div>
+				<div class="stat">
+					<small>Latency</small>
+					<h4 data-count="128">0</h4>
+					<p>Milliseconds avg</p>
+				</div>
+				<div class="stat">
+					<small>Availability</small>
+					<h4 data-count="99">0</h4>
+					<p>Percent uptime</p>
+				</div>
+			</div>
+
+			<div class="feature-grid" id="featureGrid"></div>
+
+			<div class="mini-chart">
+				<h4>Latency Trend</h4>
+				<canvas id="statusChart" width="600" height="220"></canvas>
+			</div>
+		</section>
+	</div>
+
+	<script>
+		const updatedAt = document.getElementById('updatedAt');
+		const now = new Date();
+		updatedAt.textContent = `Last updated ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
+		const featureGrid = document.getElementById('featureGrid');
+		const featureSearch = document.getElementById('featureSearch');
+		const filterButtons = document.querySelectorAll('.chip');
+
+		const featureData = [
+			{ title: 'Health Checks', tag: 'monitoring', desc: 'Ping every critical service.', details: 'Runs every 60 seconds.' },
+			{ title: 'Latency Alerts', tag: 'alerts', desc: 'Trigger when response spikes.', details: 'Thresholds adjustable per region.' },
+			{ title: 'Incident Timeline', tag: 'alerts', desc: 'Publish incident updates.', details: 'Keeps teams aligned during outages.' },
+			{ title: 'Auto Failover', tag: 'recovery', desc: 'Switch to backup clusters.', details: 'Failover completes under 2 minutes.' },
+			{ title: 'Region Status', tag: 'monitoring', desc: 'View uptime per region.', details: 'NA, EU, and APAC all visible.' },
+			{ title: 'Recovery Playbooks', tag: 'recovery', desc: 'Step-by-step recovery plans.', details: 'Runbooks stored for every service.' },
+			{ title: 'Alert Routing', tag: 'alerts', desc: 'Notify on-call rotations.', details: 'Escalate after 10 minutes.' },
+			{ title: 'Synthetic Tests', tag: 'monitoring', desc: 'Automated login and export tests.', details: 'Catches issues before users do.' },
+			{ title: 'Status Subscribe', tag: 'alerts', desc: 'Email and SMS updates.', details: 'Subscribe from any status card.' },
+			{ title: 'Warm Cache', tag: 'recovery', desc: 'Restore cache after restart.', details: 'Reduces cold-start time.' },
+			{ title: 'Change Calendar', tag: 'monitoring', desc: 'Review upcoming deployments.', details: 'Maintenance windows listed weekly.' },
+			{ title: 'Postmortem Hub', tag: 'recovery', desc: 'Document and share learnings.', details: 'Root cause analysis templates included.' }
+		];
+
+		function renderFeatures(filter = 'all', query = '') {
+			const normalized = query.toLowerCase();
+			const items = featureData.filter(item => {
+				const matchFilter = filter === 'all' || item.tag === filter;
+				const matchQuery = item.title.toLowerCase().includes(normalized) || item.desc.toLowerCase().includes(normalized);
+				return matchFilter && matchQuery;
+			});
+			featureGrid.innerHTML = items.map(item => `
+				<div class="feature-tile" data-tag="${item.tag}">
+					<small>${item.tag.toUpperCase()}</small>
+					<h4>${item.title}</h4>
+					<p>${item.desc}</p>
+					<button class="feature-expand">View details</button>
+					<div class="feature-details">${item.details}</div>
+				</div>
+			`).join('');
+
+			featureGrid.querySelectorAll('.feature-expand').forEach(btn => {
+				btn.addEventListener('click', () => {
+					btn.closest('.feature-tile').classList.toggle('active');
+				});
+			});
+		}
+
+		function animateCounters() {
+			document.querySelectorAll('[data-count]').forEach(counter => {
+				const target = Number(counter.dataset.count || 0);
+				let current = 0;
+				const step = Math.max(1, Math.ceil(target / 40));
+				const interval = setInterval(() => {
+					current += step;
+					if (current >= target) {
+						current = target;
+						clearInterval(interval);
+					}
+					counter.textContent = current;
+				}, 20);
+			});
+		}
+
+		function drawStatusChart() {
+			const canvas = document.getElementById('statusChart');
+			if (!canvas) return;
+			const ctx = canvas.getContext('2d');
+			const values = [140, 135, 128, 132, 120, 118, 125];
+			const width = canvas.width;
+			const height = canvas.height;
+			ctx.clearRect(0, 0, width, height);
+			ctx.strokeStyle = 'rgba(78, 160, 255, 0.9)';
+			ctx.lineWidth = 3;
+			ctx.beginPath();
+			values.forEach((val, index) => {
+				const x = (width / (values.length - 1)) * index;
+				const y = height - (val / 160) * (height - 30) - 10;
+				if (index === 0) ctx.moveTo(x, y);
+				else ctx.lineTo(x, y);
+			});
+			ctx.stroke();
+		}
+
+		filterButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				filterButtons.forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+				renderFeatures(btn.dataset.filter, featureSearch.value);
+			});
+		});
+
+		featureSearch.addEventListener('input', () => {
+			const active = document.querySelector('.chip.active');
+			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
+		});
+
+		renderFeatures();
+		animateCounters();
+		drawStatusChart();
+	</script>
+</body>
+</html>

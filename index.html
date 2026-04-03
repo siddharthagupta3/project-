@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Finance - Future of Financial Management</title>
+    <title> Zorvyn - Future of Financial Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="admin.css">
 
@@ -28,14 +28,24 @@
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">
-                <i class="fas fa-building"></i>
-                Finance
+                <svg class="logo-mark" viewBox="0 0 64 64" role="img" aria-label="Zorvyn logo">
+                    <defs>
+                        <linearGradient id="zorvynGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#667eea" />
+                            <stop offset="50%" stop-color="#f093fb" />
+                            <stop offset="100%" stop-color="#fda085" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#zorvynGrad)" />
+                    <path d="M16 16H44L26 34H46L20 50H48" fill="none" stroke="#0a0a0f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Zorvyn
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#support">Contact</a></li>
             </ul>
             <a href="signup/signup.html" class="nav-cta">Get Started</a>
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -50,7 +60,7 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text">
-                <span class="hero-badge">🚀 Finance Tomorrow, Today</span>
+                <span class="hero-badge">🚀 Zorvyn Tomorrow, Today</span>
                 <h1 class="hero-title">Shape the Future with <br><span class="typing-wrapper"><span id="typing-text"></span></span></h1>
                 <p>Experience the convergence of AI,  Transform your management with solutions that transcend boundaries.</p>
                 <div class="hero-buttons">
@@ -82,8 +92,8 @@
                                 <i class="fas fa-cloud"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 600;">Mind Game</div>
-                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> Play interactive games</div>
+                                <div style="font-weight: 600;">Smart Alerts</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> Real-time finance notifications</div>
                             </div>
                         </div>
                         <div class="tech-item">
@@ -91,8 +101,8 @@
                                 <i class="fas fa-atom"></i>
                             </div>
                             <div>
-                                <div style="font-weight: 600;">News</div>
-                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Upteds with latest news</div>
+                                <div style="font-weight: 600;">Auto Reports</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> Scheduled finance summaries</div>
                             </div>
                         </div>
                         <div class="tech-item">
@@ -110,55 +120,100 @@
         </div>
     </section>
 
+    <!-- Access Flow Section -->
+    <section class="flow-section" id="access-flow">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get to the Dashboard in 3 Steps</h2>
+                <p>Follow the quick flow below: start free account, login with any email and password, then land on your dashboard.</p>
+            </div>
+            <div class="flow-track" role="list">
+                <article class="flow-card" role="listitem">
+                    <div class="flow-media">
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=900&q=80" alt="Zorvyn dashboard overview" />
+                        <span class="flow-step">Step 1</span>
+                    </div>
+                    <div class="flow-body">
+                        <h3>Click Start Free Account</h3>
+                        <p>Tap Start Free account or Get Started to open the login screen instantly.</p>
+                        <span class="flow-link">Open Login</span>
+                    </div>
+                </article>
+                <article class="flow-card" role="listitem">
+                    <div class="flow-media">
+                        <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=900&q=80" alt="Login screen on device" />
+                        <span class="flow-step">Step 2</span>
+                    </div>
+                    <div class="flow-body">
+                        <h3>Login with Any Gmail</h3>
+                        <p>Enter any Gmail and any password. This demo lets you proceed right away.</p>
+                        <span class="flow-link">Go to Login</span>
+                    </div>
+                </article>
+                <article class="flow-card" role="listitem">
+                    <div class="flow-media">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Analytics dashboard screen" />
+                        <span class="flow-step">Step 3</span>
+                    </div>
+                    <div class="flow-body">
+                        <h3>Dashboard Opened</h3>
+                        <p>Your dashboard loads with charts, totals, and real-time finance insights.</p>
+                        <span class="flow-link">Open Dashboard</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <h2>Revolutionary Features</h2>
-                <p>Discover the cutting-edge capabilities that set us apart</p>
+                <h2>Dashboard Features</h2>
+                <p>Everything you see inside the finance dashboard, beautifully organized</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
+                        <i class="fas fa-wallet"></i>
                     </div>
-                    <h3>Autonomous AI</h3>
-                    <p>Self-learning algorithms that adapt and evolve with your data, providing insights that grow smarter over time.</p>
+                    <h3>Total Balance</h3>
+                    <p>Instantly see net position with auto-updating balance that reflects every change.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-arrow-trend-up"></i>
                     </div>
-                    <h3>Mind Game</h3>
-                    <p>Interactive games designed to enhance cognitive skills and mental agility.</p>
+                    <h3>Total Income</h3>
+                    <p>Track all inflows at a glance with clear breakdowns by source and time.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-arrow-trend-down"></i>
                     </div>
-                    <h3>News</h3>
-                    <p>Stay updated with the latest news and trends in technology and innovation.</p>
+                    <h3>Total Expenses</h3>
+                    <p>Know exactly where money goes with accurate expense totals and trends.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
+                        <i class="fas fa-chart-column"></i>
                     </div>
-                    <h3>india reach</h3>
-                    <p>Our platform is accessible across India with localized content and support.</p>
+                    <h3>Monthly Trend</h3>
+                    <p>Compare income and expenses month-over-month using crisp charts.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-chart-pie"></i>
                     </div>
-                    <h3>Real-time Analytics</h3>
-                    <p>Visualize complex data streams with interactive dashboards and predictive modeling.</p>
+                    <h3>Category Breakdown</h3>
+                    <p>Visual slices show which categories drive income and spending.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-clipboard-list"></i>
                     </div>
-                    <h3>Developer First</h3>
-                    <p>Comprehensive APIs, SDKs, and documentation to accelerate your development workflow.</p>
+                    <h3>Transactions & Export</h3>
+                    <p>Add, edit, delete, and export records with role-based access control.</p>
                 </div>
             </div>
         </div>
@@ -170,7 +225,7 @@
     <section class="testimonials">
         <div class="container">
             <div class="section-header">
-                <h2>Trusted by Finance Professionals in India</h2>
+                <h2>Trusted by Zorvyn Professionals in India</h2>
                 <p>See what our clients have to say about their financial success</p>
             </div>
             <div class="testimonials-grid">
@@ -182,7 +237,7 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-content">"Finance has transformed our entire portfolio. The AI capabilities alone have increased our returns by 300%."</p>
+                    <p class="testimonial-content">"Zorvyn has transformed our entire portfolio. The AI capabilities alone have increased our returns by 300%."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">JD</div>
                         <div class="author-info">
@@ -233,7 +288,7 @@
     <section class="cta">
         <div class="cta-content">
             <h2>Ready to Transform Your Future?</h2>
-            <p>Join thousands of finance experts already using Finance to manage their portfolios and investments.</p>
+            <p>Join thousands of finance experts already using Zorvyn to manage their portfolios and investments.</p>
             <div class="hero-buttons" style="justify-content: center;">
                 <a href="signup/signup.html" class="btn-primary">
                     Start Free Trial
@@ -252,10 +307,10 @@
    <section id="about">
   <div class="about-wrapper">
 
-    <h2 class="about-title">About Finance</h2>
+    <h2 class="about-title">About Zorvyn</h2>
 
     <p class="about-desc">
-      Finance Management System helps manage portfolios, investments,
+    Zorvyn Management System helps manage portfolios, investments,
       transactions, analytics and reporting efficiently in one platform.
     </p>
 
@@ -281,106 +336,13 @@
   </div>
 </section>
 
-<!-- Contact Section -->
-
-<section id="contact" style="padding: 5rem 2rem; background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));">
-  <div class="container">
-    <div class="section-header" style="margin-bottom: 4rem;">
-      <h2>Get in Touch With Our Finance Team</h2>
-      <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Have questions about our Finance Management System? Our team is here to help you optimize your financial operations.</p>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; align-items: start;">
-      <!-- Contact Info Cards -->
-      <div>
-        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-          <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📧</div>
-            <div>
-              <h3 style="margin: 0 0 0.5rem 0;">Email Support</h3>
-              <p style="margin: 0; color: var(--text-secondary);">support@finance.com</p>
-              <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Response within 24 hours</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-          <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📞</div>
-            <div>
-              <h3 style="margin: 0 0 0.5rem 0;">Phone Support</h3>
-              <p style="margin: 0; color: var(--text-secondary);">+91 (987) 654-3210</p>
-              <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Monday - Friday, 9AM - 6PM IST</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;">
-          <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📍</div>
-            <div>
-              <h3 style="margin: 0 0 0.5rem 0;">Office Location</h3>
-              <p style="margin: 0; color: var(--text-secondary);">Bangalore, India</p>
-              <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">BizHub Tower, Electronic City</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Form -->
-      <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;">
-        <h3 style="margin-top: 0;">Send us a Message</h3>
-        <form class="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
-          
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Full Name</label>
-            <input type="text" placeholder="Your Full Name" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
-          </div>
-
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Email Address</label>
-            <input type="email" placeholder="your@email.com" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
-          </div>
-
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Company</label>
-            <input type="text" placeholder="Your Company Name" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
-          </div>
-
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Subject</label>
-            <select style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
-              <option style="background: var(--dark-bg); color: white;">Select a subject</option>
-              <option style="background: var(--dark-bg); color: white;">Product Demo</option>
-              <option style="background: var(--dark-bg); color: white;">Pricing Inquiry</option>
-              <option style="background: var(--dark-bg); color: white;">Technical Support</option>
-              <option style="background: var(--dark-bg); color: white;">Partnership</option>
-              <option style="background: var(--dark-bg); color: white;">Other</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem;">Message</label>
-            <textarea placeholder="Tell us about your inquiry..." rows="5" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; font-size: 1rem; font-family: inherit;"></textarea>
-          </div>
-
-          <button type="submit" style="background: var(--primary-gradient); padding: 12px 2rem; border-radius: 50px; border: none; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; width: 100%;">
-            Send Message
-          </button>
-
-          <p style="text-align: center; font-size: 0.875rem; color: var(--text-secondary); margin: 0;">Our team will respond within 24 business hours</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>Finance</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Finance Management System</p>
+            <div class="footer-section" id="support">
+                <h3>Zorvyn</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Zorvyn Management System</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-twitter"></i></a>
                     <a href="#"><i class="fab fa-linkedin"></i></a>
@@ -399,15 +361,15 @@
             <div class="footer-section">
                 <h3>Support</h3>
                 <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Status Page</a></li>
-                    <li><a href="#">Community</a></li>
+                    <li><a href="support/help-center.html">Help Center</a></li>
+                    <li><a href="support/contact-us.html">Contact Us</a></li>
+                    <li><a href="support/status-page.html">Status Page</a></li>
+                    <li><a href="support/community.html">Community</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Finance. All rights reserved.</p>
+            <p>&copy; 2026 Zorvyn. All rights reserved.</p>
             <p class="designer">Designed by <span> Siddhartha gupta</span></p>
         </div>
     </footer>

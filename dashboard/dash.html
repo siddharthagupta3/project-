@@ -191,6 +191,25 @@ alt="" />
             </div>
         </div>
 
+        <!-- Insights -->
+        <div class="insights-section">
+            <div class="insight-card">
+                <h3>Best Month (Net)</h3>
+                <p class="insight-title" id="bestMonth">No data</p>
+                <p class="insight-value" id="bestMonthNet">₹0</p>
+            </div>
+            <div class="insight-card">
+                <h3>Top Income Category</h3>
+                <p class="insight-title" id="topIncomeCategory">No income</p>
+                <p class="insight-value" id="topIncomeAmount">₹0</p>
+            </div>
+            <div class="insight-card">
+                <h3>Top Expense Category</h3>
+                <p class="insight-title" id="topExpenseCategory">No expense</p>
+                <p class="insight-value" id="topExpenseAmount">₹0</p>
+            </div>
+        </div>
+
         <!-- Charts Section -->
         <div class="charts-container">
             <div class="chart-card">
@@ -229,28 +248,29 @@ alt="" />
                         <option value="amount">Sort by Amount</option>
                     </select>
                     <button class="add-transaction-btn admin-only" id="addTransactionBtn">+ Add Transaction</button>
+                    <button class="export-btn admin-only" id="saveBtn">💾 Save</button>
                     <button class="export-btn" id="exportBtn">📊 Export</button>
                 </div>
             </div>
 
             <!-- Add Transaction Form (Hidden by default) -->
             <div class="add-transaction-form" id="addTransactionForm" style="display: none;">
-                <h4>Add New Transaction</h4>
+                <h4 id="transactionFormTitle">Add New Transaction</h4>
                 <form id="transactionForm">
                     <div class="form-row">
-                        <input type="number" id="amount" placeholder="Amount" required>
-                        <input type="text" id="category" placeholder="Category" required>
+                        <input type="number" id="amount" name="amount" placeholder="Amount" min="0" step="0.01" required>
+                        <input type="text" id="category" name="category" placeholder="Category" required>
                     </div>
                     <div class="form-row">
-                        <input type="date" id="date" required>
-                        <select id="type" required>
+                        <input type="date" id="date" name="date" required>
+                        <select id="type" name="type" required>
                             <option value="">Select Type</option>
                             <option value="income">Income</option>
                             <option value="expense">Expense</option>
                         </select>
                     </div>
                     <div class="form-row">
-                        <input type="text" id="description" placeholder="Description (optional)">
+                        <input type="text" id="description" name="description" placeholder="Description (optional)">
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn-primary">Add Transaction</button>

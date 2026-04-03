@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Help Center | Finance Support</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--bg: #0b0f1a;
+			--bg-2: #0e1a24;
+			--glass: rgba(255, 255, 255, 0.06);
+			--glass-border: rgba(255, 255, 255, 0.12);
+			--text: #f8fbff;
+			--muted: #b8c3d6;
+			--accent: #29d6c1;
+			--accent-2: #4ea0ff;
+			--accent-3: #f5b84b;
+			--shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			background-color: var(--bg);
+			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			scroll-behavior: smooth;
+			height: 100%;
+			overflow-x: hidden;
+		}
+
+		body {
+			font-family: "Space Grotesk", sans-serif;
+			background-color: var(--bg);
+			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			background-repeat: no-repeat;
+			background-size: cover;
+			color: var(--text);
+			min-height: 100vh;
+			overflow-x: hidden;
+			width: 100%;
+		}
+
+		.back-button {
+			position: fixed;
+			top: max(18px, env(safe-area-inset-top));
+			left: max(18px, env(safe-area-inset-left));
+			z-index: 6;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 14px;
+			border-radius: 999px;
+			background: rgba(11, 15, 26, 0.7);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: var(--text);
+			text-decoration: none;
+			font-weight: 600;
+			backdrop-filter: blur(12px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+			transition: transform 0.2s ease, background 0.2s ease;
+			touch-action: manipulation;
+		}
+
+		.back-button:hover {
+			background: rgba(11, 15, 26, 0.9);
+			color: var(--text);
+		}
+
+		.back-button:active {
+			transform: translateY(1px);
+		}
+
+		.page {
+			position: relative;
+			min-height: 100vh;
+			overflow-x: clip;
+		}
+
+		.grid-glow {
+			position: absolute;
+			inset: 0;
+			background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+			background-size: 48px 48px;
+			opacity: 0.35;
+			z-index: 0;
+		}
+
+		.orb {
+			position: absolute;
+			width: 320px;
+			height: 320px;
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(41, 214, 193, 0.6), transparent 70%);
+			filter: blur(20px);
+			animation: float 10s ease-in-out infinite;
+			top: -120px;
+			right: -80px;
+			z-index: 0;
+		}
+
+		nav {
+			position: sticky;
+			top: 0;
+			z-index: 5;
+			backdrop-filter: blur(18px);
+			background: rgba(11, 15, 26, 0.82);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		.nav-wrap {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 18px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
+		}
+
+		.logo {
+			font-family: "Syne", sans-serif;
+			font-size: 1.4rem;
+			letter-spacing: 1px;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 18px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active {
+			color: var(--text);
+		}
+
+		.hero {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 90px 24px 60px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 36px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-title {
+			font-family: "Syne", sans-serif;
+			font-size: clamp(2.4rem, 4vw, 3.4rem);
+			line-height: 1.1;
+			margin-bottom: 16px;
+			text-shadow: 0 0 25px rgba(78, 160, 255, 0.3);
+			animation: titlePulse 4s ease-in-out infinite;
+		}
+
+		.hero p {
+			color: var(--muted);
+			font-size: 1.05rem;
+			line-height: 1.7;
+			margin-bottom: 28px;
+		}
+
+		.search-bar {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 999px;
+			padding: 8px 16px;
+			box-shadow: var(--shadow);
+		}
+
+		.search-bar input {
+			flex: 1;
+			background: transparent;
+			border: none;
+			outline: none;
+			color: var(--text);
+			font-size: 1rem;
+		}
+
+		.search-bar button {
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+			border: none;
+			color: #021b1a;
+			padding: 10px 18px;
+			border-radius: 999px;
+			font-weight: 700;
+			cursor: pointer;
+		}
+
+		.hero-visual {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.hero-visual img {
+			width: min(360px, 90%);
+			max-width: 100%;
+			height: auto;
+			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+			animation: float 7s ease-in-out infinite;
+		}
+
+		.section {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 24px 80px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.section-title {
+			font-family: "Syne", sans-serif;
+			font-size: 1.8rem;
+			margin-bottom: 18px;
+		}
+
+		.cards {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 20px;
+		}
+
+		.card {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 18px;
+			padding: 20px;
+			box-shadow: var(--shadow);
+			transition: transform 0.3s ease, border-color 0.3s ease;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.card::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at top, rgba(78, 160, 255, 0.25), transparent 60%);
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		.card:hover {
+			transform: translateY(-6px);
+			border-color: rgba(78, 160, 255, 0.4);
+		}
+
+		.card:hover::after {
+			opacity: 1;
+		}
+
+		.card h4 {
+			margin-bottom: 8px;
+			font-size: 1.1rem;
+		}
+
+		.card p {
+			color: var(--muted);
+			font-size: 0.95rem;
+			line-height: 1.5;
+		}
+
+		.faq {
+			margin-top: 32px;
+			display: grid;
+			gap: 14px;
+		}
+
+		.faq-item {
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 14px;
+			padding: 16px 18px;
+			cursor: pointer;
+		}
+
+		.faq-item h5 {
+			font-size: 1rem;
+		}
+
+		.faq-item p {
+			color: var(--muted);
+			margin-top: 10px;
+			display: none;
+			line-height: 1.6;
+		}
+
+		.faq-item.active p {
+			display: block;
+		}
+
+		.feature-lab {
+			max-width: 1200px;
+			margin: 0 auto 80px;
+			padding: 0 24px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.feature-header {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+
+		.feature-controls {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.feature-controls input {
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			padding: 10px 12px;
+			color: var(--text);
+			min-width: 220px;
+		}
+
+		.chip {
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			background: rgba(255, 255, 255, 0.04);
+			color: var(--muted);
+			padding: 8px 14px;
+			border-radius: 999px;
+			cursor: pointer;
+			font-size: 0.9rem;
+		}
+
+		.chip.active {
+			color: #04121a;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		}
+
+		.feature-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 18px;
+		}
+
+		.feature-tile {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 16px;
+			padding: 16px;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-tile small {
+			color: var(--accent-3);
+			font-weight: 600;
+		}
+
+		.feature-tile p {
+			color: var(--muted);
+			margin: 8px 0 12px;
+			line-height: 1.5;
+		}
+
+		.feature-expand {
+			border: none;
+			padding: 8px 12px;
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.08);
+			color: var(--text);
+			cursor: pointer;
+			font-weight: 600;
+		}
+
+		.feature-details {
+			margin-top: 12px;
+			display: none;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.feature-tile.active .feature-details {
+			display: block;
+		}
+
+		.stat-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 18px;
+			margin: 26px 0;
+		}
+
+		.stat {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		.stat h4 {
+			font-size: 1.4rem;
+		}
+
+		.mini-chart {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		canvas {
+			width: 100%;
+			height: 180px;
+			display: block;
+		}
+
+		.system-pulse {
+			display: inline-flex;
+			gap: 8px;
+			align-items: center;
+			color: var(--accent);
+			font-weight: 600;
+		}
+
+		.pulse-dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: var(--accent);
+			box-shadow: 0 0 12px rgba(41, 214, 193, 0.8);
+		}
+
+		footer {
+			text-align: center;
+			padding: 30px 20px 50px;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-14px); }
+		}
+
+		@keyframes titlePulse {
+			0%, 100% { text-shadow: 0 0 0 rgba(78, 160, 255, 0); }
+			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
+		}
+
+		@media (max-width: 768px) {
+			.nav-links { display: none; }
+			.hero { padding-top: 60px; }
+		}
+
+		@media (max-width: 600px) {
+			.back-button {
+				top: 12px;
+				left: 12px;
+				padding: 8px 12px;
+				font-size: 0.9rem;
+				max-width: calc(100vw - 24px);
+			}
+			.page {
+				padding-top: 56px;
+			}
+			.hero {
+				grid-template-columns: 1fr;
+			}
+			.search-bar {
+				flex-wrap: wrap;
+			}
+			.search-bar input {
+				min-width: 0;
+				width: 100%;
+			}
+			.search-bar button {
+				width: 100%;
+			}
+			.feature-controls input {
+				min-width: 0;
+				width: min(100%, 260px);
+			}
+			canvas {
+				max-width: 100%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
+	<div class="page">
+		<div class="grid-glow"></div>
+		<div class="orb"></div>
+
+		<nav>
+			<div class="nav-wrap">
+				<div class="logo">Finance Support</div>
+				<ul class="nav-links">
+					<li><a class="active" href="help-center.html">Help Center</a></li>
+					<li><a href="contact-us.html">Contact Us</a></li>
+					<li><a href="community.html">Community</a></li>
+					<li><a href="status-page.html">Status</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<section class="hero">
+			<div>
+				<div class="hero-title">Help Center, Built for Fast Answers</div>
+				<p>Search guides, explore fixes, and get back to business with clarity. Every article is tuned for finance workflows.</p>
+				<div class="search-bar">
+					<input id="searchInput" type="text" placeholder="Search topics, billing, exports, or reports" />
+					<button id="searchBtn">Search</button>
+				</div>
+			</div>
+			<div class="hero-visual">
+				<img alt="Help Center Illustration" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'><defs><radialGradient id='g' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='%2329d6c1'/><stop offset='60%' stop-color='%234ea0ff'/><stop offset='100%' stop-color='%230b0f1a'/></radialGradient></defs><circle cx='210' cy='210' r='170' fill='url(%23g)'/><circle cx='210' cy='210' r='110' fill='%230b0f1a' opacity='0.6'/><path d='M150 210h120' stroke='%23ffffff' stroke-width='8' stroke-linecap='round'/><path d='M210 150v120' stroke='%23ffffff' stroke-width='8' stroke-linecap='round'/></svg>" />
+			</div>
+		</section>
+
+		<section class="section">
+			<h3 class="section-title">Popular Topics</h3>
+			<div class="cards" id="topicCards">
+				<div class="card" data-topic="getting started">
+					<h4>Getting Started</h4>
+					<p>Set up your first dashboard, connect data, and configure roles.</p>
+				</div>
+				<div class="card" data-topic="transactions">
+					<h4>Transactions</h4>
+					<p>Add, edit, and delete income or expenses with confidence.</p>
+				</div>
+				<div class="card" data-topic="reports">
+					<h4>Reports & Export</h4>
+					<p>Download CSV reports and share executive-ready summaries.</p>
+				</div>
+				<div class="card" data-topic="security">
+					<h4>Security & Roles</h4>
+					<p>Control access with admin and viewer permissions.</p>
+				</div>
+			</div>
+
+			<div class="faq">
+				<div class="faq-item">
+					<h5>How do I add a new transaction?</h5>
+					<p>Open the dashboard, switch to Admin, and use the Add Transaction button. It updates instantly.</p>
+				</div>
+				<div class="faq-item">
+					<h5>Can I export monthly reports?</h5>
+					<p>Yes. Use Export to CSV in the dashboard to download every transaction instantly.</p>
+				</div>
+				<div class="faq-item">
+					<h5>Where do I change categories?</h5>
+					<p>Edit the transaction directly and set the category. Charts update automatically.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="feature-lab">
+			<div class="feature-header">
+				<div>
+					<h3 class="section-title">Feature Lab</h3>
+					<p class="system-pulse"><span class="pulse-dot"></span><span id="systemPulse">Syncing help signals...</span></p>
+				</div>
+				<div class="feature-controls">
+					<input id="featureSearch" type="text" placeholder="Search features" />
+					<button class="chip active" data-filter="all">All</button>
+					<button class="chip" data-filter="setup">Setup</button>
+					<button class="chip" data-filter="analytics">Analytics</button>
+					<button class="chip" data-filter="workflow">Workflow</button>
+				</div>
+			</div>
+
+			<div class="stat-row">
+				<div class="stat">
+					<small>Articles Solved</small>
+					<h4 data-count="248">0</h4>
+					<p>Resolved this week</p>
+				</div>
+				<div class="stat">
+					<small>Avg Response</small>
+					<h4 data-count="6">0</h4>
+					<p>Minutes per ticket</p>
+				</div>
+				<div class="stat">
+					<small>Top Category</small>
+					<h4>Exports</h4>
+					<p>Highest engagement</p>
+				</div>
+			</div>
+
+			<div class="feature-grid" id="featureGrid"></div>
+
+			<div class="mini-chart">
+				<h4>Help Requests Volume</h4>
+				<canvas id="helpChart" width="600" height="220"></canvas>
+			</div>
+		</section>
+
+		<footer>Need more help? Email support@finance.com</footer>
+	</div>
+
+	<script>
+		const searchInput = document.getElementById('searchInput');
+		const cards = Array.from(document.querySelectorAll('#topicCards .card'));
+		const faqItems = document.querySelectorAll('.faq-item');
+		const featureGrid = document.getElementById('featureGrid');
+		const featureSearch = document.getElementById('featureSearch');
+		const filterButtons = document.querySelectorAll('.chip');
+		const systemPulse = document.getElementById('systemPulse');
+
+		function filterTopics() {
+			const query = searchInput.value.trim().toLowerCase();
+			cards.forEach(card => {
+				const topic = card.dataset.topic || '';
+				card.style.display = topic.includes(query) ? 'block' : 'none';
+			});
+		}
+
+		const featureData = [
+			{ title: 'Role Switcher', tag: 'setup', desc: 'Switch between admin and viewer modes.', details: 'Use admin mode to unlock editing and exports.' },
+			{ title: 'Smart Search', tag: 'workflow', desc: 'Find any transaction or article instantly.', details: 'Filters update results with each key press.' },
+			{ title: 'Live Totals', tag: 'analytics', desc: 'Balance, income, and expense auto-calc.', details: 'Totals update after every add or edit.' },
+			{ title: 'Monthly Trend', tag: 'analytics', desc: 'Compare income and expenses monthly.', details: 'Chart renders once and updates on data change.' },
+			{ title: 'Category Breakdown', tag: 'analytics', desc: 'Visual split of category totals.', details: 'Tap a slice to see the top category.' },
+			{ title: 'Transaction Editor', tag: 'workflow', desc: 'Edit items with instant validation.', details: 'Form highlights required inputs.' },
+			{ title: 'Export Center', tag: 'workflow', desc: 'Download CSV reports in one click.', details: 'Exports include filters and sorting.' },
+			{ title: 'Access Controls', tag: 'setup', desc: 'Lock admin tools when needed.', details: 'Viewer mode hides editing tools.' },
+			{ title: 'Notifications', tag: 'workflow', desc: 'Toast updates confirm each action.', details: 'Success and error states are color-coded.' },
+			{ title: 'Audit Trail', tag: 'setup', desc: 'Track edits and deletions.', details: 'Timestamped metadata helps auditing.' },
+			{ title: 'Auto Save', tag: 'workflow', desc: 'Local storage keeps data safe.', details: 'Changes are saved after each update.' },
+			{ title: 'Insight Cards', tag: 'analytics', desc: 'Best month and top categories.', details: 'Insights refresh with every transaction.' }
+		];
+
+		function renderFeatures(filter = 'all', query = '') {
+			const normalized = query.toLowerCase();
+			const items = featureData.filter(item => {
+				const matchFilter = filter === 'all' || item.tag === filter;
+				const matchQuery = item.title.toLowerCase().includes(normalized) || item.desc.toLowerCase().includes(normalized);
+				return matchFilter && matchQuery;
+			});
+			featureGrid.innerHTML = items.map(item => `
+				<div class="feature-tile" data-tag="${item.tag}">
+					<small>${item.tag.toUpperCase()}</small>
+					<h4>${item.title}</h4>
+					<p>${item.desc}</p>
+					<button class="feature-expand">View details</button>
+					<div class="feature-details">${item.details}</div>
+				</div>
+			`).join('');
+
+			featureGrid.querySelectorAll('.feature-expand').forEach(btn => {
+				btn.addEventListener('click', () => {
+					btn.closest('.feature-tile').classList.toggle('active');
+				});
+			});
+		}
+
+		function animateCounters() {
+			document.querySelectorAll('[data-count]').forEach(counter => {
+				const target = Number(counter.dataset.count || 0);
+				let current = 0;
+				const step = Math.max(1, Math.ceil(target / 40));
+				const interval = setInterval(() => {
+					current += step;
+					if (current >= target) {
+						current = target;
+						clearInterval(interval);
+					}
+					counter.textContent = current;
+				}, 20);
+			});
+		}
+
+		function drawHelpChart() {
+			const canvas = document.getElementById('helpChart');
+			if (!canvas) return;
+			const ctx = canvas.getContext('2d');
+			const values = [20, 32, 28, 40, 36, 52, 45];
+			const width = canvas.width;
+			const height = canvas.height;
+			ctx.clearRect(0, 0, width, height);
+			ctx.strokeStyle = 'rgba(78, 160, 255, 0.7)';
+			ctx.lineWidth = 3;
+			ctx.beginPath();
+			values.forEach((val, index) => {
+				const x = (width / (values.length - 1)) * index;
+				const y = height - (val / 60) * (height - 30) - 10;
+				if (index === 0) ctx.moveTo(x, y);
+				else ctx.lineTo(x, y);
+			});
+			ctx.stroke();
+		}
+
+		document.getElementById('searchBtn').addEventListener('click', filterTopics);
+		searchInput.addEventListener('input', filterTopics);
+
+		faqItems.forEach(item => {
+			item.addEventListener('click', () => {
+				item.classList.toggle('active');
+			});
+		});
+
+		filterButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				filterButtons.forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+				renderFeatures(btn.dataset.filter, featureSearch.value);
+			});
+		});
+
+		featureSearch.addEventListener('input', () => {
+			const active = document.querySelector('.chip.active');
+			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
+		});
+
+		setTimeout(() => {
+			systemPulse.textContent = 'All help systems operational';
+		}, 1200);
+
+		renderFeatures();
+		animateCounters();
+		drawHelpChart();
+	</script>
+</body>
+</html>

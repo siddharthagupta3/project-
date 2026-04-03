@@ -66,6 +66,10 @@ function switchRole(role) {
     showNotification(`Switched to ${role} role`, 'success');
     app.saveStorage();
     renderTransactions();
+
+    if (role !== 'admin') {
+        hideAddTransactionForm();
+    }
 }
 
 // Transaction CRUD
@@ -110,15 +114,105 @@ function calculateTotals() {
     return totals;
 }
 
+function formatCurrency(value) {
+    const safeValue = Number.isFinite(value) ? value : 0;
+    return `₹${safeValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+}
+
 function updateDashboard() {
     const totals = calculateTotals();
     const balanceEl = document.getElementById('totalBalance');
     const incomeEl = document.getElementById('totalIncome');
     const expensesEl = document.getElementById('totalExpenses');
     
-    if (balanceEl) balanceEl.textContent = `₹${totals.balance.toLocaleString('en-IN')}`;
-    if (incomeEl) incomeEl.textContent = `₹${totals.income.toLocaleString('en-IN')}`;
-    if (expensesEl) expensesEl.textContent = `₹${totals.expenses.toLocaleString('en-IN')}`;
+    if (balanceEl) balanceEl.textContent = formatCurrency(totals.balance);
+    if (incomeEl) incomeEl.textContent = formatCurrency(totals.income);
+    if (expensesEl) expensesEl.textContent = formatCurrency(totals.expenses);
+
+    updateInsights();
+    updateCharts();
+}
+
+function updateCharts() {
+    drawMonthlyChart();
+    drawCategoryChart();
+}
+
+function updateInsights() {
+    const bestMonthEl = document.getElementById('bestMonth');
+    const bestMonthNetEl = document.getElementById('bestMonthNet');
+    const topIncomeCategoryEl = document.getElementById('topIncomeCategory');
+    const topIncomeAmountEl = document.getElementById('topIncomeAmount');
+    const topExpenseCategoryEl = document.getElementById('topExpenseCategory');
+    const topExpenseAmountEl = document.getElementById('topExpenseAmount');
+
+    if (!bestMonthEl || !bestMonthNetEl || !topIncomeCategoryEl || !topIncomeAmountEl || !topExpenseCategoryEl || !topExpenseAmountEl) {
+        return;
+    }
+
+    if (app.transactions.length === 0) {
+        bestMonthEl.textContent = 'No data';
+        bestMonthNetEl.textContent = '₹0';
+        topIncomeCategoryEl.textContent = 'No income';
+        topIncomeAmountEl.textContent = '₹0';
+        topExpenseCategoryEl.textContent = 'No expense';
+        topExpenseAmountEl.textContent = '₹0';
+        return;
+    }
+
+    const monthly = {};
+    const incomeByCategory = {};
+    const expenseByCategory = {};
+
+    app.transactions.forEach(t => {
+        const date = new Date(t.date);
+        if (Number.isNaN(date.getTime())) return;
+
+        const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        if (!monthly[monthKey]) {
+            monthly[monthKey] = {
+                income: 0,
+                expense: 0,
+                label: date.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })
+            };
+        }
+
+        const category = (t.category || 'Uncategorized').trim() || 'Uncategorized';
+        if (t.type === 'income') {
+            monthly[monthKey].income += t.amount;
+            incomeByCategory[category] = (incomeByCategory[category] || 0) + t.amount;
+        } else {
+            monthly[monthKey].expense += t.amount;
+            expenseByCategory[category] = (expenseByCategory[category] || 0) + t.amount;
+        }
+    });
+
+    const bestMonth = Object.values(monthly).sort((a, b) => (b.income - b.expense) - (a.income - a.expense))[0];
+    if (bestMonth) {
+        bestMonthEl.textContent = bestMonth.label;
+        bestMonthNetEl.textContent = formatCurrency(bestMonth.income - bestMonth.expense);
+    } else {
+        bestMonthEl.textContent = 'No data';
+        bestMonthNetEl.textContent = '₹0';
+    }
+
+    const topIncome = Object.entries(incomeByCategory).sort((a, b) => b[1] - a[1])[0];
+    if (topIncome) {
+        topIncomeCategoryEl.textContent = topIncome[0];
+        topIncomeAmountEl.textContent = formatCurrency(topIncome[1]);
+    } else {
+        topIncomeCategoryEl.textContent = 'No income';
+        topIncomeAmountEl.textContent = '₹0';
+    }
+
+    const topExpense = Object.entries(expenseByCategory).sort((a, b) => b[1] - a[1])[0];
+    if (topExpense) {
+        topExpenseCategoryEl.textContent = topExpense[0];
+        topExpenseAmountEl.textContent = formatCurrency(topExpense[1]);
+    } else {
+        topExpenseCategoryEl.textContent = 'No expense';
+        topExpenseAmountEl.textContent = '₹0';
+    }
 }
 
 // UI Rendering
@@ -169,23 +263,45 @@ function createTransactionHTML(t) {
 }
 
 // Form Handling
-function showAddTransactionForm() {
+function setTransactionFormMode(mode) {
+    const titleEl = document.getElementById('transactionFormTitle');
+    const submitBtn = document.querySelector('#transactionForm button[type="submit"]');
+    const isEdit = mode === 'edit';
+
+    if (titleEl) titleEl.textContent = isEdit ? 'Edit Transaction' : 'Add New Transaction';
+    if (submitBtn) submitBtn.textContent = isEdit ? 'Update Transaction' : 'Add Transaction';
+}
+
+function resetTransactionFormState() {
+    app.editing = false;
+    app.editingId = null;
+    setTransactionFormMode('add');
+}
+
+function showAddTransactionForm(options = {}) {
     if (app.user !== 'admin') {
         showNotification('Admin access required', 'error');
         return;
     }
-    
-    const form = document.getElementById('addTransactionForm');
-    if (form) {
-        form.style.display = 'block';
-        document.getElementById('transactionForm').reset();
-        app.editing = false;
-        app.editingId = null;
+
+    const { reset = true } = options;
+    const formWrapper = document.getElementById('addTransactionForm');
+    const form = document.getElementById('transactionForm');
+
+    if (formWrapper) {
+        formWrapper.style.display = 'block';
+    }
+
+    if (reset && form) {
+        form.reset();
+        resetTransactionFormState();
     }
 }
 
 function hideAddTransactionForm() {
-    document.getElementById('addTransactionForm').style.display = 'none';
+    const formWrapper = document.getElementById('addTransactionForm');
+    if (formWrapper) formWrapper.style.display = 'none';
+    resetTransactionFormState();
 }
 
 function handleTransactionSubmit(e) {
@@ -193,13 +309,13 @@ function handleTransactionSubmit(e) {
     const formData = new FormData(e.target);
     const data = {
         amount: parseFloat(formData.get('amount')),
-        category: formData.get('category'),
+        category: (formData.get('category') || '').trim(),
         date: formData.get('date'),
         type: formData.get('type'),
-        description: formData.get('description')
+        description: (formData.get('description') || '').trim()
     };
-    
-    if (!data.amount || !data.category || !data.date || !data.type) {
+
+    if (!Number.isFinite(data.amount) || data.amount <= 0 || !data.category || !data.date || !data.type) {
         showNotification('Fill all required fields', 'error');
         return;
     }
@@ -217,25 +333,34 @@ function handleTransactionSubmit(e) {
 function editTransaction(id) {
     const t = app.transactions.find(tr => tr.id === id);
     if (!t) return;
-    
-    document.getElementById('amount').value = t.amount;
-    document.getElementById('category').value = t.category;
-    document.getElementById('date').value = t.date;
-    document.getElementById('type').value = t.type;
-    document.getElementById('description').value = t.description || '';
-    
+
     app.editing = true;
     app.editingId = id;
-    showAddTransactionForm();
-    
-    const submitBtn = document.querySelector('#transactionForm button[type="submit"]');
-    if (submitBtn) submitBtn.textContent = 'Update Transaction';
+    showAddTransactionForm({ reset: false });
+
+    const amountEl = document.getElementById('amount');
+    const categoryEl = document.getElementById('category');
+    const dateEl = document.getElementById('date');
+    const typeEl = document.getElementById('type');
+    const descriptionEl = document.getElementById('description');
+
+    if (amountEl) amountEl.value = t.amount;
+    if (categoryEl) categoryEl.value = t.category;
+    if (dateEl) dateEl.value = t.date;
+    if (typeEl) typeEl.value = t.type;
+    if (descriptionEl) descriptionEl.value = t.description || '';
+
+    setTransactionFormMode('edit');
+}
+
+function saveDashboard() {
+    app.saveStorage();
+    showNotification('Changes saved', 'success');
 }
 
 // Charts
 function initCharts() {
-    drawMonthlyChart();
-    drawCategoryChart();
+    updateCharts();
 }
 
 function drawMonthlyChart() {
@@ -561,6 +686,12 @@ function setupEventListeners() {
     const exportBtn = document.getElementById('exportBtn');
     if (exportBtn) {
         exportBtn.addEventListener('click', exportToCSV);
+    }
+
+    // Save button
+    const saveBtn = document.getElementById('saveBtn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveDashboard);
     }
 }
 

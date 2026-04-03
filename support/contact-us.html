@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Contact Us | Finance Support</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--bg: #0b0f1a;
+			--bg-2: #0c1724;
+			--glass: rgba(255, 255, 255, 0.06);
+			--glass-border: rgba(255, 255, 255, 0.12);
+			--text: #f8fbff;
+			--muted: #b8c3d6;
+			--accent: #2ad1b5;
+			--accent-2: #4ea0ff;
+			--accent-3: #f5b84b;
+			--shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+		}
+
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+
+		html {
+			background-color: var(--bg);
+			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			scroll-behavior: smooth;
+			height: 100%;
+		}
+
+		body {
+			font-family: "Space Grotesk", sans-serif;
+			background-color: var(--bg);
+			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
+			background-repeat: no-repeat;
+			background-size: cover;
+			color: var(--text);
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		.back-button {
+			position: fixed;
+			top: max(18px, env(safe-area-inset-top));
+			left: max(18px, env(safe-area-inset-left));
+			z-index: 6;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 14px;
+			border-radius: 999px;
+			background: rgba(11, 15, 26, 0.7);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: var(--text);
+			text-decoration: none;
+			font-weight: 600;
+			backdrop-filter: blur(12px);
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+			transition: transform 0.2s ease, background 0.2s ease;
+			touch-action: manipulation;
+		}
+
+		.back-button:hover {
+			background: rgba(11, 15, 26, 0.9);
+			color: var(--text);
+		}
+
+		.back-button:active {
+			transform: translateY(1px);
+		}
+
+		.page { position: relative; min-height: 100vh; }
+
+		.glow {
+			position: absolute;
+			inset: 0;
+			background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+			background-size: 60px 60px;
+			opacity: 0.3;
+			z-index: 0;
+		}
+
+		.orb {
+			position: absolute;
+			width: 260px;
+			height: 260px;
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(78, 160, 255, 0.7), transparent 70%);
+			filter: blur(25px);
+			animation: float 9s ease-in-out infinite;
+			bottom: 40px;
+			left: -60px;
+			z-index: 0;
+		}
+
+		nav {
+			position: sticky;
+			top: 0;
+			z-index: 5;
+			backdrop-filter: blur(18px);
+			background: rgba(11, 15, 26, 0.82);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		.nav-wrap {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 18px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
+		}
+
+		.logo {
+			font-family: "Syne", sans-serif;
+			font-size: 1.4rem;
+			letter-spacing: 1px;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 18px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			text-decoration: none;
+			font-weight: 500;
+			transition: color 0.3s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active { color: var(--text); }
+
+		.hero {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 90px 24px 50px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 32px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-title {
+			font-family: "Syne", sans-serif;
+			font-size: clamp(2.3rem, 4vw, 3.2rem);
+			margin-bottom: 16px;
+			animation: titlePulse 4s ease-in-out infinite;
+		}
+
+		.hero p {
+			color: var(--muted);
+			font-size: 1.05rem;
+			line-height: 1.7;
+		}
+
+		.hero-visual {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.hero-visual img {
+			width: min(340px, 90%);
+			animation: float 7s ease-in-out infinite;
+			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+		}
+
+		.section {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 24px 80px;
+			position: relative;
+			z-index: 1;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 28px;
+		}
+
+		.panel {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 20px;
+			padding: 24px;
+			box-shadow: var(--shadow);
+		}
+
+		.panel h3 { margin-bottom: 12px; font-size: 1.3rem; }
+		.panel p { color: var(--muted); line-height: 1.6; }
+
+		.contact-list {
+			display: grid;
+			gap: 16px;
+			margin-top: 18px;
+		}
+
+		.contact-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 14px;
+			border-radius: 14px;
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+		}
+
+		.badge {
+			width: 42px;
+			height: 42px;
+			border-radius: 14px;
+			display: grid;
+			place-items: center;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+			color: #0b0f1a;
+			font-weight: 700;
+		}
+
+		form {
+			display: grid;
+			gap: 16px;
+		}
+
+		input, textarea, select {
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 12px;
+			padding: 12px 14px;
+			color: var(--text);
+			font-family: "Space Grotesk", sans-serif;
+			font-size: 0.95rem;
+		}
+
+		button {
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+			border: none;
+			padding: 12px 18px;
+			border-radius: 999px;
+			font-weight: 700;
+			cursor: pointer;
+			color: #0b0f1a;
+		}
+
+		.toast {
+			position: fixed;
+			bottom: 30px;
+			right: 30px;
+			background: rgba(15, 25, 35, 0.92);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			color: var(--text);
+			padding: 14px 18px;
+			border-radius: 14px;
+			box-shadow: var(--shadow);
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.3s ease;
+		}
+
+		.toast.show { opacity: 1; }
+
+		.feature-lab {
+			max-width: 1200px;
+			margin: 0 auto 80px;
+			padding: 0 24px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.feature-header {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 20px;
+		}
+
+		.feature-controls {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.feature-controls input {
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			padding: 10px 12px;
+			color: var(--text);
+			min-width: 220px;
+		}
+
+		.chip {
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			background: rgba(255, 255, 255, 0.04);
+			color: var(--muted);
+			padding: 8px 14px;
+			border-radius: 999px;
+			cursor: pointer;
+			font-size: 0.9rem;
+		}
+
+		.chip.active {
+			color: #04121a;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		}
+
+		.feature-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 18px;
+		}
+
+		.feature-tile {
+			background: var(--glass);
+			border: 1px solid var(--glass-border);
+			border-radius: 16px;
+			padding: 16px;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-tile small {
+			color: var(--accent-3);
+			font-weight: 600;
+		}
+
+		.feature-tile p {
+			color: var(--muted);
+			margin: 8px 0 12px;
+			line-height: 1.5;
+		}
+
+		.feature-expand {
+			border: none;
+			padding: 8px 12px;
+			border-radius: 10px;
+			background: rgba(255, 255, 255, 0.08);
+			color: var(--text);
+			cursor: pointer;
+			font-weight: 600;
+		}
+
+		.feature-details {
+			margin-top: 12px;
+			display: none;
+			color: var(--muted);
+			font-size: 0.9rem;
+		}
+
+		.feature-tile.active .feature-details {
+			display: block;
+		}
+
+		.stat-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 18px;
+			margin: 26px 0;
+		}
+
+		.stat {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		.stat h4 {
+			font-size: 1.4rem;
+		}
+
+		.mini-chart {
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 16px;
+			padding: 16px;
+		}
+
+		canvas {
+			width: 100%;
+			height: 180px;
+			display: block;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-14px); }
+		}
+
+		@keyframes titlePulse {
+			0%, 100% { text-shadow: 0 0 0 rgba(78, 160, 255, 0); }
+			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
+		}
+
+		@media (max-width: 768px) {
+			.nav-links { display: none; }
+			.hero { padding-top: 60px; }
+		}
+
+		@media (max-width: 600px) {
+			.back-button {
+				top: 12px;
+				left: 12px;
+				padding: 8px 12px;
+				font-size: 0.9rem;
+				max-width: calc(100vw - 24px);
+			}
+			.page {
+				padding-top: 56px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
+	<div class="page">
+		<div class="glow"></div>
+		<div class="orb"></div>
+
+		<nav>
+			<div class="nav-wrap">
+				<div class="logo">Finance Support</div>
+				<ul class="nav-links">
+					<li><a href="help-center.html">Help Center</a></li>
+					<li><a class="active" href="contact-us.html">Contact Us</a></li>
+					<li><a href="community.html">Community</a></li>
+					<li><a href="status-page.html">Status</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<section class="hero">
+			<div>
+				<div class="hero-title">Talk to a Specialist</div>
+				<p>Connect with the Finance team for onboarding, billing, and technical support.</p>
+			</div>
+			<div class="hero-visual">
+				<img alt="Contact illustration" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%232ad1b5'/><stop offset='100%' stop-color='%234ea0ff'/></linearGradient></defs><rect x='70' y='80' width='280' height='260' rx='40' fill='url(%23g)'/><rect x='110' y='130' width='200' height='40' rx='20' fill='%230b0f1a' opacity='0.5'/><rect x='110' y='190' width='200' height='30' rx='15' fill='%230b0f1a' opacity='0.35'/><circle cx='150' cy='250' r='26' fill='%230b0f1a' opacity='0.45'/><circle cx='230' cy='250' r='26' fill='%230b0f1a' opacity='0.45'/></svg>" />
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="panel">
+				<h3>Direct Lines</h3>
+				<p>Reach the right team in minutes with dedicated channels.</p>
+				<div class="contact-list">
+					<div class="contact-item">
+						<div class="badge">EM</div>
+						<div>
+							<strong>Email</strong>
+							<div>support@finance.com</div>
+						</div>
+					</div>
+					<div class="contact-item">
+						<div class="badge">PH</div>
+						<div>
+							<strong>Phone</strong>
+							<div>+91 98765 43210</div>
+						</div>
+					</div>
+					<div class="contact-item">
+						<div class="badge">HQ</div>
+						<div>
+							<strong>Office</strong>
+							<div>Bengaluru, India</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel">
+				<h3>Send a Message</h3>
+				<form id="contactForm">
+					<input type="text" name="name" placeholder="Full name" required />
+					<input type="email" name="email" placeholder="Work email" required />
+					<select name="topic" required>
+						<option value="" disabled selected>Select topic</option>
+						<option>Onboarding</option>
+						<option>Billing</option>
+						<option>Technical Support</option>
+						<option>Partnership</option>
+					</select>
+					<textarea name="message" rows="4" placeholder="How can we help?" required></textarea>
+					<button type="submit">Send Message</button>
+				</form>
+			</div>
+		</section>
+
+		<section class="feature-lab">
+			<div class="feature-header">
+				<div>
+					<h3 class="hero-title" style="font-size: 1.9rem;">Support Features</h3>
+					<p>10-15 working tools to streamline contact workflows.</p>
+				</div>
+				<div class="feature-controls">
+					<input id="featureSearch" type="text" placeholder="Search features" />
+					<button class="chip active" data-filter="all">All</button>
+					<button class="chip" data-filter="routing">Routing</button>
+					<button class="chip" data-filter="priority">Priority</button>
+					<button class="chip" data-filter="automation">Automation</button>
+				</div>
+			</div>
+
+			<div class="stat-row">
+				<div class="stat">
+					<small>Open Requests</small>
+					<h4 data-count="32">0</h4>
+					<p>Currently queued</p>
+				</div>
+				<div class="stat">
+					<small>Avg Reply</small>
+					<h4 data-count="9">0</h4>
+					<p>Minutes</p>
+				</div>
+				<div class="stat">
+					<small>Resolution Rate</small>
+					<h4 data-count="98">0</h4>
+					<p>Percent this month</p>
+				</div>
+			</div>
+
+			<div class="feature-grid" id="featureGrid"></div>
+
+			<div class="mini-chart">
+				<h4>Weekly Contact Volume</h4>
+				<canvas id="contactChart" width="600" height="220"></canvas>
+			</div>
+		</section>
+
+		<div class="toast" id="toast">Message sent. We will reply within 24 hours.</div>
+	</div>
+
+	<script>
+		const form = document.getElementById('contactForm');
+		const toast = document.getElementById('toast');
+		const featureGrid = document.getElementById('featureGrid');
+		const featureSearch = document.getElementById('featureSearch');
+		const filterButtons = document.querySelectorAll('.chip');
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			toast.classList.add('show');
+			form.reset();
+			setTimeout(() => toast.classList.remove('show'), 2600);
+		});
+
+		const featureData = [
+			{ title: 'Ticket Routing', tag: 'routing', desc: 'Auto-route by topic and urgency.', details: 'Requests reach the right team instantly.' },
+			{ title: 'Priority Flags', tag: 'priority', desc: 'Mark VIP or urgent contacts.', details: 'VIP requests are highlighted for faster response.' },
+			{ title: 'SLA Timer', tag: 'priority', desc: 'Track response deadlines.', details: 'Timers reset after every update.' },
+			{ title: 'Auto Replies', tag: 'automation', desc: 'Send immediate acknowledgements.', details: 'Customers get confirmation in seconds.' },
+			{ title: 'Team Assign', tag: 'routing', desc: 'Assign by location or product.', details: 'Escalations follow region-specific rules.' },
+			{ title: 'Attachment Scan', tag: 'automation', desc: 'Flag missing files or invoices.', details: 'Checklist auto-fills required documents.' },
+			{ title: 'Working Hours', tag: 'priority', desc: 'Schedule replies by timezone.', details: 'Out-of-hours requests move to next shift.' },
+			{ title: 'Conversation Tags', tag: 'routing', desc: 'Label tickets by workflow.', details: 'Use tags to filter dashboards quickly.' },
+			{ title: 'Escalation Paths', tag: 'priority', desc: 'Trigger manager alerts.', details: 'Escalates after SLA breach.' },
+			{ title: 'Smart Forms', tag: 'automation', desc: 'Auto-fill common fields.', details: 'Select a topic to load suggested inputs.' },
+			{ title: 'Channel Sync', tag: 'routing', desc: 'Combine email and phone logs.', details: 'Unified conversation history across channels.' },
+			{ title: 'Outcome Survey', tag: 'automation', desc: 'Collect post-resolution feedback.', details: 'Scores update the satisfaction dashboard.' }
+		];
+
+		function renderFeatures(filter = 'all', query = '') {
+			const normalized = query.toLowerCase();
+			const items = featureData.filter(item => {
+				const matchFilter = filter === 'all' || item.tag === filter;
+				const matchQuery = item.title.toLowerCase().includes(normalized) || item.desc.toLowerCase().includes(normalized);
+				return matchFilter && matchQuery;
+			});
+			featureGrid.innerHTML = items.map(item => `
+				<div class="feature-tile" data-tag="${item.tag}">
+					<small>${item.tag.toUpperCase()}</small>
+					<h4>${item.title}</h4>
+					<p>${item.desc}</p>
+					<button class="feature-expand">View details</button>
+					<div class="feature-details">${item.details}</div>
+				</div>
+			`).join('');
+
+			featureGrid.querySelectorAll('.feature-expand').forEach(btn => {
+				btn.addEventListener('click', () => {
+					btn.closest('.feature-tile').classList.toggle('active');
+				});
+			});
+		}
+
+		function animateCounters() {
+			document.querySelectorAll('[data-count]').forEach(counter => {
+				const target = Number(counter.dataset.count || 0);
+				let current = 0;
+				const step = Math.max(1, Math.ceil(target / 40));
+				const interval = setInterval(() => {
+					current += step;
+					if (current >= target) {
+						current = target;
+						clearInterval(interval);
+					}
+					counter.textContent = current;
+				}, 20);
+			});
+		}
+
+		function drawContactChart() {
+			const canvas = document.getElementById('contactChart');
+			if (!canvas) return;
+			const ctx = canvas.getContext('2d');
+			const values = [18, 24, 30, 26, 34, 38, 29];
+			const width = canvas.width;
+			const height = canvas.height;
+			ctx.clearRect(0, 0, width, height);
+			ctx.fillStyle = 'rgba(41, 214, 193, 0.2)';
+			ctx.strokeStyle = 'rgba(41, 214, 193, 0.8)';
+			ctx.lineWidth = 2;
+			ctx.beginPath();
+			values.forEach((val, index) => {
+				const x = (width / (values.length - 1)) * index;
+				const y = height - (val / 50) * (height - 30) - 10;
+				if (index === 0) ctx.moveTo(x, y);
+				else ctx.lineTo(x, y);
+			});
+			ctx.stroke();
+		}
+
+		filterButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				filterButtons.forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+				renderFeatures(btn.dataset.filter, featureSearch.value);
+			});
+		});
+
+		featureSearch.addEventListener('input', () => {
+			const active = document.querySelector('.chip.active');
+			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
+		});
+
+		renderFeatures();
+		animateCounters();
+		drawContactChart();
+	</script>
+</body>
+</html>
