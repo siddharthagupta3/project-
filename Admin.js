@@ -139,19 +139,6 @@ function toggleChat() {
   }
 }
 
-// ================= THEME ================= 
-let darkMode = true;
-function toggleTheme() {
-  const box = byId("chatBox");
-  if (!box) return;
-  darkMode = !darkMode;
-  if (darkMode) {
-    box.style.background = "rgba(15,15,30,0.98)";
-  } else {
-    box.style.background = "#ffffff";
-  }
-}
-
 // ================= CLEAR ================= 
 function clearChat() {
   const body = byId("chatBody");
@@ -313,7 +300,7 @@ function startVoice() {
 // ================= TYPING EFFECT ================= 
 const TYPING_TEXT = "Finance system ";
 const TYPING_SPEED = 70;
-const TYPING_PAUSE = 1200;
+const TYPING_PAUSE = 1110;
 let i = 0;
 let deleting = false;
 

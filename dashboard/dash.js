@@ -1,7 +1,4 @@
-/**
- * FINANCE DASHBOARD
- * Clean, interview-friendly structure with minimal globals.
- */
+
 
 const byId = (id) => document.getElementById(id);
 const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
