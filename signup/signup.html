@@ -15,7 +15,7 @@
         <div class="floating-orb orb3"></div>
     </div>
 
-    <!-- Main Container -->
+    <!-- Main Layout -->
     <div class="main-container">
         <!-- Left Panel - Login -->
         <div class="panel login-panel" id="loginPanel" style="display: flex;">
@@ -125,7 +125,7 @@
                         <div class="input-group">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="registerPassword" placeholder="Password" required>
-                            <button type="button" class="toggle-password" onclick="togglePassword('registerPassword')">
+                            <button type="button" class="toggle-password" data-toggle-target="registerPassword">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -135,7 +135,7 @@
                         <div class="input-group">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-                            <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                            <button type="button" class="toggle-password" data-toggle-target="confirmPassword">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -185,17 +185,17 @@
         </div>
     </div>
 
-    <!-- Success Message -->
+    <!-- Feedback Overlay -->
     <div class="success-message" id="successMessage">
         <div class="success-content">
             <i class="fas fa-check-circle"></i>
             <h3>Success!</h3>
             <p id="successText">Operation completed successfully</p>
-            <button class="success-btn" onclick="closeSuccess()">OK</button>
+            <button class="success-btn" id="closeSuccessBtn" type="button">OK</button>
         </div>
     </div>
 
-    <!-- Authentication Script -->
+    <!-- Page Logic -->
     <script src="signup.js"></script>
 </body>
 </html>

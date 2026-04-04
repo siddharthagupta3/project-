@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
 	<style>
+		/* ---------- Theme Variables ---------- */
 		:root {
 			--bg: #0b0f1a;
 			--bg-2: #0c1724;
@@ -23,6 +24,7 @@
 
 		* { margin: 0; padding: 0; box-sizing: border-box; }
 
+		/* ---------- Base Layout ---------- */
 		html {
 			background-color: var(--bg);
 			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
@@ -41,6 +43,7 @@
 			overflow-x: hidden;
 		}
 
+		/* ---------- Header + Navigation ---------- */
 		.back-button {
 			position: fixed;
 			top: max(18px, env(safe-area-inset-top));
@@ -137,6 +140,7 @@
 		.nav-links a:hover,
 		.nav-links a.active { color: var(--text); }
 
+		/* ---------- Hero Section ---------- */
 		.hero {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -173,6 +177,7 @@
 			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
 		}
 
+		/* ---------- Contact Panels ---------- */
 		.section {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -264,6 +269,7 @@
 
 		.toast.show { opacity: 1; }
 
+		/* ---------- Feature Lab ---------- */
 		.feature-lab {
 			max-width: 1200px;
 			margin: 0 auto 80px;
@@ -390,6 +396,7 @@
 			display: block;
 		}
 
+		/* ---------- Animations ---------- */
 		@keyframes float {
 			0%, 100% { transform: translateY(0); }
 			50% { transform: translateY(-14px); }
@@ -400,6 +407,7 @@
 			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
 		}
 
+		/* ---------- Responsive ---------- */
 		@media (max-width: 768px) {
 			.nav-links { display: none; }
 			.hero { padding-top: 60px; }
@@ -421,11 +429,14 @@
 </head>
 
 <body>
+	<!-- Back Navigation -->
 		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
 	<div class="page">
+		<!-- Background Effects -->
 		<div class="glow"></div>
 		<div class="orb"></div>
 
+		<!-- Top Navigation -->
 		<nav>
 			<div class="nav-wrap">
 				<div class="logo">Finance Support</div>
@@ -438,6 +449,7 @@
 			</div>
 		</nav>
 
+		<!-- Hero -->
 		<section class="hero">
 			<div>
 				<div class="hero-title">Talk to a Specialist</div>
@@ -448,6 +460,7 @@
 			</div>
 		</section>
 
+		<!-- Contact Information + Form -->
 		<section class="section">
 			<div class="panel">
 				<h3>Direct Lines</h3>
@@ -494,6 +507,7 @@
 			</div>
 		</section>
 
+		<!-- Feature Lab -->
 		<section class="feature-lab">
 			<div class="feature-header">
 				<div>
@@ -538,13 +552,16 @@
 		<div class="toast" id="toast">Message sent. We will reply within 24 hours.</div>
 	</div>
 
+	<!-- Page Logic -->
 	<script>
+		// ---------- DOM REFERENCES ----------
 		const form = document.getElementById('contactForm');
 		const toast = document.getElementById('toast');
 		const featureGrid = document.getElementById('featureGrid');
 		const featureSearch = document.getElementById('featureSearch');
 		const filterButtons = document.querySelectorAll('.chip');
 
+		// ---------- Contact Form ----------
 		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 			toast.classList.add('show');
@@ -552,6 +569,7 @@
 			setTimeout(() => toast.classList.remove('show'), 2600);
 		});
 
+		// ---------- Feature Data ----------
 		const featureData = [
 			{ title: 'Ticket Routing', tag: 'routing', desc: 'Auto-route by topic and urgency.', details: 'Requests reach the right team instantly.' },
 			{ title: 'Priority Flags', tag: 'priority', desc: 'Mark VIP or urgent contacts.', details: 'VIP requests are highlighted for faster response.' },
@@ -567,6 +585,7 @@
 			{ title: 'Outcome Survey', tag: 'automation', desc: 'Collect post-resolution feedback.', details: 'Scores update the satisfaction dashboard.' }
 		];
 
+		// ---------- Feature Rendering ----------
 		function renderFeatures(filter = 'all', query = '') {
 			const normalized = query.toLowerCase();
 			const items = featureData.filter(item => {
@@ -591,6 +610,7 @@
 			});
 		}
 
+		// ---------- Counter Animation ----------
 		function animateCounters() {
 			document.querySelectorAll('[data-count]').forEach(counter => {
 				const target = Number(counter.dataset.count || 0);
@@ -607,6 +627,7 @@
 			});
 		}
 
+		// ---------- Chart Rendering ----------
 		function drawContactChart() {
 			const canvas = document.getElementById('contactChart');
 			if (!canvas) return;
@@ -628,6 +649,7 @@
 			ctx.stroke();
 		}
 
+		// ---------- Event Handling ----------
 		filterButtons.forEach(btn => {
 			btn.addEventListener('click', () => {
 				filterButtons.forEach(b => b.classList.remove('active'));
@@ -641,6 +663,7 @@
 			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
 		});
 
+		// ---------- Initialization ----------
 		renderFeatures();
 		animateCounters();
 		drawContactChart();

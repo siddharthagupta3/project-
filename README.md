@@ -1,30 +1,61 @@
-# InterProject - Finance System UI
+# InterProject - Finance Management Web App
 
-A modern, responsive finance management UI built with pure HTML, CSS, and JavaScript. No backend dependencies, no frameworks.
+InterProject is a responsive, frontend-first Finance Management System built using pure HTML, CSS, and Vanilla JavaScript.
+It includes a landing experience, authentication flow, analytics dashboard, settings management, support pages, and legal pages.
 
-## ✅ What’s Included
+## Project Description
 
-- **Landing + Admin UI**: Hero, stats, chatbot, smooth navigation, toast notifications
-- **Auth**: Dual-panel login/register with validation and demo login note
-- **Dashboard**: Transactions, charts, filters, and admin actions
-- **Support**: Help Center, Contact Us, Community, Status pages
-- **Legal**: Privacy, terms, cookies
+This project demonstrates a production-style frontend architecture without framework dependency.
+The codebase is organized section-wise and flow-wise for readability, maintainability, and interview-level review.
 
-## 📁 Project Structure
+Key focus areas:
+- UI-first structure and clean component flow
+- Role-based dashboard behavior (viewer/admin)
+- Transaction CRUD, filtering, sorting, and CSV export
+- Charts and insights rendering using Canvas API
+- Security-conscious frontend handling (safer DOM rendering, reduced inline handlers)
 
-```
+## Demo Login
+
+Demo login: use any Gmail and any password to login.
+
+## Features
+
+- Landing page with animated hero, navigation, and chatbot widget
+- Login/Register UI with validation and password strength hints
+- Finance dashboard with:
+   - Total Balance, Income, Expense cards
+   - Best month and top category insights
+   - Monthly trend and category charts
+   - Transaction add/edit/delete/search/filter/sort
+   - CSV export and save state
+- Profile overview and profile image support
+- Settings page for role switch, profile update, export/reset actions
+- Support pages: Help Center, Contact Us, Community, Status
+- Legal pages: Privacy Policy, Terms, Cookie Policy
+
+## Project Structure
+
+```text
 interproject/
-├── index.html              # Main landing page
-├── admin.css               # Landing/admin styles
-├── admin.js                # Landing/admin interactions
+├── index.html
+├── admin.css
+├── Admin.js
 ├── signup/
-│   ├── signup.html         # Login/register
-│   ├── signup.css          # Auth styles
-│   └── signup.js           # Auth logic
+│   ├── signup.html
+│   ├── signup.css
+│   ├── signup.js
+│   └── forgot-password.html
 ├── dashboard/
-│   ├── dash.html           # Dashboard UI
-│   ├── dash.css            # Dashboard styles
-│   └── dash.js             # Dashboard logic
+│   ├── common.css
+│   ├── common.js
+│   ├── dash.html
+│   ├── dash.css
+│   ├── dash.js
+│   └── setting/
+│       ├── setting.html
+│       ├── setting.css
+│       └── setting.js
 ├── support/
 │   ├── help-center.html
 │   ├── contact-us.html
@@ -34,42 +65,50 @@ interproject/
 │   ├── privacy.html
 │   ├── terms.html
 │   └── cookies.html
-├── video/                  # Demo assets
+├── video/
 ├── LICENSE
 └── README.md
 ```
 
-## 🚀 Getting Started
+## Tech Stack
 
-1. **Clone**
-   ```bash
-   git clone https://github.com/siddharthagupta3/project-.git
-   cd interproject
-   ```
+- HTML5
+- CSS3
+- Vanilla JavaScript (ES6+)
+- Font Awesome / Ionicons via CDN
 
-2. **Open**
-   - Open `index.html` in a browser
-   - Navigate via top menu
+## Run Locally
 
-3. **No install required**
-   - Works offline
-   - Pure HTML/CSS/JS
+1. Clone repository:
 
-## 💻 Tech Stack
+```bash
+git clone https://github.com/siddharthagupta3/project-.git
+cd interproject
+```
 
-- **HTML5**
-- **CSS3** (gradients, animations)
-- **Vanilla JavaScript**
-- **CDNs**: Font Awesome
+2. Open `index.html` in your browser.
 
-## 📄 License
+No build step or package installation is required.
 
-MIT License. See LICENSE.
+## Interview Readiness (Current)
 
-## 👤 Author
+- Frontend interview readiness: 90%+
+- Strengths:
+   - Modular, sectioned JavaScript structure
+   - Clear UI flow and code readability
+   - Functional feature coverage across modules
+- Remaining optional upgrades:
+   - Add test cases and CI pipeline
+   - Convert repeated support-page logic into shared modules
+
+## Author
 
 Siddhartha Gupta
 
+## License
+
+MIT License. See LICENSE.
+
 ---
 
-**Last Updated:** April 4, 2026
+Last Updated: April 5, 2026

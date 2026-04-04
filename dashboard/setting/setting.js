@@ -1,15 +1,20 @@
+// 1. App State / Init
+// ---------- Storage Keys ----------
 const STORAGE_KEY = 'financeDashboard';
 const PROFILE_IMAGE_KEY = 'financeProfileImage';
 const PROFILE_META_KEY = 'financeProfileMeta';
 
+// ---------- DOM Helper ----------
 const byId = (id) => document.getElementById(id);
 
+// ---------- Sample Data ----------
 const sampleTransactions = [
   { id: 1, amount: 50000, category: 'Customer Deposits', date: '2024-01-15', type: 'income', description: 'Customer deposit transaction' },
   { id: 2, amount: 15000, category: 'Salaries', date: '2024-01-10', type: 'expense', description: 'Staff salaries' },
   { id: 3, amount: 25000, category: 'Account Fees', date: '2024-01-20', type: 'income', description: 'Account service charges' }
 ];
 
+// ---------- Page State ----------
 const state = {
   user: 'viewer',
   transactions: []
@@ -44,50 +49,8 @@ function getDefaultProfileImage() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-function showToast(message) {
-  const host = byId('toastHost');
-  if (!host) return;
-
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = message;
-  host.appendChild(toast);
-  setTimeout(() => toast.remove(), 2500);
-}
-
-function loadStore() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    state.user = 'viewer';
-    state.transactions = [];
-    return;
-  }
-
-  try {
-    const parsed = JSON.parse(raw);
-    state.user = parsed.user || 'viewer';
-    state.transactions = Array.isArray(parsed.transactions) ? parsed.transactions : [];
-  } catch (err) {
-    state.user = 'viewer';
-    state.transactions = [];
-  }
-}
-
-function saveStore() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    user: state.user,
-    transactions: state.transactions
-  }));
-}
-
-function saveRole(role) {
-  state.user = role;
-  saveStore();
-  renderRoleButtons();
-  renderStats();
-  showToast(`Role switched to ${role}`);
-}
-
+// 2. UI Rendering (dashboard, cards, transactions)
+// ---------- UI Rendering ----------
 function renderRoleButtons() {
   document.querySelectorAll('.role-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.role === state.user);
@@ -114,83 +77,6 @@ function updateProfileImages(src) {
   }
 }
 
-function loadProfileMeta(form) {
-  const raw = localStorage.getItem(PROFILE_META_KEY);
-  if (!raw) return;
-
-  try {
-    const parsed = JSON.parse(raw);
-    form.elements.fullName.value = parsed.fullName || '';
-    form.elements.email.value = parsed.email || '';
-    form.elements.phone.value = parsed.phone || '';
-    form.elements.organization.value = parsed.organization || '';
-  } catch (err) {
-    // ignore invalid profile meta
-  }
-}
-
-function saveProfileMeta(form) {
-  const payload = {
-    fullName: form.elements.fullName.value.trim(),
-    email: form.elements.email.value.trim(),
-    phone: form.elements.phone.value.trim(),
-    organization: form.elements.organization.value.trim()
-  };
-  localStorage.setItem(PROFILE_META_KEY, JSON.stringify(payload));
-  showToast('Profile details saved');
-}
-
-function clearProfileMeta(form) {
-  if (!confirm('Clear saved profile details?')) return;
-  localStorage.removeItem(PROFILE_META_KEY);
-  form.reset();
-  showToast('Profile details cleared');
-}
-
-function handleImageFile(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    const result = event.target.result;
-    if (typeof result === 'string') {
-      localStorage.setItem(PROFILE_IMAGE_KEY, result);
-      updateProfileImages(result);
-      showToast('Profile image updated');
-    }
-  };
-  reader.readAsDataURL(file);
-}
-
-function exportCsv() {
-  if (!state.transactions.length) {
-    showToast('No transactions to export');
-    return;
-  }
-
-  const headers = ['Date', 'Category', 'Description', 'Type', 'Amount'];
-  const rows = state.transactions.map((t) => [t.date, t.category, t.description || '', t.type, t.amount]);
-  const csv = [headers, ...rows].map((row) => row.join(',')).join('\n');
-
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = window.URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'transactions.csv';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(url);
-  showToast('CSV exported');
-}
-
-function resetData() {
-  if (!confirm('Reset all transactions to sample data?')) return;
-  state.transactions = sampleTransactions.map((item) => ({ ...item }));
-  saveStore();
-  renderStats();
-  showToast('Transactions reset');
-}
-
 function renderStats() {
   const total = state.transactions.length;
   const income = state.transactions.filter((t) => t.type === 'income').length;
@@ -202,6 +88,8 @@ function renderStats() {
   if (byId('statRole')) byId('statRole').textContent = state.user;
 }
 
+// 3. Event Handlers (buttons, forms, search, filter)
+// ---------- Event Bindings ----------
 function initProfileImageControls() {
   const uploadBtn = byId('uploadProfileImage');
   const removeBtn = byId('removeProfileImage');
@@ -273,6 +161,145 @@ function initDataActions() {
   if (resetBtn) resetBtn.addEventListener('click', resetData);
 }
 
+// 4. Business Logic (calculations, insights)
+// ---------- Feedback ----------
+function showToast(message) {
+  const host = byId('toastHost');
+  if (!host) return;
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  host.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+
+// ---------- Storage ----------
+function loadStore() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) {
+    state.user = 'viewer';
+    state.transactions = [];
+    return;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    state.user = parsed.user || 'viewer';
+    state.transactions = Array.isArray(parsed.transactions) ? parsed.transactions : [];
+  } catch (err) {
+    state.user = 'viewer';
+    state.transactions = [];
+  }
+}
+
+function saveStore() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    user: state.user,
+    transactions: state.transactions
+  }));
+}
+
+// ---------- Role Section ----------
+function saveRole(role) {
+  state.user = role;
+  saveStore();
+  renderRoleButtons();
+  renderStats();
+  showToast(`Role switched to ${role}`);
+}
+
+// ---------- Profile Image Section ----------
+function loadProfileMeta(form) {
+  const raw = localStorage.getItem(PROFILE_META_KEY);
+  if (!raw) return;
+
+  try {
+    const parsed = JSON.parse(raw);
+    form.elements.fullName.value = parsed.fullName || '';
+    form.elements.email.value = parsed.email || '';
+    form.elements.phone.value = parsed.phone || '';
+    form.elements.organization.value = parsed.organization || '';
+  } catch (err) {
+    // ignore invalid profile meta
+  }
+}
+
+// ---------- Profile Details Section ----------
+function saveProfileMeta(form) {
+  const payload = {
+    fullName: form.elements.fullName.value.trim(),
+    email: form.elements.email.value.trim(),
+    phone: form.elements.phone.value.trim(),
+    organization: form.elements.organization.value.trim()
+  };
+  localStorage.setItem(PROFILE_META_KEY, JSON.stringify(payload));
+  showToast('Profile details saved');
+}
+
+function clearProfileMeta(form) {
+  if (!confirm('Clear saved profile details?')) return;
+  localStorage.removeItem(PROFILE_META_KEY);
+  form.reset();
+  showToast('Profile details cleared');
+}
+
+// ---------- File Handling ----------
+function handleImageFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const result = event.target.result;
+    if (typeof result === 'string') {
+      localStorage.setItem(PROFILE_IMAGE_KEY, result);
+      updateProfileImages(result);
+      showToast('Profile image updated');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+// ---------- Data Actions ----------
+function exportCsv() {
+  if (!state.transactions.length) {
+    showToast('No transactions to export');
+    return;
+  }
+
+  const headers = ['Date', 'Category', 'Description', 'Type', 'Amount'];
+  const rows = state.transactions.map((t) => [t.date, t.category, t.description || '', t.type, t.amount]);
+  const csv = [headers, ...rows].map((row) => row.join(',')).join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'transactions.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+  showToast('CSV exported');
+}
+
+function resetData() {
+  if (!confirm('Reset all transactions to sample data?')) return;
+  state.transactions = sampleTransactions.map((item) => ({ ...item }));
+  saveStore();
+  renderStats();
+  showToast('Transactions reset');
+}
+
+// 5. Charts (monthly, category)
+// ---------- Not used on this page ----------
+
+// 6. Utility functions
+// ---------- Shared helpers are above (image sanitization/defaults) ----------
+
+// 7. Animations (last me)
+// ---------- Not used on this page ----------
+
+// ---------- INITIALIZATION ----------
 function initSettingsPage() {
   loadStore();
   renderRoleButtons();

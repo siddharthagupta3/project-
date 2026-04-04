@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
 	<style>
+		/* ---------- Theme Variables ---------- */
 		:root {
 			--bg: #0b0f1a;
 			--glass: rgba(255, 255, 255, 0.06);
@@ -22,6 +23,7 @@
 
 		* { margin: 0; padding: 0; box-sizing: border-box; }
 
+		/* ---------- Base Layout ---------- */
 		html {
 			background: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
 			scroll-behavior: smooth;
@@ -39,6 +41,7 @@
 			overflow-x: hidden;
 		}
 
+		/* ---------- Header + Navigation ---------- */
 		.back-button {
 			position: fixed;
 			top: max(18px, env(safe-area-inset-top));
@@ -122,6 +125,7 @@
 		.nav-links a:hover,
 		.nav-links a.active { color: var(--text); }
 
+		/* ---------- Hero Section ---------- */
 		.hero {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -152,6 +156,7 @@
 			font-weight: 600;
 		}
 
+		/* ---------- Status Cards ---------- */
 		.section {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -213,6 +218,7 @@
 			font-size: 0.9rem;
 		}
 
+		/* ---------- Feature Lab ---------- */
 		.feature-lab {
 			max-width: 1200px;
 			margin: 0 auto 80px;
@@ -337,11 +343,13 @@
 			display: block;
 		}
 
+		/* ---------- Animations ---------- */
 		@keyframes titlePulse {
 			0%, 100% { text-shadow: 0 0 0 rgba(78, 160, 255, 0); }
 			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
 		}
 
+		/* ---------- Responsive ---------- */
 		@media (max-width: 768px) {
 			.nav-links { display: none; }
 			.hero { padding-top: 60px; }
@@ -363,10 +371,13 @@
 </head>
 
 <body>
+	<!-- Back Navigation -->
 		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
 	<div class="page">
+		<!-- Background Effects -->
 		<div class="grid"></div>
 
+		<!-- Top Navigation -->
 		<nav>
 			<div class="nav-wrap">
 				<div class="logo">Finance Support</div>
@@ -379,6 +390,7 @@
 			</div>
 		</nav>
 
+		<!-- Hero -->
 		<section class="hero">
 			<div class="hero-title">Platform Status</div>
 			<p>Real-time visibility into Finance services and infrastructure health.</p>
@@ -386,6 +398,7 @@
 			<div class="updated" id="updatedAt">Last updated just now</div>
 		</section>
 
+		<!-- Service Status + Timeline -->
 		<section class="section">
 			<div class="card">
 				<h4>Core Services</h4>
@@ -417,6 +430,7 @@
 			</div>
 		</section>
 
+		<!-- Feature Lab -->
 		<section class="feature-lab">
 			<div class="feature-header">
 				<div>
@@ -459,7 +473,9 @@
 		</section>
 	</div>
 
+	<!-- Page Logic -->
 	<script>
+		// ---------- DOM REFERENCES ----------
 		const updatedAt = document.getElementById('updatedAt');
 		const now = new Date();
 		updatedAt.textContent = `Last updated ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
@@ -467,6 +483,7 @@
 		const featureSearch = document.getElementById('featureSearch');
 		const filterButtons = document.querySelectorAll('.chip');
 
+		// ---------- Feature Data ----------
 		const featureData = [
 			{ title: 'Health Checks', tag: 'monitoring', desc: 'Ping every critical service.', details: 'Runs every 60 seconds.' },
 			{ title: 'Latency Alerts', tag: 'alerts', desc: 'Trigger when response spikes.', details: 'Thresholds adjustable per region.' },
@@ -482,6 +499,7 @@
 			{ title: 'Postmortem Hub', tag: 'recovery', desc: 'Document and share learnings.', details: 'Root cause analysis templates included.' }
 		];
 
+		// ---------- Feature Rendering ----------
 		function renderFeatures(filter = 'all', query = '') {
 			const normalized = query.toLowerCase();
 			const items = featureData.filter(item => {
@@ -506,6 +524,7 @@
 			});
 		}
 
+		// ---------- Counter Animation ----------
 		function animateCounters() {
 			document.querySelectorAll('[data-count]').forEach(counter => {
 				const target = Number(counter.dataset.count || 0);
@@ -522,6 +541,7 @@
 			});
 		}
 
+		// ---------- Chart Rendering ----------
 		function drawStatusChart() {
 			const canvas = document.getElementById('statusChart');
 			if (!canvas) return;
@@ -542,6 +562,7 @@
 			ctx.stroke();
 		}
 
+		// ---------- Event Handling ----------
 		filterButtons.forEach(btn => {
 			btn.addEventListener('click', () => {
 				filterButtons.forEach(b => b.classList.remove('active'));
@@ -555,6 +576,7 @@
 			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
 		});
 
+		// ---------- Initialization ----------
 		renderFeatures();
 		animateCounters();
 		drawStatusChart();

@@ -48,7 +48,7 @@
                 <li><a href="#support">Contact</a></li>
             </ul>
             <a href="signup/signup.html" class="nav-cta">Get Started</a>
-            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -68,7 +68,7 @@
                         Start Free account
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="video/demo.mp4" class="btn-secondary" onclick="showToast('Playing demo video')">
+                    <a href="video/demo.mp4" class="btn-secondary" id="watchDemoBtn">
                         <i class="fas fa-play"></i>
                         Watch Demo
                     </a>
@@ -299,7 +299,7 @@
         </div>
     </section>
 
- <!-- About Section -->
+    <!-- About Section -->
 
    <section id="about">
   <div class="about-wrapper">
@@ -377,9 +377,9 @@
         </div>
         <div class="toast-message" id="toastMessage">Action completed!</div>
     </div>
-<!-- ================= CMS PRO MAX AI ================= -->
+    <!-- AI Chat Widget -->
 
-<div class="chat-toggle" onclick="toggleChat()">
+<div class="chat-toggle" id="chatToggle">
    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Assistant">
 </div>
 
@@ -387,8 +387,8 @@
   <div class="chat-header">
         Zorvyn AI 🤖
     <div>
-      <span onclick="clearChat()" style="cursor:pointer">🗑</span>
-      <span onclick="toggleChat()" style="cursor:pointer">✖</span>
+    <span id="chatClear" style="cursor:pointer">🗑</span>
+    <span id="chatClose" style="cursor:pointer">✖</span>
     </div>
   </div>
 
@@ -396,11 +396,12 @@
 
   <div class="chat-footer">
     <input type="text" id="chatInput" placeholder="Type message...">
-    <button onclick="startVoice()">🎤</button>
-    <button onclick="sendMessage()">➤</button>
+        <button id="chatVoiceBtn" type="button">🎤</button>
+        <button id="chatSendBtn" type="button">➤</button>
   </div>
 </div>
 
-    <script src="admin.js"></script>
+    <!-- Page Logic -->
+    <script src="Admin.js"></script>
 </body>
 </html>

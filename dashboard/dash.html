@@ -22,7 +22,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <body>
 
-<!-- TOP BAR -->
+<!-- Header: Top Bar + Navigation -->
 <header class="topbar">
 
 <!-- DESKTOP NAVBAR -->
@@ -33,7 +33,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <div class="topbar-left">
 <!-- HAMBURGER MENU -->
-<div class="hamburger" onclick="toggleMenu()">
+<div class="hamburger" id="hamburgerMenu">
 
 <span></span>
 <span></span>
@@ -89,6 +89,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 </header>
 
 
+<!-- Hero Section -->
 <section class="home" id="home">
 <div class="description">
 
@@ -186,7 +187,7 @@ alt="" />
 </div>
 </section>
 
-<!-- Finance Dashboard Section -->
+<!-- Main Dashboard: Summary, Charts, Transactions -->
 <section class="finance-dashboard" id="finance">
     <div class="finance-container">
         
@@ -289,7 +290,7 @@ alt="" />
                 </div>
             </div>
 
-            <!-- Add Transaction Form (Hidden by default) -->
+            <!-- Transaction Form (Admin Only) -->
             <div class="add-transaction-form" id="addTransactionForm" style="display: none;">
                 <h4 id="transactionFormTitle">Add New Transaction</h4>
                 <form id="transactionForm">
@@ -315,7 +316,7 @@ alt="" />
                 </form>
             </div>
 
-            <!-- Transactions List -->
+            <!-- Transaction List -->
             <div class="transactions-list" id="transactionsList">
                 <!-- Transactions will be dynamically added here -->
             </div>
@@ -323,7 +324,7 @@ alt="" />
     </div>
 </section>
 
-<!-- FOOTER SECTION -->
+<!-- Footer -->
 <footer class="main-footer">
     <div class="footer-bottom">
         <div class="footer-content">
@@ -333,11 +334,11 @@ alt="" />
     </div>
 </footer>
 
-<!-- JS CONNECT -->
+<!-- Page Logic -->
 <script src="common.js" defer></script>
 <script src="dash.js" defer></script>
 
-<!-- ICON LIBRARY -->
+<!-- Icon Library -->
 <script type="module"
 src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 

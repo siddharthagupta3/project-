@@ -1,6 +1,9 @@
+// 1. App State / Init
+// ---------- DOM Helpers ----------
 const byId = (id) => document.getElementById(id);
 const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
+// ---------- Storage Keys ----------
 const STORAGE_KEY = 'financeDashboard';
 const PROFILE_IMAGE_KEY = 'financeProfileImage';
 const PROFILE_META_KEY = 'financeProfileMeta';
@@ -23,6 +26,8 @@ function sanitizeImageSource(src, fallback) {
   return value;
 }
 
+// 2. UI Rendering (dashboard, cards, transactions)
+// ---------- Image Rendering + Fallback ----------
 function attachImageFallbacks() {
   const defaultFallback = getImageFallbackPath();
 
@@ -42,6 +47,7 @@ function attachImageFallbacks() {
   });
 }
 
+// ---------- Shared Data Store ----------
 const financeStore = {
   state: {
     user: 'viewer',
@@ -107,6 +113,17 @@ const financeStore = {
   }
 };
 
+// 3. Event Handlers (buttons, forms, search, filter)
+// ---------- Event Handlers ----------
+document.addEventListener('DOMContentLoaded', () => {
+  financeStore.init();
+  applyRoleVisibility();
+  attachImageFallbacks();
+  setupProfileImage();
+});
+
+// 4. Business Logic (calculations, insights)
+// ---------- Notifications + Role Visibility ----------
 function showNotification(msg, type = 'info') {
   const notification = document.createElement('div');
   notification.textContent = msg;
@@ -127,6 +144,7 @@ function showNotification(msg, type = 'info') {
   setTimeout(() => notification.remove(), 4000);
 }
 
+// ---------- File Download ----------
 function downloadFile(content, filename, mimeType) {
   const blob = new Blob([content], { type: mimeType });
   const url = window.URL.createObjectURL(blob);
@@ -139,10 +157,12 @@ function downloadFile(content, filename, mimeType) {
   window.URL.revokeObjectURL(url);
 }
 
+// ---------- Role UI ----------
 function applyRoleVisibility() {
   document.body.classList.toggle('admin-mode', financeStore.state.user === 'admin');
 }
 
+// ---------- Profile Image ----------
 function getDefaultProfileImage() {
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
@@ -202,13 +222,16 @@ function setupProfileImage() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  financeStore.init();
-  applyRoleVisibility();
-  attachImageFallbacks();
-  setupProfileImage();
-});
+// 5. Charts (monthly, category)
+// ---------- Not used in this shared module ----------
 
+// 6. Utility functions
+// ---------- Sanitizers + Path helpers are defined above ----------
+
+// 7. Animations (last me)
+// ---------- Not used in this shared module ----------
+
+// ---------- GLOBAL API ----------
 window.financeStore = financeStore;
 window.showNotification = showNotification;
 window.downloadFile = downloadFile;

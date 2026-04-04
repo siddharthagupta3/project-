@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
 	<style>
+		/* ---------- Theme Variables ---------- */
 		:root {
 			--bg: #0b0f1a;
 			--glass: rgba(255, 255, 255, 0.06);
@@ -22,6 +23,7 @@
 
 		* { margin: 0; padding: 0; box-sizing: border-box; }
 
+		/* ---------- Base Layout ---------- */
 		html {
 			background: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
 			scroll-behavior: smooth;
@@ -39,6 +41,7 @@
 			overflow-x: hidden;
 		}
 
+		/* ---------- Header + Navigation ---------- */
 		.back-button {
 			position: fixed;
 			top: max(18px, env(safe-area-inset-top));
@@ -122,6 +125,7 @@
 		.nav-links a:hover,
 		.nav-links a.active { color: var(--text); }
 
+		/* ---------- Hero Section ---------- */
 		.hero {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -154,6 +158,7 @@
 			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
 		}
 
+		/* ---------- Community Content ---------- */
 		.section {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -214,6 +219,7 @@
 		.post h5 { margin: 6px 0; }
 		.post p { color: var(--muted); }
 
+		/* ---------- Feature Lab ---------- */
 		.feature-lab {
 			max-width: 1200px;
 			margin: 0 auto 80px;
@@ -340,6 +346,7 @@
 			display: block;
 		}
 
+		/* ---------- Animations ---------- */
 		@keyframes float {
 			0%, 100% { transform: translateY(0); }
 			50% { transform: translateY(-14px); }
@@ -350,6 +357,7 @@
 			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
 		}
 
+		/* ---------- Responsive ---------- */
 		@media (max-width: 768px) {
 			.nav-links { display: none; }
 			.hero { padding-top: 60px; }
@@ -371,10 +379,13 @@
 </head>
 
 <body>
+	<!-- Back Navigation -->
 		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
 	<div class="page">
+		<!-- Background Effects -->
 		<div class="pulse-lines"></div>
 
+		<!-- Top Navigation -->
 		<nav>
 			<div class="nav-wrap">
 				<div class="logo">Finance Support</div>
@@ -387,6 +398,7 @@
 			</div>
 		</nav>
 
+		<!-- Hero -->
 		<section class="hero">
 			<div>
 				<div class="hero-title">Join the Finance Community</div>
@@ -401,6 +413,7 @@
 			</div>
 		</section>
 
+		<!-- Community Highlights + Feed -->
 		<section class="section">
 			<div class="pill-grid">
 				<div class="pill">
@@ -435,6 +448,7 @@
 			</div>
 		</section>
 
+		<!-- Feature Lab -->
 		<section class="feature-lab">
 			<div class="feature-header">
 				<div>
@@ -477,7 +491,9 @@
 		</section>
 	</div>
 
+	<!-- Page Logic -->
 	<script>
+		// ---------- DOM REFERENCES ----------
 		const joinBtn = document.getElementById('joinBtn');
 		const eventBtn = document.getElementById('eventBtn');
 		const feed = document.getElementById('feed');
@@ -485,6 +501,7 @@
 		const featureSearch = document.getElementById('featureSearch');
 		const filterButtons = document.querySelectorAll('.chip');
 
+		// ---------- Feed Actions ----------
 		joinBtn.addEventListener('click', () => {
 			const post = document.createElement('div');
 			post.className = 'post';
@@ -499,6 +516,7 @@
 			feed.prepend(post);
 		});
 
+		// ---------- Feature Data ----------
 		const featureData = [
 			{ title: 'Live Events', tag: 'events', desc: 'Schedule and RSVP in one click.', details: 'Auto-syncs to your calendar.' },
 			{ title: 'Office Hours', tag: 'events', desc: 'Book a 15 minute expert session.', details: 'Slots open every Tuesday.' },
@@ -514,6 +532,7 @@
 			{ title: 'Global Map', tag: 'rewards', desc: 'See where teams connect worldwide.', details: 'Pinned locations grow monthly.' }
 		];
 
+		// ---------- Feature Rendering ----------
 		function renderFeatures(filter = 'all', query = '') {
 			const normalized = query.toLowerCase();
 			const items = featureData.filter(item => {
@@ -538,6 +557,7 @@
 			});
 		}
 
+		// ---------- Counter Animation ----------
 		function animateCounters() {
 			document.querySelectorAll('[data-count]').forEach(counter => {
 				const target = Number(counter.dataset.count || 0);
@@ -554,6 +574,7 @@
 			});
 		}
 
+		// ---------- Chart Rendering ----------
 		function drawCommunityChart() {
 			const canvas = document.getElementById('communityChart');
 			if (!canvas) return;
@@ -574,6 +595,7 @@
 			ctx.stroke();
 		}
 
+		// ---------- Event Handling ----------
 		filterButtons.forEach(btn => {
 			btn.addEventListener('click', () => {
 				filterButtons.forEach(b => b.classList.remove('active'));
@@ -587,6 +609,7 @@
 			renderFeatures(active ? active.dataset.filter : 'all', featureSearch.value);
 		});
 
+		// ---------- Initialization ----------
 		renderFeatures();
 		animateCounters();
 		drawCommunityChart();

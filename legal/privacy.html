@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy</title>
 <style>
+/* Base Layout */
 body{
 margin:0;
 height:100vh;
@@ -15,6 +18,7 @@ color:#0ff;
 overflow:hidden;
 }
 
+/* Background Effect */
 body::before{
 content:"";
 position:absolute;
@@ -24,10 +28,12 @@ background:radial-gradient(circle,#00ffff55,transparent);
 animation:spin 10s linear infinite;
 }
 
+/* Background Animation */
 @keyframes spin{
 100%{transform:rotate(360deg);}
 }
 
+/* Content Card */
 .box{
 position:relative;
 background:#111;
@@ -39,16 +45,19 @@ max-width:700px;
 animation:fade 1.2s ease;
 }
 
+/* Card Entrance Animation */
 @keyframes fade{
 from{opacity:0;transform:scale(.8);}
 to{opacity:1;transform:scale(1);}
 }
 
+/* Typography */
 h1{color:#0ff;margin-bottom:20px;}
 p{color:#aaa;line-height:1.6;}
 </style>
 </head>
 <body>
+<!-- Privacy Content -->
 <div class="box">
 <h1>Privacy Policy</h1>
 <p>Your data is encrypted and securely stored.</p>

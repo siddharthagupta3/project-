@@ -13,6 +13,7 @@
 </head>
 
 <body>
+  <!-- Header -->
   <header class="topbar settings-topbar">
     <div class="topbar-left">
       <a class="icon-button back-button" href="../dash.html" aria-label="Back to dashboard">
@@ -28,8 +29,11 @@
     <input type="file" id="topbarProfileInput" accept="image/*" hidden>
   </header>
 
+  <!-- Main Layout -->
   <main class="settings-main">
+    <!-- Settings Cards -->
     <section class="settings-grid">
+      <!-- Profile Card -->
       <article class="card card-profile">
         <h3>Profile Identity</h3>
         <div class="identity-layout">
@@ -63,6 +67,7 @@
         </div>
       </article>
 
+      <!-- Role Card -->
       <article class="card">
         <h3>Access Role</h3>
         <p class="muted">Switch between admin and viewer mode.</p>
@@ -72,6 +77,7 @@
         </div>
       </article>
 
+      <!-- Data Actions Card -->
       <article class="card">
         <h3>Data Actions</h3>
         <p class="muted">Export and reset your transactions.</p>
@@ -81,6 +87,7 @@
         </div>
       </article>
 
+      <!-- Dataset Status Card -->
       <article class="card">
         <h3>Dataset Status</h3>
         <div class="status-list">
@@ -93,8 +100,10 @@
     </section>
   </main>
 
+  <!-- Toast Host -->
   <div id="toastHost" class="toast-host" aria-live="polite"></div>
 
+  <!-- Page Logic -->
   <script src="setting.js" defer></script>
 </body>
 

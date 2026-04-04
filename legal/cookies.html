@@ -7,6 +7,7 @@
 
 <style>
 
+/* Base Reset */
 *{
 margin:0;
 padding:0;
@@ -15,6 +16,7 @@ font-family:'Segoe UI',sans-serif;
 scroll-behavior:smooth;
 }
 
+/* Page Background */
 body{
 background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#000000);
 background-size:400% 400%;
@@ -23,6 +25,7 @@ color:white;
 overflow-x:hidden;
 }
 
+/* Background Animation */
 @keyframes bgMove{
 0%{background-position:0% 50%;}
 50%{background-position:100% 50%;}
@@ -48,6 +51,7 @@ from{opacity:0;transform:translateY(20px);}
 to{opacity:1;transform:translateY(0);}
 }
 
+/* Typography */
 h1{
 font-size:40px;
 margin-bottom:20px;
@@ -104,6 +108,7 @@ transform:scale(1.05);
 box-shadow:0 0 20px rgba(255,255,255,0.4);
 }
 
+/* Responsive */
 @media(max-width:768px){
 .container{margin:40px 15px;padding:30px;}
 h1{font-size:28px;}
@@ -114,6 +119,7 @@ h1{font-size:28px;}
 
 <body>
 
+<!-- Cookies Content -->
 <div class="container">
 
 <h1>Cookies Policy</h1>
@@ -142,8 +148,8 @@ h1{font-size:28px;}
 <p>This policy complies with modern data protection standards and may be updated when necessary.</p>
 
 <div class="buttons">
-<a href="index.html" class="btn home">Back to Home</a>
-<a href="contact.html" class="btn contact">Contact Admin</a>
+<a href="../index.html" class="btn home">Back to Home</a>
+<a href="../support/contact-us.html" class="btn contact">Contact Admin</a>
 <a href="#" class="btn download">Download Policy</a>
 </div>
 

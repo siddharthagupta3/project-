@@ -8,6 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
 	<style>
+		/* ---------- Theme Variables ---------- */
 		:root {
 			--bg: #0b0f1a;
 			--bg-2: #0e1a24;
@@ -27,6 +28,7 @@
 			box-sizing: border-box;
 		}
 
+		/* ---------- Base Layout ---------- */
 		html {
 			background-color: var(--bg);
 			background-image: radial-gradient(circle at top, #142233 0%, var(--bg) 55%);
@@ -47,6 +49,7 @@
 			width: 100%;
 		}
 
+		/* ---------- Header + Navigation ---------- */
 		.back-button {
 			position: fixed;
 			top: max(18px, env(safe-area-inset-top));
@@ -149,6 +152,7 @@
 			color: var(--text);
 		}
 
+		/* ---------- Hero Section ---------- */
 		.hero {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -220,6 +224,7 @@
 			animation: float 7s ease-in-out infinite;
 		}
 
+		/* ---------- Popular Topics + FAQ ---------- */
 		.section {
 			max-width: 1200px;
 			margin: 0 auto;
@@ -309,6 +314,7 @@
 			display: block;
 		}
 
+		/* ---------- Feature Lab ---------- */
 		.feature-lab {
 			max-width: 1200px;
 			margin: 0 auto 80px;
@@ -458,6 +464,7 @@
 			font-size: 0.9rem;
 		}
 
+		/* ---------- Animations ---------- */
 		@keyframes float {
 			0%, 100% { transform: translateY(0); }
 			50% { transform: translateY(-14px); }
@@ -468,6 +475,7 @@
 			50% { text-shadow: 0 0 22px rgba(78, 160, 255, 0.35); }
 		}
 
+		/* ---------- Responsive ---------- */
 		@media (max-width: 768px) {
 			.nav-links { display: none; }
 			.hero { padding-top: 60px; }
@@ -509,11 +517,14 @@
 </head>
 
 <body>
+	<!-- Back Navigation -->
 		<a class="back-button" href="../index.html" aria-label="Back to home">&#8592; Back</a>
 	<div class="page">
+		<!-- Background Effects -->
 		<div class="grid-glow"></div>
 		<div class="orb"></div>
 
+		<!-- Top Navigation -->
 		<nav>
 			<div class="nav-wrap">
 				<div class="logo">Finance Support</div>
@@ -526,6 +537,7 @@
 			</div>
 		</nav>
 
+		<!-- Hero -->
 		<section class="hero">
 			<div>
 				<div class="hero-title">Help Center, Built for Fast Answers</div>
@@ -540,6 +552,7 @@
 			</div>
 		</section>
 
+		<!-- Popular Topics + FAQ -->
 		<section class="section">
 			<h3 class="section-title">Popular Topics</h3>
 			<div class="cards" id="topicCards">
@@ -577,6 +590,7 @@
 			</div>
 		</section>
 
+		<!-- Feature Lab -->
 		<section class="feature-lab">
 			<div class="feature-header">
 				<div>
@@ -621,7 +635,9 @@
 		<footer>Need more help? Email support@finance.com</footer>
 	</div>
 
+	<!-- Page Logic -->
 	<script>
+		// ---------- DOM REFERENCES ----------
 		const searchInput = document.getElementById('searchInput');
 		const cards = Array.from(document.querySelectorAll('#topicCards .card'));
 		const faqItems = document.querySelectorAll('.faq-item');
@@ -630,6 +646,7 @@
 		const filterButtons = document.querySelectorAll('.chip');
 		const systemPulse = document.getElementById('systemPulse');
 
+		// ---------- Topic Search ----------
 		function filterTopics() {
 			const query = searchInput.value.trim().toLowerCase();
 			cards.forEach(card => {
@@ -638,6 +655,7 @@
 			});
 		}
 
+		// ---------- Feature Data ----------
 		const featureData = [
 			{ title: 'Role Switcher', tag: 'setup', desc: 'Switch between admin and viewer modes.', details: 'Use admin mode to unlock editing and exports.' },
 			{ title: 'Smart Search', tag: 'workflow', desc: 'Find any transaction or article instantly.', details: 'Filters update results with each key press.' },
@@ -653,6 +671,7 @@
 			{ title: 'Insight Cards', tag: 'analytics', desc: 'Best month and top categories.', details: 'Insights refresh with every transaction.' }
 		];
 
+		// ---------- Feature Rendering ----------
 		function renderFeatures(filter = 'all', query = '') {
 			const normalized = query.toLowerCase();
 			const items = featureData.filter(item => {
@@ -677,6 +696,7 @@
 			});
 		}
 
+		// ---------- Counter Animation ----------
 		function animateCounters() {
 			document.querySelectorAll('[data-count]').forEach(counter => {
 				const target = Number(counter.dataset.count || 0);
@@ -693,6 +713,7 @@
 			});
 		}
 
+		// ---------- Chart Rendering ----------
 		function drawHelpChart() {
 			const canvas = document.getElementById('helpChart');
 			if (!canvas) return;
@@ -713,6 +734,7 @@
 			ctx.stroke();
 		}
 
+		// ---------- Event Handling ----------
 		document.getElementById('searchBtn').addEventListener('click', filterTopics);
 		searchInput.addEventListener('input', filterTopics);
 
@@ -739,6 +761,7 @@
 			systemPulse.textContent = 'All help systems operational';
 		}, 1200);
 
+		// ---------- Initialization ----------
 		renderFeatures();
 		animateCounters();
 		drawHelpChart();

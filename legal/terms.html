@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terms & Conditions</title>
 <style>
+/* Base Layout */
 body{
 margin:0;
 font-family:sans-serif;
@@ -16,12 +19,14 @@ animation:bg 8s ease infinite;
 color:white;
 }
 
+/* Background Animation */
 @keyframes bg{
 0%{background-position:0% 50%;}
 50%{background-position:100% 50%;}
 100%{background-position:0% 50%;}
 }
 
+/* Content Card */
 .card{
 background:rgba(0,0,0,.7);
 padding:50px;
@@ -31,16 +36,19 @@ max-width:700px;
 animation:slide 1.5s ease;
 }
 
+/* Card Entrance Animation */
 @keyframes slide{
 from{transform:translateY(50px);opacity:0;}
 to{transform:translateY(0);opacity:1;}
 }
 
+/* Typography */
 h1{margin-bottom:20px;}
 p{line-height:1.6;color:#ddd;}
 </style>
 </head>
 <body>
+<!-- Terms Content -->
 <div class="card">
 <h1>Terms & Conditions</h1>
 <p>Users must follow platform rules strictly.</p>
