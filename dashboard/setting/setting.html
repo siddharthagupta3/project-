@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Settings | finaDash</title>
+  <link rel="stylesheet" href="../dash.css">
+  <link rel="stylesheet" href="setting.css">
+</head>
+
+<body>
+  <header class="topbar settings-topbar">
+    <div class="topbar-left">
+      <a class="icon-button back-button" href="../dash.html" aria-label="Back to dashboard">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back</span>
+      </a>
+      <h1 class="settings-title">Settings</h1>
+    </div>
+
+    <button class="profile-chip" id="profileButton" type="button" aria-label="Upload profile image">
+      <img id="topbarProfileImage" src="" alt="Profile">
+    </button>
+    <input type="file" id="topbarProfileInput" accept="image/*" hidden>
+  </header>
+
+  <main class="settings-main">
+    <section class="settings-grid">
+      <article class="card card-profile">
+        <h3>Profile Identity</h3>
+        <div class="identity-layout">
+          <div class="avatar-stack">
+            <img id="profileAvatar" class="avatar" src="" alt="Profile">
+            <div class="avatar-actions">
+              <button id="uploadProfileImage" type="button" class="btn action">Upload</button>
+              <button id="removeProfileImage" type="button" class="btn danger">Remove</button>
+            </div>
+            <input type="file" id="settingsProfileInput" accept="image/*" hidden>
+          </div>
+
+          <form id="profileForm" class="profile-form">
+            <label>Full Name
+              <input type="text" name="fullName" placeholder="Enter full name">
+            </label>
+            <label>Email
+              <input type="email" name="email" placeholder="name@domain.com">
+            </label>
+            <label>Phone
+              <input type="text" name="phone" placeholder="+91 98765 43210">
+            </label>
+            <label>Organization
+              <input type="text" name="organization" placeholder="Finance Team">
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="btn primary">Save Details</button>
+              <button id="clearProfileDetails" type="button" class="btn danger">Clear Details</button>
+            </div>
+          </form>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Access Role</h3>
+        <p class="muted">Switch between admin and viewer mode.</p>
+        <div class="role-switch" id="roleButtons">
+          <button class="role-btn" data-role="viewer" type="button">Viewer</button>
+          <button class="role-btn" data-role="admin" type="button">Admin</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Data Actions</h3>
+        <p class="muted">Export and reset your transactions.</p>
+        <div class="stack-actions">
+          <button id="exportCsv" type="button" class="btn action">Export CSV</button>
+          <button id="resetData" type="button" class="btn danger">Reset to Sample</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Dataset Status</h3>
+        <div class="status-list">
+          <div><span>Transactions</span><strong id="statTransactions">0</strong></div>
+          <div><span>Income Entries</span><strong id="statIncome">0</strong></div>
+          <div><span>Expense Entries</span><strong id="statExpense">0</strong></div>
+          <div><span>Current Role</span><strong id="statRole">viewer</strong></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div id="toastHost" class="toast-host" aria-live="polite"></div>
+
+  <script src="setting.js" defer></script>
+</body>
+
+</html>

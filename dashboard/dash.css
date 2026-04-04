@@ -59,8 +59,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  transform: translateZ(0);
-  will-change: transform;
+  position: relative;
 }
 
 img {
@@ -72,8 +71,6 @@ img {
 
 section {
   min-height: 100vh;
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 /* HOME SECTION */
@@ -96,19 +93,6 @@ section {
 .description {
   color: #fff;
   padding: 0 50px;
-}
-
-.badge {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50px;
-  font-size: 0.875rem;
-  color: #fff;
-  margin-bottom: 1.5rem;
-  animation: pulse 2s infinite;
 }
 
 .description h1 {
@@ -343,41 +327,6 @@ input[type="email"]:focus {
   }
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-/* CARD CONTAINER SECTION */
-
-.card-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  min-height: 100vh;
-  background: rgb(67, 69, 112);
-  background: radial-gradient(
-    circle,
-    rgba(67, 69, 112, 1) 3%,
-    rgba(35, 36, 57, 1) 60%
-  );
-  overflow: hidden;
-  padding: 60px 50px 20px;
-}
-
-.slider {
-  width: 100%;
-  height: auto;
-}
-
 /* TOP MENU */
 
 .topbar {
@@ -393,6 +342,12 @@ input[type="email"]:focus {
   background: rgba(17, 17, 17, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .hamburger {
@@ -441,6 +396,34 @@ input[type="email"]:focus {
 .hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
   background: #4ade80;
+}
+
+
+.profile-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-button img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-button:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .menu {
@@ -607,10 +590,6 @@ input[type="email"]:focus {
     text-align: center;
   }
 
-  .badge {
-    margin-inline: auto;
-  }
-
   #form {
     justify-content: center;
   }
@@ -705,6 +684,132 @@ input[type="email"]:focus {
   }
 }
 
+/* Read-only profile overview (dashboard only) */
+.profile-view-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 18, 0.6);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 78px 18px 18px;
+  z-index: 140;
+}
+
+.profile-view-overlay.active {
+  display: flex;
+}
+
+.profile-view-card {
+  width: min(420px, 100%);
+  background: rgba(16, 20, 34, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.profile-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.profile-view-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.profile-view-close {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.profile-view-body {
+  padding: 14px 16px;
+}
+
+.profile-view-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-view-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  object-fit: cover;
+}
+
+.profile-view-meta p {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.profile-view-meta span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
+.profile-view-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.profile-view-grid div {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 0;
+}
+
+.profile-view-grid label {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 4px;
+}
+
+.profile-view-grid strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #fff;
+  word-break: break-word;
+}
+
+.profile-view-note {
+  margin: 0;
+  padding: 10px 16px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .profile-view-overlay {
+    justify-content: center;
+    padding: 68px 10px 12px;
+  }
+
+  .profile-view-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ================= FINANCE DASHBOARD STYLES ================= */
 
 .finance-dashboard {
@@ -761,20 +866,6 @@ input[type="email"]:focus {
 
 .role-btn:hover:not(.active) {
   background: rgba(255, 255, 255, 0.1);
-}
-
-.dark-mode-toggle {
-  padding: 10px 15px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.dark-mode-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Overview Cards */
@@ -1583,6 +1674,10 @@ body.admin-mode .admin-only {
     font-size: 1.8rem;
   }
 
+  .description p {
+    font-size: 0.9rem;
+  }
+}
 
 /* Keep phone UI visually consistent with laptop layout */
 @media (max-width: 500px) {
@@ -1635,10 +1730,6 @@ body.admin-mode .admin-only {
 
   .chart-card canvas {
     height: 240px !important;
-  }
-}
-  .description p {
-    font-size: 0.9rem;
   }
 }
 
@@ -1700,4 +1791,372 @@ body.admin-mode .admin-only {
 
 .transaction-item {
   animation: slideIn 0.3s ease;
+}
+
+/* ===== Final Navbar Overrides ===== */
+.topbar {
+  min-height: 58px;
+  padding: 8px 18px;
+  gap: 12px;
+}
+
+.desktop-nav {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.desktop-nav a {
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.desktop-nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hamburger {
+  display: none;
+  margin-top: 0;
+}
+
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.nav-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.nav-badge span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    min-height: 52px;
+    padding: 8px 12px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-badge {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.78rem;
+    padding: 8px 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .profile-button {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* ===== Final Overflow + Mobile Navbar Stability ===== */
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body,
+.home,
+.finance-dashboard,
+.main-footer {
+  width: 100%;
+  max-width: 100%;
+}
+
+.main-footer {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  background: #0f172a !important;
+}
+
+.footer-bottom {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.footer-content {
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .main-footer {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding: 0 !important;
+  }
+
+  .footer-bottom {
+    padding: 10px 12px;
+  }
+}
+
+.topbar {
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.topbar-left {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: calc(100% - 52px);
+}
+
+.profile-button {
+  flex: 0 0 auto;
+  z-index: 2;
+}
+
+.nav-badge {
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.15;
+  white-space: normal;
+  padding: 7px 12px;
+}
+
+.nav-badge span:last-child {
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    min-height: 50px;
+    gap: 6px;
+    padding: 6px 9px;
+  }
+
+  .topbar-left {
+    align-items: center;
+    gap: 8px;
+    max-width: calc(100% - 46px);
+  }
+
+  .hamburger {
+    display: inline-flex;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3px;
+    position: relative;
+    top: 1px;
+    margin-top: 0;
+    line-height: 0;
+  }
+
+  .hamburger span {
+    width: 16px;
+    height: 2px;
+    margin: 0;
+    border-radius: 2px;
+    transform-origin: center;
+  }
+
+  .nav-badge {
+    flex: 0 1 auto;
+    font-size: 0.72rem;
+    line-height: 0.9;
+    font-weight: 800;
+    letter-spacing: 0.015em;
+    gap: 4px;
+    padding: 5px 8px;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
+  .nav-badge span:last-child {
+    display: block;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-clamp: unset;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: initial;
+    white-space: nowrap;
+    word-break: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .nav-badge-icon {
+    font-size: 0.9rem;
+  }
+
+  .profile-button {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav-badge {
+    font-size: 0.64rem;
+    letter-spacing: 0.01em;
+    gap: 3px;
+    padding: 4px 6px;
+  }
+}
+
+/* ===== Mobile Scroll Stability Patch ===== */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  html,
+  body {
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .finance-dashboard,
+  .finance-container,
+  .overview-cards,
+  .insights-section,
+  .charts-container,
+  .transaction-section {
+    overflow: visible !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .overview-cards .card,
+  .insight-card,
+  .chart-card,
+  .transaction-section,
+  .role-switcher {
+    position: relative;
+    z-index: 1;
+    transform: translate3d(0, 0, 0) !important;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: auto !important;
+    overflow: visible !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  .overview-cards .card::before,
+  .insight-card::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .overview-cards .card:hover,
+  .insight-card:hover,
+  .chart-card:hover,
+  .transaction-item:hover,
+  .add-transaction-btn:hover,
+  .export-btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .menu a:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .card-content,
+  .card-content h3,
+  .card-content .amount,
+  .card-content .trend,
+  .insight-card h3,
+  .insight-title,
+  .insight-value,
+  .chart-card h3,
+  .transaction-item,
+  .amount-value {
+    position: relative;
+    z-index: 2;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: none;
+  }
+
+  .profile-view-overlay,
+  .menu,
+  .topbar,
+  .nav-badge {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .transaction-item,
+  .overview-cards .card,
+  .insight-card,
+  .chart-card {
+    animation: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
 }

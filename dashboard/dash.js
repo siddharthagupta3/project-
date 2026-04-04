@@ -1,8 +1,10 @@
-
-
-const byId = (id) => document.getElementById(id);
-const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 const MONTH_ORDER = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const NO_DATA_TEXT = {
+    bestMonth: 'No data',
+    currency: '₹0',
+    noIncome: 'No income',
+    noExpense: 'No expense'
+};
 
 // -------- State Management --------
 const app = {
@@ -51,6 +53,10 @@ function showNotification(msg, type = 'info') {
     });
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 4000);
+}
+
+function setText(el, value) {
+    if (el) el.textContent = value;
 }
 
 // -------- Role Management --------
@@ -126,10 +132,10 @@ function updateDashboard() {
     const balanceEl = byId('totalBalance');
     const incomeEl = byId('totalIncome');
     const expensesEl = byId('totalExpenses');
-    
-    if (balanceEl) balanceEl.textContent = formatCurrency(totals.balance);
-    if (incomeEl) incomeEl.textContent = formatCurrency(totals.income);
-    if (expensesEl) expensesEl.textContent = formatCurrency(totals.expenses);
+
+    setText(balanceEl, formatCurrency(totals.balance));
+    setText(incomeEl, formatCurrency(totals.income));
+    setText(expensesEl, formatCurrency(totals.expenses));
 
     updateInsights();
     updateCharts();
@@ -152,13 +158,28 @@ function updateInsights() {
         return;
     }
 
+    const resetInsightsToEmpty = () => {
+        setText(bestMonthEl, NO_DATA_TEXT.bestMonth);
+        setText(bestMonthNetEl, NO_DATA_TEXT.currency);
+        setText(topIncomeCategoryEl, NO_DATA_TEXT.noIncome);
+        setText(topIncomeAmountEl, NO_DATA_TEXT.currency);
+        setText(topExpenseCategoryEl, NO_DATA_TEXT.noExpense);
+        setText(topExpenseAmountEl, NO_DATA_TEXT.currency);
+    };
+
+    const applyTopCategory = (entry, categoryEl, amountEl, emptyLabel) => {
+        if (!entry) {
+            setText(categoryEl, emptyLabel);
+            setText(amountEl, NO_DATA_TEXT.currency);
+            return;
+        }
+
+        setText(categoryEl, entry[0]);
+        setText(amountEl, formatCurrency(entry[1]));
+    };
+
     if (app.transactions.length === 0) {
-        bestMonthEl.textContent = 'No data';
-        bestMonthNetEl.textContent = '₹0';
-        topIncomeCategoryEl.textContent = 'No income';
-        topIncomeAmountEl.textContent = '₹0';
-        topExpenseCategoryEl.textContent = 'No expense';
-        topExpenseAmountEl.textContent = '₹0';
+        resetInsightsToEmpty();
         return;
     }
 
@@ -191,30 +212,18 @@ function updateInsights() {
 
     const bestMonth = Object.values(monthly).sort((a, b) => (b.income - b.expense) - (a.income - a.expense))[0];
     if (bestMonth) {
-        bestMonthEl.textContent = bestMonth.label;
-        bestMonthNetEl.textContent = formatCurrency(bestMonth.income - bestMonth.expense);
+        setText(bestMonthEl, bestMonth.label);
+        setText(bestMonthNetEl, formatCurrency(bestMonth.income - bestMonth.expense));
     } else {
-        bestMonthEl.textContent = 'No data';
-        bestMonthNetEl.textContent = '₹0';
+        setText(bestMonthEl, NO_DATA_TEXT.bestMonth);
+        setText(bestMonthNetEl, NO_DATA_TEXT.currency);
     }
 
     const topIncome = Object.entries(incomeByCategory).sort((a, b) => b[1] - a[1])[0];
-    if (topIncome) {
-        topIncomeCategoryEl.textContent = topIncome[0];
-        topIncomeAmountEl.textContent = formatCurrency(topIncome[1]);
-    } else {
-        topIncomeCategoryEl.textContent = 'No income';
-        topIncomeAmountEl.textContent = '₹0';
-    }
+    applyTopCategory(topIncome, topIncomeCategoryEl, topIncomeAmountEl, NO_DATA_TEXT.noIncome);
 
     const topExpense = Object.entries(expenseByCategory).sort((a, b) => b[1] - a[1])[0];
-    if (topExpense) {
-        topExpenseCategoryEl.textContent = topExpense[0];
-        topExpenseAmountEl.textContent = formatCurrency(topExpense[1]);
-    } else {
-        topExpenseCategoryEl.textContent = 'No expense';
-        topExpenseAmountEl.textContent = '₹0';
-    }
+    applyTopCategory(topExpense, topExpenseCategoryEl, topExpenseAmountEl, NO_DATA_TEXT.noExpense);
 }
 
 // -------- UI Rendering --------
@@ -598,16 +607,42 @@ function toggleMenu() {
     if (hamburger) hamburger.classList.toggle('active');
 }
 
+function closeMenu() {
+    const menu = byId('menu');
+    const hamburger = document.querySelector('.hamburger');
+    if (menu) menu.classList.remove('active');
+    if (hamburger) hamburger.classList.remove('active');
+}
+
 function setupNavigation() {
     qsa('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetSelector = link.getAttribute('href');
+            const target = targetSelector ? document.querySelector(targetSelector) : null;
             if (target) {
-                byId('menu')?.classList.remove('active');
+                closeMenu();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
+    });
+
+    document.addEventListener('click', (event) => {
+        const menu = byId('menu');
+        const hamburger = document.querySelector('.hamburger');
+        if (!menu || !hamburger) return;
+
+        const clickedInsideMenu = menu.contains(event.target);
+        const clickedHamburger = hamburger.contains(event.target);
+        if (!clickedInsideMenu && !clickedHamburger) {
+            closeMenu();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
     });
 }
 
@@ -645,6 +680,92 @@ function setupEmailForm() {
         }
     }
     setTimeout(typeEmail, 1600);
+}
+
+// -------- Profile Overview (Read-only) --------
+function safeText(value) {
+    return (value && String(value).trim()) ? String(value).trim() : 'Not set';
+}
+
+function getProfileMeta() {
+    const raw = localStorage.getItem('financeProfileMeta');
+    if (!raw) return {};
+
+    try {
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (err) {
+        return {};
+    }
+}
+
+function openProfileOverview() {
+    const overlay = byId('profileViewOverlay');
+    if (!overlay) return;
+    overlay.hidden = false;
+    overlay.classList.add('active');
+}
+
+function closeProfileOverview() {
+    const overlay = byId('profileViewOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('active');
+    overlay.hidden = true;
+}
+
+function fillProfileOverview() {
+    const meta = getProfileMeta();
+    const name = safeText(meta.fullName);
+    const email = safeText(meta.email);
+    const phone = safeText(meta.phone);
+    const org = safeText(meta.organization);
+
+    const nameEl = byId('pvName');
+    const roleEl = byId('pvRole');
+    const emailEl = byId('pvEmail');
+    const phoneEl = byId('pvPhone');
+    const orgEl = byId('pvOrg');
+    const countEl = byId('pvCount');
+
+    if (nameEl) nameEl.textContent = name;
+    if (roleEl) roleEl.textContent = app.user;
+    if (emailEl) emailEl.textContent = email;
+    if (phoneEl) phoneEl.textContent = phone;
+    if (orgEl) orgEl.textContent = org;
+    if (countEl) countEl.textContent = String(app.transactions.length);
+}
+
+function setupProfileOverview() {
+    const profileBtn = byId('profileButton');
+    const closeBtn = byId('closeProfileView');
+    const overlay = byId('profileViewOverlay');
+
+    if (!profileBtn || !overlay) return;
+
+    // Remove upload listener from common.js on dashboard and keep profile click read-only.
+    const cleanBtn = profileBtn.cloneNode(true);
+    profileBtn.parentNode.replaceChild(cleanBtn, profileBtn);
+
+    cleanBtn.addEventListener('click', () => {
+        fillProfileOverview();
+        openProfileOverview();
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeProfileOverview);
+    }
+
+    overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) {
+            closeProfileOverview();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeProfileOverview();
+        }
+    });
 }
 
 // -------- Event Listeners --------
@@ -704,21 +825,22 @@ function exportToCSV() {
     const headers = ['Date', 'Category', 'Description', 'Type', 'Amount'];
     const rows = app.transactions.map(t => [t.date, t.category, t.description || '', t.type, t.amount]);
     const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
-    
-    downloadFile(csv, 'transactions.csv', 'text/csv');
-    showNotification('Exported to CSV', 'success');
-}
 
-function downloadFile(content, filename, mimeType) {
-    const blob = new Blob([content], { type: mimeType });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    if (typeof window.downloadFile === 'function') {
+        window.downloadFile(csv, 'transactions.csv', 'text/csv');
+    } else {
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'transactions.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    }
+
+    showNotification('Exported to CSV', 'success');
 }
 
 // -------- Initialize App --------
@@ -727,6 +849,7 @@ function initDashboard() {
     setupEventListeners();
     setupNavigation();
     setupEmailForm();
+    setupProfileOverview();
     updateDashboard();
     renderTransactions();
     initCharts();
@@ -737,8 +860,18 @@ function initDashboard() {
     });
     document.body.classList.toggle('admin-mode', app.user === 'admin');
 
-    // Start grid animation
-    startGridAnimation();
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        showStaticGridItems();
+    } else {
+        startGridAnimation();
+    }
+}
+
+function showStaticGridItems() {
+    qsa('.users-color-container .item').forEach((item) => {
+        item.classList.add('animate');
+    });
 }
 
 // -------- Grid Animation Sequence --------
