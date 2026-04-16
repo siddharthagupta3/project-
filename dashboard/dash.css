@@ -1881,7 +1881,6 @@ body.admin-mode .admin-only {
     flex: 1;
     min-width: 0;
     font-size: 0.78rem;
-    padding: 8px 10px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
